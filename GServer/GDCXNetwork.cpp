@@ -608,7 +608,7 @@ int			iRecvd;				// Number of bytes recieved
 										break;
 									}                                          
 
-										CTekSleep(6);		// Delay 6 ms so that we can read our response
+										CTekSleep(7);		// Delay 6 ms so that we can read our response
 										
 										// Read the response which should be !ccggp\n. We do nothing with this
 										// cc - target chip, gg - group on the DCX board the chip is in
