@@ -242,8 +242,8 @@ BOOL CControlDlg::OnInitDialog()
 	CDialog::OnInitDialog();
 
 	// Setup default values and update the dialog box
-	m_iDelay=30;
-	m_iModuleAddr=33;
+	m_iDelay=10;		// 10ms default delay
+	m_iModuleAddr=33;	// Default starting module is 33 for DCX
 	UpdateData(FALSE);
  
 	// Fill in the list of controls
