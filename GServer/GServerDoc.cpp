@@ -311,12 +311,15 @@ BOOL    CGServerDoc::DisplayGeneralMessage(LPSTR lps)
 BOOL      bRet = TRUE;
 
 #ifdef _DEBUG
+
+// Display General messages in the status list box if we are debugging
+
 POSITION pos;
 CGServerView* pGServerView;
-
 	pos = GetFirstViewPosition();
 	pGServerView = (CGServerView *)GetNextView(pos);
 	pGServerView->m_clbStatusList.AddString(lps);
+
 #endif
 
     TRACE0((LPSTR) LPCTSTR(lps));
@@ -350,6 +353,8 @@ BOOL    CGServerDoc::DisplayNetErrorMessage(LPSTR lps)
 BOOL      bRet = TRUE;
 CString   cs;
 POSITION pos;
+
+// Always display network errors in status list box
 
   CGServerView* pGServerView;
   pos = GetFirstViewPosition();

@@ -403,7 +403,7 @@ void CCorTekAsyncSocket::OnSend(int nErrorCode)
 										}							// again when its ok to send
 										else
 										{							// A read error occured
-											m_pNet->m_pDoc->DisplayGeneralMessage("@@ Send DCX.BIN: Socket Error  @@");
+											m_pNet->m_pDoc->DisplayNetErrorMessage("@@ Send DCX.BIN: Socket Error  @@");
 											CloseHandle(m_hFile);
 											m_hFile = NULL;
 											State = 0;
@@ -442,15 +442,15 @@ void CCorTekAsyncSocket::OnSend(int nErrorCode)
 
 				case	DCX_TCP_SEND_CONTROL_STATES:
 				{
-					HDR_DCXTCP					*pHdr=(HDR_DCXTCP *)SendBuf;
-					DWORD               dwDataSize;
-					int									iSent;
-					int									iErr;
+					HDR_DCXTCP	*pHdr=(HDR_DCXTCP *)SendBuf;
+					DWORD		dwDataSize;
+					int			iSent;
+					int			iErr;
 
 					if(m_bSendingControlStates == FALSE)	
 					{
-							m_bSendingControlStates = TRUE;
-							dwDataSize = MAX_NUM_CONTROLS*80*sizeof(WORD);		// size of data array holding control states
+						m_bSendingControlStates = TRUE;
+						dwDataSize = MAX_NUM_CONTROLS*80*sizeof(WORD);		// size of data array holding control states
 
 						// Set the header information for the TCP packet
 
@@ -508,7 +508,7 @@ void CCorTekAsyncSocket::OnSend(int nErrorCode)
 										}							// again when its ok to send
 										else
 										{							// A read error occured
-											m_pNet->m_pDoc->DisplayGeneralMessage("@@ Send DCX.BIN: Socket Error  @@");
+											m_pNet->m_pDoc->DisplayNetErrorMessage("@@ Send Control States: Socket Error  @@");
 											m_bSendingControlStates = NULL;
 											State = 0;
 											return;
@@ -583,6 +583,8 @@ int CCorTekAsyncSocket::Receive(void* pBuffer, int iReadSize, int nFlags)
     }
     else
     {
+			m_pNet->m_pDoc->DisplayNetErrorMessage("@@ Receive: Socket Error  @@");
+
       // This is some sort of an error ... we might have to check here
     break;
     }
@@ -632,7 +634,10 @@ int CCorTekAsyncSocket::Send(const void* pBuffer, int iSendSize, int nFlags)
       // This is some sort of an error ... we might have to check here
 			
 			if(GetLastError()  != WSAEWOULDBLOCK)
+			{
+				m_pNet->m_pDoc->DisplayNetErrorMessage("@@ Send: Socket Error  @@");
 				return -1;		// Need to toggle RED LED to indicate ERROR sending
+			}
 			else
 				Sleep(1);	// Sleep and try again
     }

@@ -482,7 +482,7 @@ void CGServerView::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
 //---------------------------------
 
 	if(pDoc)
-  {
+	{
 //		m_iPort       = pDoc->m_pdcxNetwork->m_iPort;         // Port number
 //		m_csTcpAddr   = pDoc->m_pdcxNetwork->m_csIPAddress;   // IP Address
 
@@ -514,7 +514,7 @@ void CGServerView::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
 #define VU_BITMAP_OFFSET  6   // Offset for a bitmap to a bitmap with VU
 
 	for(iIdx = 0; iIdx < DCX_DEVMAP_MAXSIZE; iIdx ++)
-  {
+	{
 
     //--------------------------------------------------------------------
     // check the VU lock flag.  If it is not zero then we are sending
@@ -523,41 +523,42 @@ void CGServerView::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
     //--------------------------------------------------------------------
 
 		if(pDoc->m_VUMetersArray.m_aVUReadData[iIdx].cLock)
-      iBitmap = VU_BITMAP_OFFSET;
-    else
-      iBitmap = 0;    // No offset
+			iBitmap = VU_BITMAP_OFFSET;
+		else
+			iBitmap = 0;    // No offset
 
 		switch(pDoc->m_dcxdevMap.GetModuleType(iIdx))
-    {
+		{
 
-      case  DCX_DEVMAP_MODULE_NA:
-        iBitmap += 0;
-        break;
-      case  DCX_DEVMAP_MODULE_INPUT:
-        iBitmap += 1;
-        break;
-      case  DCX_DEVMAP_MODULE_AUX:
-        iBitmap += 2;
-        break;
-      case  DCX_DEVMAP_MODULE_MATRIX:
-        iBitmap += 3;
-        break;
-      case  DCX_DEVMAP_MODULE_CUE:
-        iBitmap += 4;
-        break;
-      case  DCX_DEVMAP_MODULE_MASTER:
-        iBitmap += 5;
-        break;
-//      case  DCX_DEVMAP_MODULE_COMPUTER:
-//        iBitmap = 6;
-//        break;
-	    default:
+		  case  DCX_DEVMAP_MODULE_NA:
+			iBitmap += 0;
+			break;
+		  case  DCX_DEVMAP_MODULE_INPUT:
+			iBitmap += 1;
+			break;
+		  case  DCX_DEVMAP_MODULE_AUX:
+			iBitmap += 2;
+			break;
+		  case  DCX_DEVMAP_MODULE_MATRIX:
+			iBitmap += 3;
+			break;
+		  case  DCX_DEVMAP_MODULE_CUE:
+			iBitmap += 4;
+			break;
+		  case  DCX_DEVMAP_MODULE_MASTER:
+			iBitmap += 5;
+			break;
+	//      case  DCX_DEVMAP_MODULE_COMPUTER:
+	//        iBitmap = 6;
+	//        break;
+			default:
 				// handle an error here .....
 				iBitmap = 0;
 				break;
-    }
-  m_tbCtrlModule.SendMessage(TB_CHANGEBITMAP, iIdx + 1, iBitmap);
-  }
+		}
+
+		m_tbCtrlModule.SendMessage(TB_CHANGEBITMAP, iIdx + 1, iBitmap);
+	}
 
 }
 
@@ -699,7 +700,7 @@ CGServerDoc*  pDoc;
   // Position tool bar window and make it on top.
 
 #define MODULE_SETUP_SCREEN_X		20
-#define MODULE_SETUP_SCREEN_Y		180
+#define MODULE_SETUP_SCREEN_Y		240			//180
 
 
   m_tbCtrlModule.SetWindowPos(&wndTop, 
