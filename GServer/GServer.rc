@@ -290,46 +290,54 @@ BEGIN
     GROUPBOX        "VU Settings",IDC_STATIC,356,21,109,159,BS_CENTER,
                     WS_EX_DLGMODALFRAME | WS_EX_TRANSPARENT | 
                     WS_EX_CLIENTEDGE
-    CONTROL         "Progress2",IDC_VUMETER_1,"msctls_progress32",WS_BORDER,
-                    360,41,94,11
-    CTEXT           "0000",IDC_VUMETER1_RDOUT,376,33,75,8
-    CONTROL         "Progress2",IDC_VUMETER_2,"msctls_progress32",WS_BORDER,
-                    360,63,95,11
-    CTEXT           "000",IDC_VUMETER2_RDOUT,372,55,76,8
+    CONTROL         "Progress2",IDC_VUMETER_1,"msctls_progress32",
+                    PBS_VERTICAL | PBS_SMOOTH | WS_BORDER,429,45,18,79
+    CTEXT           "0000",IDC_VUMETER1_RDOUT,426,33,25,8
+    CONTROL         "Progress2",IDC_VUMETER_2,"msctls_progress32",
+                    PBS_VERTICAL | PBS_SMOOTH | WS_BORDER,367,45,18,79
+    CTEXT           "000",IDC_VUMETER2_RDOUT,363,34,25,8
     CONTROL         "1",IDC_VU_1,"Button",BS_AUTORADIOBUTTON | BS_PUSHLIKE,
                     367,146,27,10
-    CONTROL         "5",IDC_VU_5,"Button",BS_AUTORADIOBUTTON | BS_PUSHLIKE,
+    CONTROL         "3",IDC_VU_5,"Button",BS_AUTORADIOBUTTON | BS_PUSHLIKE,
                     367,158,27,10
-    CONTROL         "3",IDC_VU_3,"Button",BS_AUTORADIOBUTTON | BS_PUSHLIKE,
+    CONTROL         "2",IDC_VU_3,"Button",BS_AUTORADIOBUTTON | BS_PUSHLIKE,
                     399,146,27,10
-    CONTROL         "7",IDC_VU_7,"Button",BS_AUTORADIOBUTTON | BS_PUSHLIKE,
+    CONTROL         "4",IDC_VU_7,"Button",BS_AUTORADIOBUTTON | BS_PUSHLIKE,
                     399,158,27,10
     PUSHBUTTON      "Start",IDC_VU_START,429,146,27,10
     LTEXT           "VU METER SELECT",IDC_STATIC,367,133,79,9
-    CONTROL         "Check1",IDC_CLIP1,"Button",BS_AUTOCHECKBOX | 
-                    WS_DISABLED | WS_TABSTOP,370,96,11,8
-    CONTROL         "Check1",IDC_CLIP3,"Button",BS_AUTOCHECKBOX | 
-                    WS_DISABLED | WS_TABSTOP,386,96,11,8
-    CONTROL         "Check1",IDC_CLIP5,"Button",BS_AUTOCHECKBOX | 
-                    WS_DISABLED | WS_TABSTOP,402,96,11,8
-    CONTROL         "Check1",IDC_CLIP7,"Button",BS_AUTOCHECKBOX | 
-                    WS_DISABLED | WS_TABSTOP,416,96,11,8
-    CONTROL         "Check1",IDC_CLIP2,"Button",BS_AUTOCHECKBOX | 
-                    WS_DISABLED | WS_TABSTOP,370,108,11,8
-    CONTROL         "Check1",IDC_CLIP4,"Button",BS_AUTOCHECKBOX | 
-                    WS_DISABLED | WS_TABSTOP,386,108,11,8
-    CONTROL         "Check1",IDC_CLIP6,"Button",BS_AUTOCHECKBOX | 
-                    WS_DISABLED | WS_TABSTOP,402,108,11,8
-    CONTROL         "Check1",IDC_CLIP8,"Button",BS_AUTOCHECKBOX | 
-                    WS_DISABLED | WS_TABSTOP,416,108,11,8
-    LTEXT           "P1",IDC_STATIC,368,86,11,8
-    LTEXT           "P3",IDC_STATIC,386,86,11,8
-    LTEXT           "P5",IDC_STATIC,402,86,11,8
-    LTEXT           "P7",IDC_STATIC,416,86,11,8
-    LTEXT           "P2",IDC_STATIC,370,119,11,8
-    LTEXT           "P4",IDC_STATIC,384,119,11,8
-    LTEXT           "P6",IDC_STATIC,402,119,11,8
-    LTEXT           "P8",IDC_STATIC,416,119,11,8
+    CONTROL         "Check1",IDC_CLIP1,"Button",BS_AUTOCHECKBOX | NOT 
+                    WS_VISIBLE | WS_DISABLED | WS_TABSTOP,293,130,11,8
+    CONTROL         "Check1",IDC_CLIP3,"Button",BS_AUTOCHECKBOX | NOT 
+                    WS_VISIBLE | WS_DISABLED | WS_TABSTOP,309,130,11,8
+    CONTROL         "Check1",IDC_CLIP5,"Button",BS_AUTOCHECKBOX | NOT 
+                    WS_VISIBLE | WS_DISABLED | WS_TABSTOP,325,130,11,8
+    CONTROL         "Check1",IDC_CLIP7,"Button",BS_AUTOCHECKBOX | NOT 
+                    WS_VISIBLE | WS_DISABLED | WS_TABSTOP,339,130,11,8
+    CONTROL         "Check1",IDC_CLIP2,"Button",BS_AUTOCHECKBOX | NOT 
+                    WS_VISIBLE | WS_DISABLED | WS_TABSTOP,293,142,11,8
+    CONTROL         "Check1",IDC_CLIP4,"Button",BS_AUTOCHECKBOX | NOT 
+                    WS_VISIBLE | WS_DISABLED | WS_TABSTOP,309,142,11,8
+    CONTROL         "Check1",IDC_CLIP6,"Button",BS_AUTOCHECKBOX | NOT 
+                    WS_VISIBLE | WS_DISABLED | WS_TABSTOP,325,142,11,8
+    CONTROL         "Check1",IDC_CLIP8,"Button",BS_AUTOCHECKBOX | NOT 
+                    WS_VISIBLE | WS_DISABLED | WS_TABSTOP,339,142,11,8
+    LTEXT           "P1",IDC_STATIC,291,120,11,8,NOT WS_VISIBLE | 
+                    WS_DISABLED
+    LTEXT           "P3",IDC_STATIC,309,120,11,8,NOT WS_VISIBLE | 
+                    WS_DISABLED
+    LTEXT           "P5",IDC_STATIC,325,120,11,8,NOT WS_VISIBLE | 
+                    WS_DISABLED
+    LTEXT           "P7",IDC_STATIC,339,120,11,8,NOT WS_VISIBLE | 
+                    WS_DISABLED
+    LTEXT           "P2",IDC_STATIC,293,153,11,8,NOT WS_VISIBLE | 
+                    WS_DISABLED
+    LTEXT           "P4",IDC_STATIC,307,153,11,8,NOT WS_VISIBLE | 
+                    WS_DISABLED
+    LTEXT           "P6",IDC_STATIC,325,153,11,8,NOT WS_VISIBLE | 
+                    WS_DISABLED
+    LTEXT           "P8",IDC_STATIC,339,153,11,8,NOT WS_VISIBLE | 
+                    WS_DISABLED
     PUSHBUTTON      "RESET",IDC_CLIP_RESET,429,158,27,10
 END
 
