@@ -128,12 +128,19 @@ BOOL    CGDCXNetwork::StartAsServer(LPCTSTR lpcs, UINT  iPort)
 		if(m_pDoc->m_dcxdevMap.GetModuleType(i) != DCX_DEVMAP_MODULE_NA)
 		{
 			char	chBufferVUType[64];
+			char	chBufferDataType[64];
 			ULONG   ulIO;
 
 				wsprintf(chBufferVUType, "*%03dXVUg\n", cModule.GetModuleAddress(i));
 				m_pDoc->m_pDCXDevice->Write(cModule.GetModuleAddress(i), chBufferVUType, &ulIO, FALSE);	// Write VU type command
-				Sleep(50);
+				Sleep(10);
 				m_pDoc->m_pDCXDevice->Read(chBufferVUType, 64, &ulIO);		// Read response and discard
+
+        wsprintf(chBufferDataType, "*%03dXXW470000\n",cModule.GetModuleAddress(i));
+        m_pDoc->m_pDCXDevice->Write(cModule.GetModuleAddress(i), chBufferDataType, &ulIO, FALSE); // Write Control Data command
+        Sleep(10);
+				m_pDoc->m_pDCXDevice->Read(chBufferVUType, 64, &ulIO);		// Read response and discard
+
 		}			
   }
 
