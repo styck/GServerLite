@@ -27,14 +27,13 @@ CCorTekAsyncSocket::CCorTekAsyncSocket(CGDCXNetwork * pnet)
 {
 	m_pNet = pnet;
 	m_bOpened = FALSE;                // Socket is closed
-  m_bSendVuData = FALSE;            // Socket defaults to no VU data
+	m_bSendVuData = FALSE;            // Socket defaults to no VU data
 	m_hFile = NULL;
-  iSocketNumber = -1;               // Invalidate the socket number
+	iSocketNumber = -1;               // Invalidate the socket number
 
 	HowManyInSendBuf = 0;							// How much data in send buffer
 	OffsetToSend = 0;									// Index into data that needs to be sent
 	m_bSendingControlStates = FALSE;	// not sending the control states yet
-
 
 }
 
@@ -182,7 +181,7 @@ char chBuffer[64];
 		m_pNet->m_pDoc->m_VUMetersArray.m_aVUReadData[i].cLock+=-m_pNet->m_pDoc->m_SocketVULocks[iSocketNumber][i];
 
 		if(m_pNet->m_pDoc->m_VUMetersArray.m_aVUReadData[i].cLock < 0)
-      m_pNet->m_pDoc->m_VUMetersArray.m_aVUReadData[i].cLock = 0;
+			m_pNet->m_pDoc->m_VUMetersArray.m_aVUReadData[i].cLock = 0;
 
 		m_pNet->m_pDoc->m_SocketVULocks[iSocketNumber][i] = 0;  // All locks for this socket are gone
 
@@ -204,9 +203,9 @@ char chBuffer[64];
 							TRACE0("\n");
 #endif
 
-  iSocketNumber = -1; // Invalidate the socket number
+	iSocketNumber = -1; // Invalidate the socket number
 
-	State = 0;					// Clear the recieve state
+	State = 0;			// Clear the recieve state
 
 	if(m_hFile != NULL)
 				CloseHandle(m_hFile);
@@ -225,17 +224,16 @@ char chBuffer[64];
 
 void CCorTekAsyncSocket::OnConnect(int nErrorCode) 
 {
-
 	CAsyncSocket::OnConnect(nErrorCode);
   
 	if(nErrorCode)
-  {
+	{
 		m_bOpened = FALSE;
 		Close();
-  }
+	}
 
-  m_bSendVuData = FALSE; // Force the VU flag to FALSE ...
-                         // Until the Client requests the VU data to start
+	m_bSendVuData = FALSE;	// Force the VU flag to FALSE ...
+							// Until the Client requests the VU data to start
 	m_pNet->OnConnect(nErrorCode);
 }
 
