@@ -1174,6 +1174,7 @@ void CGServerView::DoDataExchange(CDataExchange* pDX)
 {
 	CFormView::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CGServerView)
+	DDX_Control(pDX, IDC_STATUS_LIST, m_clbStatusList);
 	DDX_Control(pDX, IDC_NUM_CONNECTIONS, m_NumClientsProgress);
 	DDX_Text(pDX, IDC_TCP_ADDRESS, m_csTcpAddr);
   DDX_Text(pDX, IDC_TCP_PORT, m_iPort);

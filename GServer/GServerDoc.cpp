@@ -310,6 +310,15 @@ BOOL    CGServerDoc::DisplayGeneralMessage(LPSTR lps)
 {
 BOOL      bRet = TRUE;
 
+#ifdef _DEBUG
+POSITION pos;
+CGServerView* pGServerView;
+
+	pos = GetFirstViewPosition();
+	pGServerView = (CGServerView *)GetNextView(pos);
+	pGServerView->m_clbStatusList.AddString(lps);
+#endif
+
     TRACE0((LPSTR) LPCTSTR(lps));
 
 return bRet;
@@ -340,6 +349,13 @@ BOOL    CGServerDoc::DisplayNetErrorMessage(LPSTR lps)
 {
 BOOL      bRet = TRUE;
 CString   cs;
+POSITION pos;
+
+  CGServerView* pGServerView;
+  pos = GetFirstViewPosition();
+  pGServerView = (CGServerView *)GetNextView(pos);
+
+	pGServerView->m_clbStatusList.AddString(lps);
 
 	cs.LoadString(IDS_NET_ERROR_MSG);
 	cs = cs + " " + lps;

@@ -22,7 +22,6 @@ protected: // create from serialization only
 public:
 	//{{AFX_DATA(CGServerView)
 	enum { IDD = IDD_DEVICE_SETUP };
-	CListBox	m_clbStatus;
 	CProgressCtrl	m_NumClientsProgress;
 	CString	m_csTcpAddr;
 	UINT	m_iPort;
@@ -40,6 +39,7 @@ public:
 
   CCorTekTBCtrl   m_tbCtrlModule;
   CComboBox *     m_pCB;
+  CListBox	m_clbStatusList;
 
   DWORD m_dwCurModuleSel;
   UINT  m_iServerType;              // Index into server type combo box 
