@@ -263,7 +263,7 @@ END
 
 VS_VERSION_INFO VERSIONINFO
  FILEVERSION 1,0,0,1
- PRODUCTVERSION 1,0,0,1
+ PRODUCTVERSION 1,0,0,2
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -280,13 +280,13 @@ BEGIN
         BEGIN
             VALUE "CompanyName", "CorTek Software, Inc.\0"
             VALUE "FileDescription", "GServer Application for VACS®\0"
-            VALUE "FileVersion", "1, 0, 0, 4\0"
+            VALUE "FileVersion", "1, 0, 0, 5\0"
             VALUE "InternalName", "GServer for the Gamble DCX\0"
-            VALUE "LegalCopyright", "Copyright © CorTek Software, Inc. 1997 - 1998\0"
+            VALUE "LegalCopyright", "Copyright © CorTek Software, Inc. 1997 - 1999\0"
             VALUE "LegalTrademarks", "VACS® is a registered trademark of CorTek Software, Inc.\0"
             VALUE "OriginalFilename", "GServer.EXE\0"
             VALUE "ProductName", "GServer Application\0"
-            VALUE "ProductVersion", "Version 10/20/98\0"
+            VALUE "ProductVersion", "Version 3/12/99\0"
         END
     END
     BLOCK "VarFileInfo"
