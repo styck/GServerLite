@@ -232,10 +232,6 @@ SOURCE=.\Resource.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Splash.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\StdAfx.h
 # End Source File
 # Begin Source File
