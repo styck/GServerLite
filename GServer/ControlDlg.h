@@ -86,6 +86,7 @@ private:
 	int m_iDirection;			// AutoScroll direction
 	BYTE	m_ucVUTypeReq;	// type of VU data
 	double	m_dStepTodBu[4096];	// Converts step to dBu
+	char	m_cLockSave;			// Save the lock value in case we need to change it.
 
 	void HandleSliderMove(int iPos);
 	int FindCueModule(void);	// returns index to cue module
