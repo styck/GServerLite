@@ -83,6 +83,11 @@
 #define ID_CLOSE                        1074
 #define IDC_ALL_MODULES                 1075
 #define IDC_MONITOR_ONOFF               1076
+#define IDT_COMPANY_NAME                1077
+#define IDT_FILE_DESC                   1078
+#define IDT_PROD_VER                    1079
+#define IDT_COPYRIGHT                   1080
+#define IDT_TRADEMARKS                  1081
 #define ID_VIEW_NETWORK                 32771
 #define ID_VIEW_CONVERTER               32772
 #define ID_VIEW_CONTROLS                32773
@@ -101,7 +106,7 @@
 #define _APS_3D_CONTROLS                     1
 #define _APS_NEXT_RESOURCE_VALUE        174
 #define _APS_NEXT_COMMAND_VALUE         32818
-#define _APS_NEXT_CONTROL_VALUE         1077
+#define _APS_NEXT_CONTROL_VALUE         1082
 #define _APS_NEXT_SYMED_VALUE           107
 #endif
 #endif

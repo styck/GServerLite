@@ -12,6 +12,7 @@
 #include "MainFrm.h"
 #include "GServerDoc.h"
 #include "GServerView.h"
+#include "winver.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -131,6 +132,7 @@ class CAboutDlg : public CDialog
 {
 public:
 	CAboutDlg();
+  BOOL OnInitDialog();
 
 // Dialog Data
 	//{{AFX_DATA(CAboutDlg)
@@ -157,6 +159,113 @@ CAboutDlg::CAboutDlg() : CDialog(CAboutDlg::IDD)
 	//}}AFX_DATA_INIT
 }
 
+BOOL CAboutDlg::OnInitDialog()
+{
+	CDialog::OnInitDialog();
+
+static  HFONT   hFontDlg;
+static  LPSTR   lpVersion;
+static  DWORD   dwVerInfoSize;
+static  DWORD   dwVerHnd;
+static  UINT    uVersionLen;
+static  WORD    wRootLen;
+static  BOOL    bRetCode;
+
+static  char    szFullPath[256];
+static  char    szResult[256];
+static  char    szGetName[256];
+
+static  int     i,iDlg;
+
+  HINSTANCE hInstance = AfxGetInstanceHandle();  
+  GetModuleFileName(hInstance, szFullPath, sizeof(szFullPath));
+  dwVerInfoSize = GetFileVersionInfoSize(szFullPath , &dwVerHnd);
+
+  if(dwVerInfoSize)   // If we can get the version info then process it
+  {
+    LPSTR lpstrVffInfo;
+    HANDLE  hMem;
+
+        hFontDlg = CreateFont(14,0, 0, 0,
+                               0, 0, 0, 0,
+                               0, 0, 0, 0,
+                               VARIABLE_PITCH | FF_SWISS,"");
+
+
+    hMem = GlobalAlloc(GMEM_MOVEABLE, dwVerInfoSize);
+    lpstrVffInfo = (char *)GlobalLock(hMem);
+
+    bRetCode=GetFileVersionInfo(szFullPath, dwVerHnd, dwVerInfoSize, lpstrVffInfo);
+
+		// Handle the language gracefully
+    // (Under both Windows NT and Windows 95, you can get the language information in 
+    // the FileVersionInfo of User.exe by calling GetFileVersionInfo, and then 
+    // VerQueryValue (on \\VarFileInfo\\Translation") on the VersionInfo block of 
+    // the operating system's User.exe.)
+    // Implement the above later ??????????????????????????????????
+
+		if (LANG_JAPANESE == PRIMARYLANGID(GetUserDefaultLangID())) // User can change this is control panel!!
+			lstrcpy(szGetName, "\\StringFileInfo\\041104E4\\");
+		else
+			lstrcpy(szGetName, "\\StringFileInfo\\040904B0\\");
+
+    wRootLen = lstrlen(szGetName);
+
+#ifdef TEST
+    VS_FIXEDFILEINFO *lpVersion;
+#endif
+    
+    // Walk through the dialog items that we want to replace
+    for(i = IDT_COMPANY_NAME; i <= IDT_TRADEMARKS; i++)
+    {
+      GetDlgItemText(i, szResult, sizeof(szResult));
+      szGetName[wRootLen] = (char)0;
+      lstrcat(szGetName, szResult);
+
+      uVersionLen = 0;
+      lpVersion = NULL;
+
+      bRetCode = VerQueryValue((LPVOID)lpstrVffInfo,
+                                szGetName,
+                                (LPVOID *)&lpVersion,
+                                (PUINT)&uVersionLen);
+
+
+
+       if(bRetCode && uVersionLen && lpVersion)
+       {
+          lstrcpy(szResult, lpVersion);
+          SetDlgItemText(i,szResult);    // Replace dialog item text with version info
+          SendDlgItemMessage(i, WM_SETFONT, (UINT)hFontDlg, TRUE);
+
+#ifdef NOTUSEDYET
+
+        hFontCopyright = CreateFont(iPointSize,
+                                   0, 0, 0,
+                                   FW_BOLD,
+                                   0, 0, 0, 0,
+                                   0, 0, 0, 0,
+                                   "Arial");
+
+          SendDlgItemMessage(hdlg, 
+                       IDD_VERLAST, 
+                       WM_SETFONT, 
+                       (WPARAM)hFontCopyright,
+                       0L);
+
+
+#endif
+       }
+    }
+
+        GlobalUnlock(hMem);
+        GlobalFree(hMem);
+  }
+
+	CenterWindow();
+	return TRUE;
+}    
+
 void CAboutDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);
@@ -173,8 +282,11 @@ END_MESSAGE_MAP()
 // App command to run the dialog
 void CGServerApp::OnAppAbout()
 {
-	CAboutDlg aboutDlg;
+
+  CAboutDlg aboutDlg;
+
 	aboutDlg.DoModal();
+
 }
 
 /////////////////////////////////////////////////////////////////////////////

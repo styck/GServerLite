@@ -205,13 +205,15 @@ CAPTION "About GServer"
 FONT 10, "Courier"
 BEGIN
     ICON            IDR_MAINFRAME,IDC_STATIC,14,15,20,20
-    LTEXT           "GServer Version 1.0",IDC_STATIC,39,14,77,8,SS_NOPREFIX
-    LTEXT           "Copyright (C) 1998",IDC_STATIC,39,24,73,8
-    DEFPUSHBUTTON   "OK",IDOK,168,22,32,14,WS_GROUP
-    LTEXT           "CorTek Software, Inc.",IDC_STATIC,39,34,85,8
+    DEFPUSHBUTTON   "OK",IDOK,170,128,32,14,WS_GROUP
     CONTROL         "",IDC_STATIC,"Static",SS_WHITERECT | SS_SUNKEN | 
-                    WS_BORDER,13,53,152,78
-    CONTROL         138,IDC_STATIC,"Static",SS_BITMAP,19,64,130,55
+                    WS_BORDER,13,52,136,63
+    CONTROL         138,IDC_STATIC,"Static",SS_BITMAP,15,56,130,55
+    LTEXT           "CompanyName",IDT_COMPANY_NAME,36,14,50,8
+    LTEXT           "FileDescription",IDT_FILE_DESC,36,26,95,9
+    LTEXT           "ProductVersion",IDT_PROD_VER,146,26,64,8
+    LTEXT           "LegalCopyright",IDT_COPYRIGHT,36,39,125,9
+    LTEXT           "LegalTrademarks",IDT_TRADEMARKS,15,122,144,22
 END
 
 IDD_NETWORK DIALOG DISCARDABLE  0, 0, 232, 87
@@ -260,13 +262,14 @@ BEGIN
         BLOCK "040904b0"
         BEGIN
             VALUE "CompanyName", "CorTek Software, Inc.\0"
-            VALUE "FileDescription", "Server Application for the Gamble DCX\0"
+            VALUE "FileDescription", "GServer Application for VACS®\0"
             VALUE "FileVersion", "1, 0, 0, 1\0"
-            VALUE "InternalName", "GServer\0"
-            VALUE "LegalCopyright", "Copyright (C) 1998 CorTek Software, Inc.\0"
+            VALUE "InternalName", "GServer for the Gamble DCX\0"
+            VALUE "LegalCopyright", "Copyright © CorTek Software, Inc. 1997 - 1998\0"
+            VALUE "LegalTrademarks", "VACS® is a registered trademark of CorTek Software, Inc.\0"
             VALUE "OriginalFilename", "GServer.EXE\0"
             VALUE "ProductName", "GServer Application\0"
-            VALUE "ProductVersion", "1, 0, 0, 1 BETA 8/11/98\0"
+            VALUE "ProductVersion", "1, 0, 0, 1 8/16/98\0"
         END
     END
     BLOCK "VarFileInfo"
