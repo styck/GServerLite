@@ -57,7 +57,7 @@ CGServerApp theApp;
 
 BOOL CGServerApp::InitInstance()
 {
-	m_pszHelpFilePath = _tcsdup(_T("..\\hlp\\VACS Server.HLP"));
+	m_pszHelpFilePath = _tcsdup(_T("..\\VACS Server.HLP"));
 	//m_pszHelpFilePath = _tcsdup(_T("d:\\Work\\VACS Server.HLP"));
 	
 
