@@ -56,7 +56,9 @@ int CVUMeterArray::GetFirstReadIdx()
 	return 0;
 }
 
-
+////////////////////////////////////////////
+// Returns an index from 0-80 into the 
+// vu data array.
 
 int CVUMeterArray::GetNextReadIdx(int iNext)
 {
@@ -80,6 +82,9 @@ int CVUMeterArray::GetNextReadIdx(int iNext)
   }
 
   // Franchesko please check this logic again !! ???? Hristo
+  //
+  // If we get to the last one and it is not viewable then return -1
+
   if(m_aVUReadData[m_iCurrentReadIndex].cLock == 0)
   {
     return 0xffffffff;
