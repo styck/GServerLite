@@ -556,6 +556,9 @@ int			iRecvd;				// Number of bytes recieved
 										m_pDoc->DisplayGeneralMessage(DCXDEV_ERROR_WRITE);
 										break;
 									}                                          
+      
+                  //////////////////////////////////////////////////////////////////
+                  // Delay between writing a control value and reading the response
 
 										CTekSleep(7);		// Delay 6 ms so that we can read our response
 										

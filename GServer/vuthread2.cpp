@@ -135,7 +135,9 @@ CGServerDoc*	m_pDoc = (CGServerDoc*)pParam;
 
   					m_pDoc->m_pDCXDevice->Write(iAddr, chBufferVUType, &ulIO);
 
-						// Delay between write and read as selected by user
+
+            // Delay between write and read as selected above by the #define
+            // This is the delay for the VU reads
 
             CTekSleep(RW_DELAY);
 
