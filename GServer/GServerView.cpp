@@ -484,7 +484,7 @@ void CGServerView::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
 
 	if(pDoc)
 	{
-//		m_iPort       = pDoc->m_pdcxNetwork->m_iPort;         // Port number
+		m_iPort       = pDoc->m_pdcxNetwork->m_iPort;         // Port number
 		m_csTcpAddr   = pDoc->m_pdcxNetwork->m_csIPAddress;   // IP Address
 
     // Show the number of clients currently connected
