@@ -74,7 +74,6 @@ IDR_GSERVETYPE          ICON    DISCARDABLE     "res\\GServerDoc.ico"
 //
 
 IDR_MAINFRAME           BITMAP  MOVEABLE PURE   "res\\Toolbar.bmp"
-IDB_CORTEK_LOGO         BITMAP  DISCARDABLE     "res\\CorTekLogo.bmp"
 IDB_MODULE_DISABLED     BITMAP  DISCARDABLE     "res\\module_disabled.bmp"
 IDB_CIRCUIT_1           BITMAP  DISCARDABLE     "res\\circuit.bmp"
 IDB_SOFTBLUE_1          BITMAP  DISCARDABLE     "res\\softblu2.bmp"
@@ -86,6 +85,7 @@ IDB_MODULE_COMPUTER     BITMAP  DISCARDABLE     "res\\ComputerModule.bmp"
 IDB_VERDE               BITMAP  DISCARDABLE     "res\\verde.bmp"
 IDB_MODULE_MATRIX       BITMAP  DISCARDABLE     "res\\matrix.bmp"
 IDB_MODULE_CUE          BITMAP  DISCARDABLE     "res\\cue.bmp"
+IDB_CORTEK_LOGO         BITMAP  DISCARDABLE     "res\\CorTek260x89@72ppi-rgb-indexedcolor.BMP"
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -206,11 +206,12 @@ FONT 10, "Courier"
 BEGIN
     ICON            IDR_MAINFRAME,IDC_STATIC,14,15,20,20
     LTEXT           "GServer Version 1.0",IDC_STATIC,39,14,77,8,SS_NOPREFIX
-    LTEXT           "Copyright (C) 1998",IDC_STATIC,39,25,73,8
-    DEFPUSHBUTTON   "OK",IDOK,165,23,32,14,WS_GROUP
-    LTEXT           "CorTek Software, Inc.",IDC_STATIC,39,38,85,8
-    CONTROL         "",IDC_STATIC,"Static",SS_BLACKFRAME | SS_SUNKEN,15,57,
-                    187,84
+    LTEXT           "Copyright (C) 1998",IDC_STATIC,39,24,73,8
+    DEFPUSHBUTTON   "OK",IDOK,168,22,32,14,WS_GROUP
+    LTEXT           "CorTek Software, Inc.",IDC_STATIC,39,34,85,8
+    CONTROL         "",IDC_STATIC,"Static",SS_WHITERECT | SS_SUNKEN | 
+                    WS_BORDER,13,53,152,78
+    CONTROL         138,IDC_STATIC,"Static",SS_BITMAP,19,64,130,55
 END
 
 IDD_NETWORK DIALOG DISCARDABLE  0, 0, 232, 87

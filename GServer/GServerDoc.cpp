@@ -57,18 +57,21 @@ CGServerDoc::CGServerDoc()
 CGServerDoc::~CGServerDoc()
 {
 
-// Signel the VU thread to exit
 
-	SetEvent(m_hEventKillVUThread);		
+  if(m_hEventKillVUThread != NULL)
+  {
+    // Signel the VU thread to exit
 
-// Wait until thread kills itself
-// Cannot wait INFINITE since thread may have not been started
-// so wait 500 ms
+	    SetEvent(m_hEventKillVUThread);		
 
-	WaitForSingleObject(m_hEventVUThreadKilled,500);
+    // Wait until thread kills itself
+    // Cannot wait INFINITE since thread may have not been started
+    // so wait 500 ms
 
-// Delete the object pointers
+	    WaitForSingleObject(m_hEventVUThreadKilled,500);
 
+    // Delete the object pointers
+  }
 	delete  m_pdcxNetwork;
 	delete  m_pDCXDevice;		// Thread must be stopped before deleting the device
 													// since the thread is accessing the device

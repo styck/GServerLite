@@ -673,6 +673,12 @@ void CGServerView::OnChkNetServer()
 
 			WaitForSingleObject(pDoc->m_hEventVUThreadKilled,500);
 
+      CloseHandle(pDoc->m_hEventKillVUThread);
+      CloseHandle(pDoc->m_hEventVUThreadKilled);
+
+      pDoc->m_hEventKillVUThread = NULL;
+      pDoc->m_hEventVUThreadKilled = NULL;
+
 		}
   }
 }
