@@ -123,7 +123,7 @@ CGServerDoc*	m_pDoc = (CGServerDoc*)pParam;
 				// Set the module address
 
 				iAddr = pVUData->iAddr;
-				if(pVUData->iLock == 1)	// Use this to determine if we should read this
+				if(pVUData->iLock > 0)	// Use this to determine if we should read this
 				{
 
             //ZeroMemory(chBuffer1, sizeof(DCXPORT_WRITE_INPUT ));
@@ -144,7 +144,7 @@ CGServerDoc*	m_pDoc = (CGServerDoc*)pParam;
 //            {
               lstrcpy(chBuffer1, chBufferVUType);
 						  m_pDoc->m_pDCXDevice->Read(chBuffer1, sizeof(DCXPORT_WRITE_INPUT ), &ulIO);
-//              OutputDebugString (chBuffer1);
+              OutputDebugString (chBuffer1);
 //            }while(chBuffer1[0] == '!' && chBuffer1[1] == '$');
            
 
@@ -153,6 +153,11 @@ CGServerDoc*	m_pDoc = (CGServerDoc*)pParam;
 					// "!0000,0000,0000,0000,0000,0000,0000,0000,/000"  ... this parsing needs
 					// to be done better .. maybe
 					//--------------------------------------
+// #define BOGUS_DATA
+#ifdef BOGUS_DATA
+              lstrcpy(chBuffer1, "!1000,0900,1100,0800,1200,0700,1300,0800,/123");
+              OutputDebugString (chBuffer1);
+#endif
 
         ///////////////////////////////////////////////////////////////////////////////
 				// Set the VU0 data

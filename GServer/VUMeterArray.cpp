@@ -10,6 +10,7 @@
 #include "stdafx.h"
 #include "GServer.h"
 #include "VUMeterArray.h"
+#include "Module.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -21,10 +22,12 @@ static char THIS_FILE[]=__FILE__;
 // Construction/Destruction
 //////////////////////////////////////////////////////////////////////
 
-#define NUM_VU_READ   4   // HARDCODE NUMBER OF VU'S TO READ
+#define NUM_VU_READ   4   // HARDCODE NUMBER OF VU'S TO READ : NOT USED ANYMORE
 
 CVUMeterArray::CVUMeterArray()
 {
+
+  CModule   cModule;
 
 // Initialize our VU data structure
 
@@ -32,9 +35,9 @@ CVUMeterArray::CVUMeterArray()
 
 	for(int i=0;i<MAX_VU_READ_DATA;i++)
 	{
-		m_aVUReadData[i].iAddr=0;							// the VUthread Reads from here(module address)
-//		m_aVUReadData[i].iVUType=1;							// the VUthread Reads from here(Pre, Post, Comp, Gate)
+		m_aVUReadData[i].iAddr=cModule.GetModuleAddress(i);							// the VUthread Reads from here(module address)
 		m_aVUReadData[i].iLock=0;							// if Zero nobody monitors this VU, so we don't need to read the damn thnig
+
 #ifdef NOTUSED
 		m_aVUReadData[i].iVUValue[0]=0;			// data. VUthread writes here
 		m_aVUReadData[i].iVUValue[1]=0;			// data. VUthread writes here
@@ -51,7 +54,7 @@ CVUMeterArray::CVUMeterArray()
 
   /////////////////////////////////////////////////
   // Hardcode modules to read vu data from
-
+#ifdef JUNK
 	for(int j=0;j<NUM_VU_READ;j++)
 	{
 		m_aVUReadData[j].iAddr=33+j;							// the VUthread Reads from here(module address)
@@ -70,6 +73,8 @@ CVUMeterArray::CVUMeterArray()
 		m_aVUReadData[j].iPeakClipValue=0;		// data
     m_aVUReadData[j].iModuleIdx = j;
 	}
+#endif
+
 }
 
 CVUMeterArray::~CVUMeterArray()
