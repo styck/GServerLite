@@ -322,6 +322,10 @@ CCorTekAsyncSocket* pSocket = NULL;
 		delete (pSocket);
 		m_pDoc->DisplayNetErrorMessage(IDS_MAX_CONNECTIONS);
   }
+
+   // Force the view to update the client connection display
+		m_pDoc->UpdateAllViews(NULL);
+
 }
 
 ////////////////////////////////////////////////////////////////////
@@ -333,6 +337,8 @@ void CGDCXNetwork::OnCloseConnection(int nErrorCode)
 {
 
 	m_iConnInUse -- ;
+	m_pDoc->UpdateAllViews(NULL);   // Force the view to update the client connection display
+
 	m_pDoc->DisplayGeneralMessage(IDS_CONNECTION_CLOSED);
 
 
