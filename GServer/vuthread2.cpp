@@ -155,10 +155,14 @@ WORD wFlag;     //  TEST TEST
 	// get the Control ID and the names
 	amdGetWaveMeterControl();
 
-
-
-
 #endif
+
+	// Delay to let the rest of the program catch up when starting with 
+	// the gserv file on the command line.
+
+     CTekSleep(m_pDoc->m_dwBasedelay,500);
+
+
 
 	if(m_pDoc != NULL)
 	{
