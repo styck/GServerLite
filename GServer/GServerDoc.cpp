@@ -313,22 +313,23 @@ BOOL    CGServerDoc::DisplayGeneralMessage(LPSTR lps)
 {
 BOOL      bRet = TRUE;
 
-//#ifdef _DEBUG
+if(m_pdcxNetwork->iShowErrorMsgs)
+{
 
-// Display General messages in the status list box if we are debugging
+	// Display General messages in the status list box if we are debugging
 
-POSITION pos;
-CGServerView* pGServerView;
-int iCnt;
+	POSITION pos;
+	CGServerView* pGServerView;
+	// int iCnt;
 
-	pos = GetFirstViewPosition();
-	pGServerView = (CGServerView *)GetNextView(pos);
-	pGServerView->m_clbStatusList.InsertString(0,lps);
+		pos = GetFirstViewPosition();
+		pGServerView = (CGServerView *)GetNextView(pos);
+		pGServerView->m_clbStatusList.InsertString(0,lps);
 
-//	iCnt = pGServerView->m_clbStatusList.GetCount();
-//	pGServerView->m_clbStatusList.SetTopIndex(iCnt);	// Move to last selection
+	//	iCnt = pGServerView->m_clbStatusList.GetCount();
+	//	pGServerView->m_clbStatusList.SetTopIndex(iCnt);	// Move to last selection
 
-//#endif
+}
 
     TRACE0((LPSTR) LPCTSTR(lps));
 
@@ -362,7 +363,7 @@ BOOL      bRet = TRUE;
 CString   cs;
 POSITION pos;
 CGServerView* pGServerView;
-int iCnt;
+//int iCnt;
 
 // Always display network errors in status list box
 

@@ -32,6 +32,7 @@ public:
 // Dialog Data
 	//{{AFX_DATA(CControlDlg)
 	enum { IDD = IDD_TESTCONTROLSSETUP };
+	CButton	m_ShowErrorMsgs;
 	CStatic	m_VU2_RdOut;
 	CStatic	m_VU1_RdOut;
 	CProgressCtrl	m_VU2;
@@ -78,6 +79,7 @@ protected:
 	afx_msg void OnVu5();
 	afx_msg void OnVu7();
 	afx_msg void OnVuStart();
+	afx_msg void OnShowerrormsgs();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 private:

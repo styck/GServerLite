@@ -65,6 +65,7 @@ void CControlDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CControlDlg)
+	DDX_Control(pDX, IDC_SHOWERRORMSGS, m_ShowErrorMsgs);
 	DDX_Control(pDX, IDC_VUMETER2_RDOUT, m_VU2_RdOut);
 	DDX_Control(pDX, IDC_VUMETER1_RDOUT, m_VU1_RdOut);
 	DDX_Control(pDX, IDC_VUMETER_2, m_VU2);
@@ -102,6 +103,7 @@ BEGIN_MESSAGE_MAP(CControlDlg, CDialog)
 	ON_BN_CLICKED(IDC_VU_5, OnVu5)
 	ON_BN_CLICKED(IDC_VU_7, OnVu7)
 	ON_BN_CLICKED(IDC_VU_START, OnVuStart)
+	ON_BN_CLICKED(IDC_SHOWERRORMSGS, OnShowerrormsgs)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
@@ -291,6 +293,7 @@ BOOL CControlDlg::OnInitDialog()
 
 	m_ShowControlData.SetCheck(m_pDoc->m_pdcxNetwork->iShowControlData);
 	m_ReadVuData.SetCheck(m_pDoc->m_pdcxNetwork->iReadVUData);
+	m_ShowErrorMsgs.SetCheck(m_pDoc->m_pdcxNetwork->iShowErrorMsgs);
 
 	m_iDelay=10;		// 10ms default delay
 	m_iModuleAddr=33;	// Default starting module is 33 for DCX
@@ -786,6 +789,11 @@ void CControlDlg::OnReadvudata()
 	m_pDoc->m_pdcxNetwork->iReadVUData= m_ReadVuData.GetCheck();	
 }
 
+void CControlDlg::OnShowerrormsgs() 
+{
+	m_pDoc->m_pdcxNetwork->iShowErrorMsgs = m_ShowErrorMsgs.GetCheck();
+	
+}
 
 void CControlDlg::OnClipReset() 
 {
@@ -897,3 +905,4 @@ VU_READ *pVUData;
 	}
 
 }
+

@@ -211,18 +211,17 @@ STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "About GServer"
 FONT 10, "Courier"
 BEGIN
-    ICON            IDR_MAINFRAME,IDC_STATIC,7,7,16,20
+    ICON            IDR_MAINFRAME,IDC_STATIC,7,7,20,20
     DEFPUSHBUTTON   "OK",IDOK,170,128,32,14,WS_GROUP
     CONTROL         "",IDC_STATIC,"Static",SS_WHITERECT | SS_SUNKEN | 
                     WS_BORDER,13,52,136,63
     CONTROL         138,IDC_STATIC,"Static",SS_BITMAP,15,56,130,55
     LTEXT           "CompanyName",IDT_COMPANY_NAME,23,14,82,8
     LTEXT           "FileDescription",IDT_FILE_DESC,23,26,88,9
-    LTEXT           "ProductVersion",IDT_PROD_VER,124,15,114,22
+    LTEXT           "ProductVersion",IDT_PROD_VER,154,15,82,13
     LTEXT           "LegalCopyright",IDT_COPYRIGHT,23,39,165,9
     LTEXT           "LegalTrademarks",IDT_TRADEMARKS,7,121,144,23
-    LTEXT           "Tel 702.836.9466  Fax 702.836.9464",IDC_STATIC,154,70,
-                    70,17
+    LTEXT           "Tel 702.836.9466",IDC_STATIC,154,76,70,12
     LTEXT           "www.corteksoft.com",IDC_STATIC,154,91,75,10
     LTEXT           "tech@corteksoft.com",IDC_STATIC,154,102,84,10
 END
@@ -282,11 +281,11 @@ BEGIN
     PUSHBUTTON      "Set",IDC_DCXCTRS_SETADDR,301,59,34,10
     PUSHBUTTON      "Write Reg0",IDC_WRITE_REGISTER_ZERO,296,14,52,13
     CONTROL         "Show Control Data",IDC_SHOWCONTROLDATA,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,213,105,85,14
+                    BS_AUTOCHECKBOX | WS_TABSTOP,207,109,85,14
     PUSHBUTTON      "OSC ON",IDC_OSC_ON,301,79,34,12
     PUSHBUTTON      "OSC OFF",IDC_OSC_OFF,302,95,34,12
     CONTROL         "Read VU data",IDC_READVUDATA,"Button",BS_AUTOCHECKBOX | 
-                    WS_TABSTOP,213,131,74,8
+                    WS_TABSTOP,207,130,74,8
     GROUPBOX        "VU Settings",IDC_STATIC,356,21,109,159,BS_CENTER,
                     WS_EX_DLGMODALFRAME | WS_EX_TRANSPARENT | 
                     WS_EX_CLIENTEDGE
@@ -339,6 +338,8 @@ BEGIN
     LTEXT           "P8",IDC_STATIC,339,153,11,8,NOT WS_VISIBLE | 
                     WS_DISABLED
     PUSHBUTTON      "RESET",IDC_CLIP_RESET,429,158,27,10
+    CONTROL         "Show Error Messages",IDC_SHOWERRORMSGS,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,207,90,86,12
 END
 
 IDD_REG0DIALOG DIALOG DISCARDABLE  0, 0, 346, 193
@@ -388,14 +389,14 @@ BEGIN
             VALUE "Comments", "\0"
             VALUE "CompanyName", "CorTek Software, Inc.\0"
             VALUE "FileDescription", "GServer Application for VACS®\0"
-            VALUE "FileVersion", "1, 0, 0, 5\0"
+            VALUE "FileVersion", "1, 1, 0, 5\0"
             VALUE "InternalName", "GServer for the Gamble DCX\0"
             VALUE "LegalCopyright", "Copyright © CorTek Software, Inc. 1997 - 2000\0"
             VALUE "LegalTrademarks", "VACS® is a registered trademark of CorTek Software, Inc.\0"
             VALUE "OriginalFilename", "GServer.EXE\0"
             VALUE "PrivateBuild", "\0"
             VALUE "ProductName", "GServer Application\0"
-            VALUE "ProductVersion", "Version 1/15/2000  Registry VUdelay and CTRLdelay \0"
+            VALUE "ProductVersion", "Version 11/23/2000 \0"
             VALUE "SpecialBuild", "\0"
         END
     END

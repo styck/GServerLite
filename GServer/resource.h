@@ -123,6 +123,7 @@
 #define IDC_OSC_ON                      1105
 #define IDC_OSC_OFF                     1106
 #define IDC_READVUDATA                  1107
+#define IDC_SHOWERRORMSGS               1108
 #define ID_VIEW_NETWORK                 32771
 #define ID_VIEW_CONVERTER               32772
 #define ID_VIEW_CONTROLS                32773
@@ -143,7 +144,7 @@
 #define _APS_3D_CONTROLS                     1
 #define _APS_NEXT_RESOURCE_VALUE        187
 #define _APS_NEXT_COMMAND_VALUE         32820
-#define _APS_NEXT_CONTROL_VALUE         1108
+#define _APS_NEXT_CONTROL_VALUE         1109
 #define _APS_NEXT_SYMED_VALUE           110
 #endif
 #endif

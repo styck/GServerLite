@@ -43,6 +43,7 @@ CGDCXNetwork::CGDCXNetwork(CGServerDoc *pDoc)
 	m_pAssListener  = NULL; 
 	m_iPort = 9191;         // Default Port address
 	iShowControlData = 0;	// Default is do NOT show control data
+	iShowErrorMsgs = 0;	// Default is do NOT show error messages
 	iReadVUData = 1;	// Default is show VU data
 
 	// Lets get our host name and find the IP address to display
@@ -134,7 +135,6 @@ BOOL    CGDCXNetwork::StartAsServer(LPCTSTR lpcs, UINT  iPort)
 {
   BOOL      bRet = FALSE;
   long      lEvent;
-  int       i;
   CModule   cModule;
   int       iSubAux = 0xFFFFFFFF;
   int       iMatrix = 0xFFFFFFFF;

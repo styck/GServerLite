@@ -65,6 +65,8 @@ public:
 public:
 	int iShowControlData;
 	int iReadVUData;
+	int iShowErrorMsgs;
+
   // General Network Interface Funvtions
   //------------------------------------
 
