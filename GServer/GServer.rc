@@ -92,6 +92,7 @@ IDB_MODULE_AUX_VU       BITMAP  DISCARDABLE     "res\\module_a.bmp"
 IDB_MODULE_MATRIX_VU    BITMAP  DISCARDABLE     "res\\module_m.bmp"
 IDB_MODULE_CUE_VU       BITMAP  DISCARDABLE     "res\\module_c.bmp"
 IDB_MODULE_MASTER_VU    BITMAP  DISCARDABLE     "res\\bmp00001.bmp"
+IDB_BITMAP1             BITMAP  DISCARDABLE     "res\\test.bmp"
 
 /////////////////////////////////////////////////////////////////////////////
 //

@@ -260,6 +260,10 @@ SOURCE=.\res\bmp00001.bmp
 # End Source File
 # Begin Source File
 
+SOURCE=.\res\bmp00002.bmp
+# End Source File
+# Begin Source File
+
 SOURCE=.\res\bvu_input.bmp
 # End Source File
 # Begin Source File

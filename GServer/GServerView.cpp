@@ -625,32 +625,43 @@ void CGServerView::OnInitialUpdate()
 
 void CGServerView::OnPaint() 
 {
-CPaintDC  dc(this); // device context for painting
 CDC       dcMem ;
 CBitmap   cBmp;
 BITMAP    bmpInfo;
 int       iX, iY;
 RECT      rClient;
 
-	GetClientRect(&rClient);
-	cBmp.LoadBitmap(IDB_CIRCUIT_1);
-	cBmp.GetBitmap(&bmpInfo);
 
-		CGServerDoc* pDoc = GetDocument();
-
-	if(dcMem.CreateCompatibleDC(&dc))
+  if(IsIconic())  // If its an icon
   {
-		dcMem.SelectObject(cBmp);
+
+  }
+  else
+  {
+    CPaintDC  dc(this); // device context for painting
+
+	  GetClientRect(&rClient);
+	  cBmp.LoadBitmap(IDB_CIRCUIT_1);
+	  cBmp.GetBitmap(&bmpInfo);
+
+		  CGServerDoc* pDoc = GetDocument();
+
+	  if(dcMem.CreateCompatibleDC(&dc))
+    {
+		  dcMem.SelectObject(cBmp);
 
 
-		for(iX = 0; iX < rClient.right; iX += bmpInfo.bmWidth)
-			for(iY = 0; iY < rClient.bottom; iY += bmpInfo.bmHeight)
-			{
-				dc.BitBlt(iX, iY, bmpInfo.bmWidth, bmpInfo.bmWidth, 
-								 &dcMem, 0, 0,  SRCCOPY);
-			}
+		  for(iX = 0; iX < rClient.right; iX += bmpInfo.bmWidth)
+			  for(iY = 0; iY < rClient.bottom; iY += bmpInfo.bmHeight)
+			  {
+				  dc.BitBlt(iX, iY, bmpInfo.bmWidth, bmpInfo.bmWidth, 
+								   &dcMem, 0, 0,  SRCCOPY);
+			  }
 
-	}
+	  }
+
+  }
+
 }
 
 

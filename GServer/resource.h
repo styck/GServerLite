@@ -30,6 +30,7 @@
 #define IDB_MODULE_MATRIX_VU            177
 #define IDB_MODULE_CUE_VU               178
 #define IDB_MODULE_MASTER_VU            179
+#define IDB_BITMAP1                     180
 #define IDS_TBNAME_GENERAL              200
 #define IDS_TBNAME_VIEWS                201
 #define IDS_NET_ERROR_MSG               300
@@ -112,7 +113,7 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_3D_CONTROLS                     1
-#define _APS_NEXT_RESOURCE_VALUE        180
+#define _APS_NEXT_RESOURCE_VALUE        181
 #define _APS_NEXT_COMMAND_VALUE         32818
 #define _APS_NEXT_CONTROL_VALUE         1084
 #define _APS_NEXT_SYMED_VALUE           107
