@@ -9,6 +9,8 @@
 #include "GserverDoc.h"
 #include "DCXDevice.h"
 #include "ControlDlg.h"
+#include "DCXLoadReg0Dialog.h"
+
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -69,6 +71,7 @@ BEGIN_MESSAGE_MAP(CControlDlg, CDialog)
 	ON_BN_CLICKED(IDC_CTRLS_ACTIVATEAUTO, OnCtrlsActivateauto)
 	ON_WM_VSCROLL()
 	ON_WM_TIMER()
+	ON_BN_CLICKED(IDC_WRITE_REGISTER_ZERO, OnWriteRegisterZero)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
@@ -459,4 +462,17 @@ void CControlDlg::OnOK()
 	}
 	
 	CDialog::OnOK();
+}
+
+///////////////////////////////////////////////
+// User clicked on the Set Zero Register
+// button so bring up the dialog to do it.
+
+void CControlDlg::OnWriteRegisterZero() 
+{
+
+	DCXLoadReg0Dialog dlg;				// Create the object
+	dlg.m_pDoc = m_pDoc;				// Make sure it knows about the document functions
+	int ret =  dlg.DoModal();			// do it
+
 }

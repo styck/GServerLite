@@ -60,6 +60,7 @@ protected:
 	afx_msg void OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar);
 	afx_msg void OnTimer(UINT nIDEvent);
 	virtual void OnOK();
+	afx_msg void OnWriteRegisterZero();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 private:

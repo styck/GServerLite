@@ -299,7 +299,7 @@ void DCXLoadReg0Dialog::WriteRegZero()
 
 		// Set Xicor Data register to value
 
-		if( ! m_pDoc->m_pDCXDevice->Write(addbuff, &ulWrite))
+		if( ! m_pDoc->m_pDCXDevice->Write(addbuff, &ulWrite, FALSE))
     {
 			m_pDoc->DisplayGeneralMessage(DCXDEV_ERROR_WRITE);
     }

@@ -5,6 +5,7 @@
 #define IDD_ABOUTBOX                    100
 #define IDP_SOCKETS_INIT_FAILED         104
 #define TIMER_AUTO_SCROLL               107
+#define IDD_REG0DIALOG                  108
 #define IDR_MAINFRAME                   128
 #define IDR_GSERVETYPE                  129
 #define IDD_NETWORK                     130
@@ -106,6 +107,7 @@
 #define IDC_DCXCTRLS_RESTBUS            1095
 #define IDC_DCXCTRLS_MODULE             1099
 #define IDC_CLEARERRORS                 1101
+#define IDC_WRITE_REGISTER_ZERO         1102
 #define ID_VIEW_NETWORK                 32771
 #define ID_VIEW_CONVERTER               32772
 #define ID_VIEW_CONTROLS                32773
@@ -126,7 +128,7 @@
 #define _APS_3D_CONTROLS                     1
 #define _APS_NEXT_RESOURCE_VALUE        187
 #define _APS_NEXT_COMMAND_VALUE         32820
-#define _APS_NEXT_CONTROL_VALUE         1102
-#define _APS_NEXT_SYMED_VALUE           108
+#define _APS_NEXT_CONTROL_VALUE         1103
+#define _APS_NEXT_SYMED_VALUE           109
 #endif
 #endif

@@ -235,7 +235,7 @@ END
 
 IDD_DEVICE_SETUP DIALOGEX 0, 0, 430, 128
 STYLE WS_CHILD | WS_CLIPCHILDREN | WS_BORDER
-FONT 8, "MS Sans Serif"
+FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
     LTEXT           "IP Address",IDC_STATIC,22,34,44,10,0,WS_EX_STATICEDGE
     EDITTEXT        IDC_TCP_ADDRESS,69,34,70,12,ES_AUTOHSCROLL
@@ -271,13 +271,34 @@ BEGIN
                     TBS_AUTOTICKS | TBS_VERT | TBS_TOP | WS_BORDER | 
                     WS_TABSTOP,167,38,27,147
     EDITTEXT        IDC_CTRLS_RDOUT,158,27,37,9,ES_AUTOHSCROLL | ES_READONLY
-    PUSHBUTTON      "Reset Bus",IDC_DCXCTRLS_RESTBUS,207,17,37,12
+    PUSHBUTTON      "Reset Bus",IDC_DCXCTRLS_RESTBUS,250,14,37,13
     LTEXT           "Auto Delay (milliseconds)",IDC_STATIC,207,39,46,17
     EDITTEXT        IDC_CTRLS_DELAY,259,39,32,12,ES_AUTOHSCROLL
     PUSHBUTTON      "Activate",IDC_CTRLS_ACTIVATEAUTO,301,39,34,10
     LTEXT           "Module Addr",IDC_STATIC,207,57,48,11
     EDITTEXT        IDC_DCXCTRLS_MODULE,259,57,32,12,ES_AUTOHSCROLL
     PUSHBUTTON      "Set",IDC_DCXCTRS_SETADDR,301,57,34,10
+    PUSHBUTTON      "Write Reg0",IDC_WRITE_REGISTER_ZERO,296,14,52,13
+END
+
+IDD_REG0DIALOG DIALOG DISCARDABLE  0, 0, 346, 193
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Write Register Zero Values"
+FONT 8, "MS Sans Serif"
+BEGIN
+    PUSHBUTTON      "Close",ID_CLOSE,279,163,48,14
+    LISTBOX         IDC_LIST1,27,54,178,94,LBS_SORT | LBS_NOINTEGRALHEIGHT | 
+                    LBS_NOSEL | WS_VSCROLL | WS_TABSTOP
+    LISTBOX         IDC_LIST2,235,71,88,75,LBS_SORT | LBS_NOINTEGRALHEIGHT | 
+                    WS_VSCROLL | WS_TABSTOP
+    EDITTEXT        IDC_FILENAME,27,33,177,12,ES_AUTOHSCROLL | WS_DISABLED
+    PUSHBUTTON      "Browse",IDC_BROWSE,155,14,48,14
+    PUSHBUTTON      "Download",ID_DOWNLOAD,233,14,48,14
+    LTEXT           "Filename",IDC_STATIC,27,15,34,11
+    EDITTEXT        IDC_ADDRESS,297,49,27,16,ES_AUTOHSCROLL
+    LTEXT           "Module Address",IDC_STATIC,235,52,55,10
+    CONTROL         "All modules of this type",IDC_ALL_MODULES,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,233,36,96,7
 END
 
 
@@ -314,7 +335,7 @@ BEGIN
             VALUE "OriginalFilename", "GServer.EXE\0"
             VALUE "PrivateBuild", "\0"
             VALUE "ProductName", "GServer Application\0"
-            VALUE "ProductVersion", "Version 8/21/99- b  Registry VUdelay and CTRLdelay \0"
+            VALUE "ProductVersion", "Version 9/6/99  Registry VUdelay and CTRLdelay \0"
             VALUE "SpecialBuild", "\0"
         END
     END
@@ -365,6 +386,14 @@ BEGIN
         RIGHTMARGIN, 354
         TOPMARGIN, 7
         BOTTOMMARGIN, 197
+    END
+
+    IDD_REG0DIALOG, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 339
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 186
     END
 END
 #endif    // APSTUDIO_INVOKED
