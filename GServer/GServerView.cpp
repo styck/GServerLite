@@ -289,6 +289,7 @@ BEGIN_MESSAGE_MAP(CGServerView, CFormView)
 	ON_BN_CLICKED(IDC_CHK_NET_SERVER, OnChkNetServer)
 	ON_WM_ERASEBKGND()
 	ON_CBN_SELCHANGE(IDC_SERVER_COMBO, OnSelchangeServerCombo)
+
 	//}}AFX_MSG_MAP
 
 	ON_NOTIFY_EX_RANGE(TTN_NEEDTEXTA, 0, 0xFFFF, OnToolTipText)
@@ -1198,3 +1199,5 @@ void CGServerView::OnSelchangeServerCombo()
   }
 
 }
+
+

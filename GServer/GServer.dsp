@@ -129,13 +129,6 @@ SOURCE=.\GServer.cpp
 # Begin Source File
 
 SOURCE=.\GServer.rc
-
-!IF  "$(CFG)" == "GServer - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "GServer - Win32 Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
@@ -725,6 +718,10 @@ SOURCE=.\hlp\Scmin.bmp
 
 # End Source File
 # End Group
+# Begin Source File
+
+SOURCE=.\deleteMe.txt
+# End Source File
 # Begin Source File
 
 SOURCE=.\GServer.reg

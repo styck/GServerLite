@@ -84,6 +84,7 @@ protected:
 	afx_msg void OnChkNetServer();
 	afx_msg BOOL OnEraseBkgnd(CDC* pDC);
 	afx_msg void OnSelchangeServerCombo();
+	
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };

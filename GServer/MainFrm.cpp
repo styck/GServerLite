@@ -32,10 +32,11 @@ BEGIN_MESSAGE_MAP(CMainFrame, CFrameWnd)
 	ON_WM_CREATE()
 	//}}AFX_MSG_MAP
 	// Global help commands
-	ON_COMMAND(ID_HELP_FINDER, CFrameWnd::OnHelpFinder)
+	ON_COMMAND(ID_HELP_FINDER, CFrameWnd::OnHelpFinder)  
 	ON_COMMAND(ID_HELP, CFrameWnd::OnHelp)
 	ON_COMMAND(ID_CONTEXT_HELP, CFrameWnd::OnContextHelp)
 	ON_COMMAND(ID_DEFAULT_HELP, CFrameWnd::OnHelpFinder)
+	ON_COMMAND(ID_HTML_HELP, OnLaunchHTMLHelp)
 END_MESSAGE_MAP()
 
 static UINT indicators[] =
@@ -135,3 +136,58 @@ void CMainFrame::Dump(CDumpContext& dc) const
 
 #endif //_DEBUG
 
+
+////////////////////////////////////////////////////////////////////////////////////////
+// This function is called from the menubar when the help information is needed.
+// It launches the Microsoft HTML Help executable -- hh.exe
+// The VACS HTML help file -- VACWS1.chm is the file opened by the executable.
+// In debug, the help files MUST be in the source code directory.
+// In release, the help files MUST be in the same directory as the executable.
+// Added 1/4/99,........ELC
+void CMainFrame::OnLaunchHTMLHelp()
+{
+	STARTUPINFO p_startupInfo;										// Struct needed for startup information
+	PROCESS_INFORMATION p_processInformation;						// Struct for information on process execution
+	char chCurrentDirectory[128];									// The current dirctory of the GServer executable
+	char chWindowsDirectory[128];									// The windows directory,..usually c:\winnt
+	char chAppPathAndFileName[100];									// The help file name with its leading path
+	char chCommandLine[50];											// The command line for hh.exe to run
+	char chFullCommandLine[150];									// The full command line includeing application
+																	// and help file
+	int nResult;													
+	char chAppFileName[100] = "\\hh.exe";							// Microsoft HTML Help file executable
+	
+	GetStartupInfo(&p_startupInfo);									// Get the startup info needed for creating a process
+	DWORD dwResult = GetCurrentDirectory(128,chCurrentDirectory);	// Get the current process directory of GServer exe
+	UINT  uiResult = GetWindowsDirectory(chWindowsDirectory,128);	// Get the windows directory
+
+	nResult = sprintf(chAppPathAndFileName,"%s%s",chWindowsDirectory,chAppFileName);// Appand the path to the HTML file exe
+	LPCTSTR pstrAppPathAndFileName = (LPCTSTR)chAppPathAndFileName;	// Cast to pointer
+
+	nResult = sprintf(chCommandLine,"%s%s",chCurrentDirectory,"\\VACWS1.chm");	// Append current directory to help file
+	nResult = sprintf(chFullCommandLine,"%s %s",chAppPathAndFileName,chCommandLine); // Merge into one big command line
+	LPTSTR pstrFullCommandLine = (LPTSTR)chFullCommandLine;			// cast to a pointer
+
+
+	// Create the process
+	int nSuccess = CreateProcess(
+		pstrAppPathAndFileName,					// pointer to name of executable module
+		pstrFullCommandLine,					// pointer to command line string
+		NULL,									// pointer to process security attributes
+		NULL,									// pointer to thread security attributes
+		FALSE,									// handle inheritance flag
+		NORMAL_PRIORITY_CLASS,					// creation flag
+		NULL,									// pointer to new environment block
+		NULL,									// pointer to current directory name
+		&p_startupInfo,							// pointer to STARTUPINFO struct
+		&p_processInformation);					// pointer to PROCESS_INFORMATION struct
+
+
+	if(!nSuccess)			// If the process creation was not successful, post a message box iunforming the end user
+	{						// that the hh.exe file is in the wrong directory.
+		CString strError;
+		strError.Format("The file 'hh.exe' is not in the %s directory.\n",chWindowsDirectory);
+		strError += "Do a search on your computer for 'hh.exe' and copy the file into the Windows directory.";
+		MessageBox(strError,"HTML Help File location error",MB_OK|MB_ICONINFORMATION); 
+	}
+}

@@ -157,6 +157,7 @@ BEGIN
         MENUITEM "&Help Topics",                ID_HELP_FINDER
         MENUITEM SEPARATOR
         MENUITEM "&About GServer...",           ID_APP_ABOUT
+        MENUITEM "Help",                        ID_HTML_HELP
     END
 END
 

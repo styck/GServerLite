@@ -50,6 +50,7 @@ public:
 
 // Implementation
 public:
+	void OnLaunchHTMLHelp();
 	virtual ~CMainFrame();
 #ifdef _DEBUG
 	virtual void AssertValid() const;
