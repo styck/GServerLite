@@ -252,10 +252,11 @@ BEGIN
     LTEXT           "",IDC_NUM_CLIENTS_TEXT,215,62,19,8
     COMBOBOX        IDC_SERVER_COMBO,139,38,84,54,CBS_DROPDOWN | WS_VSCROLL | 
                     WS_TABSTOP
-    LISTBOX         IDC_STATUS_LIST,23,81,212,55,LBS_SORT | 
+    LISTBOX         IDC_STATUS_LIST,23,81,212,55,LBS_SORT | LBS_MULTIPLESEL | 
                     LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_TABSTOP
     PUSHBUTTON      "Test Controls",IDC_TESTCONTROLS,295,23,50,14
-    PUSHBUTTON      "Clear",IDC_CLEARERRORS,239,81,40,15
+    PUSHBUTTON      "Clear",IDC_CLEARERRORS,241,81,40,15
+    PUSHBUTTON      "Copy",IDC_COPYMSG,241,104,40,15
 END
 
 IDD_TESTCONTROLSSETUP DIALOG DISCARDABLE  0, 0, 361, 204
@@ -337,7 +338,7 @@ BEGIN
             VALUE "OriginalFilename", "GServer.EXE\0"
             VALUE "PrivateBuild", "\0"
             VALUE "ProductName", "GServer Application\0"
-            VALUE "ProductVersion", "Version 9/16/99  Registry VUdelay and CTRLdelay \0"
+            VALUE "ProductVersion", "Version 9/18/99  Registry VUdelay and CTRLdelay \0"
             VALUE "SpecialBuild", "\0"
         END
     END
