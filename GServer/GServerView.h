@@ -41,7 +41,8 @@ public:
   CComboBox *     m_pCB;
 
   DWORD m_dwCurModuleSel;
-  UINT  m_iServerType;      // Index into server type combo box 
+  UINT  m_iServerType;              // Index into server type combo box 
+  UINT  m_iServerTypeCurrent;       // Current Index into server type combo box 
 
 // Operations
 public:

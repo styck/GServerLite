@@ -316,6 +316,8 @@ CGServerView::CGServerView()
   
   m_dwCurModuleSel = 0;   // Default to the first module
   m_iServerType = 0;      // Default to CUSTOM configuration
+  m_iServerTypeCurrent = 0;
+
   m_bServerStart = FALSE;
 }
 
@@ -608,8 +610,8 @@ CGServerDoc*  pDoc;
 
   // Position tool bar window and make it on top.
 
-#define MODULE_SETUP_SCREEN_X		12
-#define MODULE_SETUP_SCREEN_Y		170
+#define MODULE_SETUP_SCREEN_X		20
+#define MODULE_SETUP_SCREEN_Y		180
 
 
   m_tbCtrlModule.SetWindowPos(&wndTop, 
@@ -1051,28 +1053,36 @@ void CGServerView::DoDataExchange(CDataExchange* pDX)
 void CGServerView::Serialize(CArchive& ar) 
 {
 
-	if (ar.IsStoring())
-	{	// storing code
+  if(!m_bServerStart)
+  {
+	  if (ar.IsStoring())
+	  {	// storing code
 
-    UpdateData(TRUE);
-		ar << m_iPort;       
-		ar << m_csTcpAddr;                
-//		ar << m_bServerStart;
-    ar << m_iServerType;
+      UpdateData(TRUE);
+		  ar << m_iPort;       
+		  ar << m_csTcpAddr;                
+  //		ar << m_bServerStart;
+      ar << m_iServerType;
 
-	}
-	else
-	{	// loading code
+	  }
+	  else
+	  {	// loading code
 
-		ar >> m_iPort;       
-		ar >> m_csTcpAddr;                
-//		ar >> m_bServerStart;
-    ar >> m_iServerType;
-    UpdateData(FALSE);
+		  ar >> m_iPort;       
+		  ar >> m_csTcpAddr;                
+  //		ar >> m_bServerStart;
+      ar >> m_iServerType;
+      UpdateData(FALSE);
 
-	}
+      m_iServerTypeCurrent = m_iServerType; // set the current type
+
+	  }
+  }
+  else
+  {
+    MessageBox( "Stop the SERVER before changing configurations", "ERROR", MB_OK );  
+  }
 }
-
 
 // DDX routine fo IP address translation
 // CURRENTLY NOT USED
@@ -1141,40 +1151,50 @@ void CGServerView::OnSelchangeServerCombo()
 {
   int iCount;
 
-  CComboBox * m_pCB = (CComboBox*) GetDlgItem(IDC_SERVER_COMBO);
-  m_iServerType=m_pCB->GetCurSel();
-  m_pCB->GetLBText(m_iServerType,m_csServerType);
+    CComboBox * m_pCB = (CComboBox*) GetDlgItem(IDC_SERVER_COMBO);
+    m_iServerType=m_pCB->GetCurSel();
+    m_pCB->GetLBText(m_iServerType,m_csServerType);
 
-	CGServerDoc   *pDoc = GetDocument();
+	  CGServerDoc   *pDoc = GetDocument();
 
-	if(pDoc)	
+  if(!m_bServerStart)
   {
-
-    switch(m_iServerType)
+	  if(pDoc)	
     {
-      case 0:  // custom
+      m_iServerTypeCurrent = m_iServerType; // set the current type
+
+      switch(m_iServerType)
+      {
+        case 0:  // custom
+          break;
+        case 1:  // event
+          // setup default values for an EVENT
+          //--------------------------
+          for(iCount = 0; iCount < DCX_DEVMAP_MAXSIZE; iCount ++)
+            pDoc->m_dcxdevMap.SetModuleType(iCount, g_dwEvent[iCount]);
         break;
-      case 1:  // event
-        // setup default values for an EVENT
-        //--------------------------
-        for(iCount = 0; iCount < DCX_DEVMAP_MAXSIZE; iCount ++)
-          pDoc->m_dcxdevMap.SetModuleType(iCount, g_dwEvent[iCount]);
-      break;
-      case 2:  // showtime
-        // setup default values for an SHOWTIME
-        //--------------------------
-        for(iCount = 0; iCount < DCX_DEVMAP_MAXSIZE; iCount ++)
-          pDoc->m_dcxdevMap.SetModuleType(iCount, g_dwShowTime[iCount]);
-      break;
+        case 2:  // showtime
+          // setup default values for an SHOWTIME
+          //--------------------------
+          for(iCount = 0; iCount < DCX_DEVMAP_MAXSIZE; iCount ++)
+            pDoc->m_dcxdevMap.SetModuleType(iCount, g_dwShowTime[iCount]);
+        break;
 
-      case 3: // cabaret
-        // setup default values for an CABARET
-        //--------------------------
-        for(iCount = 0; iCount < DCX_DEVMAP_MAXSIZE; iCount ++)
-          pDoc->m_dcxdevMap.SetModuleType(iCount, g_dwCabaret[iCount]);
-      break;
+        case 3: // cabaret
+          // setup default values for an CABARET
+          //--------------------------
+          for(iCount = 0; iCount < DCX_DEVMAP_MAXSIZE; iCount ++)
+            pDoc->m_dcxdevMap.SetModuleType(iCount, g_dwCabaret[iCount]);
+        break;
+      }
+      pDoc->UpdateAllViews(NULL);
+
     }
-    pDoc->UpdateAllViews(NULL);
+  }
+  else
+  {
+    m_iServerType=m_pCB->SetCurSel(m_iServerTypeCurrent);
+    MessageBox( "Stop the SERVER before changing configurations", "ERROR", MB_OK );  
+  }
 
-  }  
 }

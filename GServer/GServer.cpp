@@ -87,7 +87,7 @@ BOOL CGServerApp::InitInstance()
 	// Change the registry key under which our settings are stored.
 	// You should modify this string to be something appropriate
 	// such as the name of your company or organization.
-	SetRegistryKey(_T("Local AppWizard-Generated Applications"));
+	SetRegistryKey(_T("CorTek\\GSERVER\\1.00"));
 
 	LoadStdProfileSettings(7);  // Load standard INI file options (including MRU)
 
