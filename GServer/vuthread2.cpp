@@ -25,9 +25,10 @@ static char THIS_FILE[] = __FILE__;
 #define CYCLECOUNT
 
 
-// #define BOGUS_DATA         // Define to send fake vu data
+#define BOGUS_DATA         // Define to send fake vu data
 
 #ifdef BOGUS_DATA
+#ifdef USEMIXER
 
 	UINT m_nNumMixers;
 	HMIXER m_hMixer;
@@ -41,7 +42,7 @@ static char THIS_FILE[] = __FILE__;
 	BOOL amdInitialize();
 	BOOL amdGetWaveMeterControl();
 	BOOL amdGetWaveMeterValue(LONG &lVal);
-
+#endif
 #endif
 
 
@@ -150,11 +151,11 @@ CGServerDoc*	m_pDoc = (CGServerDoc*)pParam;
 
 #ifdef BOGUS_DATA
 WORD wFlag;     //  TEST TEST
-
+#ifdef USEMIXER
 	amdInitialize();
 	// get the Control ID and the names
 	amdGetWaveMeterControl();
-
+#endif
 #endif
 
 	// Delay to let the rest of the program catch up when starting with 
@@ -181,6 +182,8 @@ WORD wFlag;     //  TEST TEST
 
 #ifdef BOGUS_DATA
               wFlag++;    // Toggle fake vu data, low or high
+		       CTekSleep(m_pDoc->m_dwBasedelay,4000); // slow it down
+
 #endif
 
 // Build the VU meter read command based on user selections 
@@ -199,7 +202,11 @@ WORD wFlag;     //  TEST TEST
 				// Set the module address
 
 				iAddr = pVUData->wAddr;
+#ifdef BOGUS_DATA
+				if( m_pDoc->m_pdcxNetwork->iReadVUData )	// Use this to determine if we should read this
+#else
 				if( (pVUData->cLock > 0) && (m_pDoc->m_pdcxNetwork->iReadVUData) )	// Use this to determine if we should read this
+#endif
 				{
 
             //ZeroMemory(chBuffer1, sizeof(DCXPORT_WRITE_INPUT ));
@@ -229,12 +236,13 @@ WORD wFlag;     //  TEST TEST
 					// to be done better .. maybe
 					//--------------------------------------
 #ifdef BOGUS_DATA
+#ifdef USEMIXER
 
 		LONG lval;
 		amdGetWaveMeterValue(lval); // get value from soundcard mixer
 		wsprintf(chBuffer1,"!%d.4,%d.4,%d.4,%d.4,%d.4,%d.4,%d.4,%d.4,/123",lval, lval, lval, lval, lval, lval, lval, lval);
 		TRACE0(chBuffer1);
-#ifdef NOTUSED
+#else
           if(wFlag & 1)
           {
               lstrcpy(chBuffer1, "!0000,0000,0000,0000,0000,0000,0000,0000,/123");
@@ -421,9 +429,7 @@ WORD wFlag;     //  TEST TEST
 				}
 
 				// Get the index to the next VU meter data
-
 					iVUtoRead = m_pDoc->m_VUMetersArray.GetNextReadIdx(iVUtoRead);
-
 			}
 
 		} // END WHILE
@@ -431,7 +437,7 @@ WORD wFlag;     //  TEST TEST
 	}
 
 
-#ifdef BOGUS_DATA	
+#ifdef USEMIXER
 	amdUninitialize();
 #endif
 
@@ -441,7 +447,7 @@ WORD wFlag;     //  TEST TEST
 }
 
 
-#ifdef BOGUS_DATA
+#ifdef USEMIXER
 
 BOOL amdInitialize()
 {

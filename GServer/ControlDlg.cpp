@@ -453,7 +453,7 @@ VU_READ *pVUData;
 // pre, post, comp, and gate Vu meters of
 // a given module, not all modules
 
-		for(iVUtoRead = 0; iVUtoRead < 4; iVUtoRead++)
+		while(iVUtoRead >= 0)
 		{
 
 		// Get point to first VU data
@@ -466,13 +466,13 @@ VU_READ *pVUData;
 
 			// Scale the dBu reading to 4096 values
 
-				iVU =   (int)((m_dStepTodBu[pVUData->wVUValue[m_ucVUTypeReq]]+43.2871)*4096)/58.27;
-				iPeak = (int)((m_dStepTodBu[pVUData->wPeakClipValue]+43.2871)*4096)/58.27;
+//				iVU =   (int)((m_dStepTodBu[pVUData->wVUValue[m_ucVUTypeReq]]+43.2871)*4096)/58.27;
+//				iPeak = (int)((m_dStepTodBu[pVUData->wPeakClipValue]+43.2871)*4096)/58.27;
 
 			// Display the progress bar
 
-				m_VU1.SetPos(iPeak);
-				m_VU2.SetPos(iVU);
+//				m_VU1.SetPos(iPeak);
+//				m_VU2.SetPos(iVU);
 
 			// Convert floating point to text
 
@@ -531,7 +531,7 @@ VU_READ *pVUData;
 
 			}
 
-		}
+		}	// end while
 
 	} else if (nIDEvent == TIMER_AUTO_SCROLL) 		// 145
 	{
