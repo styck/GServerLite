@@ -235,7 +235,7 @@ END
 
 IDD_DEVICE_SETUP DIALOGEX 0, 0, 430, 149
 STYLE WS_CHILD | WS_CLIPCHILDREN | WS_BORDER
-FONT 8, "MS Sans Serif", 0, 0, 0x1
+FONT 8, "MS Sans Serif"
 BEGIN
     LTEXT           "IP Address",IDC_STATIC,13,38,44,10,0,WS_EX_STATICEDGE
     EDITTEXT        IDC_TCP_ADDRESS,61,38,70,12,ES_AUTOHSCROLL
@@ -248,7 +248,7 @@ BEGIN
                     WS_EX_CLIENTEDGE
     CONTROL         "Progress1",IDC_NUM_CONNECTIONS,"msctls_progress32",
                     WS_BORDER,135,70,78,10
-    LTEXT           "Client Connections",IDC_STATIC,141,62,61,10
+    LTEXT           "Client Connections",IDC_STATIC,141,56,61,10
     LTEXT           "",IDC_NUM_CLIENTS_TEXT,215,62,19,8
     COMBOBOX        IDC_SERVER_COMBO,139,38,84,54,CBS_DROPDOWN | WS_VSCROLL | 
                     WS_TABSTOP
@@ -341,7 +341,7 @@ BEGIN
             VALUE "OriginalFilename", "GServer.EXE\0"
             VALUE "PrivateBuild", "\0"
             VALUE "ProductName", "GServer Application\0"
-            VALUE "ProductVersion", "Version 9/29/99  Registry VUdelay and CTRLdelay \0"
+            VALUE "ProductVersion", "Version 10/4/99  Registry VUdelay and CTRLdelay \0"
             VALUE "SpecialBuild", "\0"
         END
     END
