@@ -73,6 +73,8 @@ private:
 	int m_iDirection;			// AutoScroll direction
 
 	void HandleSliderMove(int iPos);
+	int FindCueModule(void);	// returns index to cue module
+
 };
 
 //{{AFX_INSERT_LOCATION}}

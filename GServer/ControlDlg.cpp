@@ -503,6 +503,11 @@ void CControlDlg::OnShowcontroldata()
 void CControlDlg::OnOscOn() 
 {
 DCX_CTRL_DESC CtrlDesc;
+int iSaveModuleAddr;
+
+	iSaveModuleAddr = m_iModuleAddr;
+
+	m_iModuleAddr = FindCueModule();
 
 	for(int i=0; i < m_CControlListBox.GetCount(); i++)
 	{
@@ -531,7 +536,7 @@ DCX_CTRL_DESC CtrlDesc;
 		}
 
 	}
-
+	m_iModuleAddr = iSaveModuleAddr;
 }
 	
 //mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm
@@ -547,6 +552,11 @@ DCX_CTRL_DESC CtrlDesc;
 void CControlDlg::OnOscOff() 
 {
 DCX_CTRL_DESC CtrlDesc;
+int iSaveModuleAddr;
+
+	iSaveModuleAddr = m_iModuleAddr;
+
+	m_iModuleAddr = FindCueModule();
 
 	for(int i=0; i < m_CControlListBox.GetCount(); i++)
 	{
@@ -575,5 +585,39 @@ DCX_CTRL_DESC CtrlDesc;
 		}
 
 	}
+	m_iModuleAddr = iSaveModuleAddr;
 	
+}
+
+
+int CControlDlg::FindCueModule()
+{
+
+ CModule   cModule;
+
+  for(int iIdx = 0; iIdx < DCX_DEVMAP_MAXSIZE; iIdx ++)
+  {
+	
+	// Find the CueModule
+
+    switch(m_pDoc->m_dcxdevMap.GetModuleType(iIdx))
+      {
+      case  DCX_DEVMAP_MODULE_NA:
+        break;
+      case  DCX_DEVMAP_MODULE_INPUT:
+        break;
+      case  DCX_DEVMAP_MODULE_AUX:
+        break;
+      case  DCX_DEVMAP_MODULE_MATRIX:
+        break;
+      case  DCX_DEVMAP_MODULE_CUE:
+		  return cModule.GetModuleAddress(iIdx);
+        break;
+      case  DCX_DEVMAP_MODULE_MASTER:
+        break;
+      default:
+        break;
+      }
+	}
+	return 0;	// Cuemodule not found
 }
