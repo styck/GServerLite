@@ -4,6 +4,7 @@
 //
 #define IDD_ABOUTBOX                    100
 #define IDP_SOCKETS_INIT_FAILED         104
+#define TIMER_AUTO_SCROLL               107
 #define IDR_MAINFRAME                   128
 #define IDR_GSERVETYPE                  129
 #define IDD_NETWORK                     130
@@ -31,6 +32,7 @@
 #define IDB_MODULE_CUE_VU               178
 #define IDB_MODULE_MASTER_VU            179
 #define IDB_BITMAP1                     180
+#define IDD_TESTCONTROLSSETUP           186
 #define IDS_TBNAME_GENERAL              200
 #define IDS_TBNAME_VIEWS                201
 #define IDS_NET_ERROR_MSG               300
@@ -100,6 +102,10 @@
 #define IDC_NUM_CLIENTS_TEXT            1083
 #define IDC_SERVER_COMBO                1087
 #define IDC_SETTINGS_FRAME              1089
+#define IDC_TESTCONTROLS                1092
+#define IDC_DCXCTRLS_RESTBUS            1095
+#define IDC_DCXCTRLS_MODULE             1099
+#define IDC_CLEARERRORS                 1101
 #define ID_VIEW_NETWORK                 32771
 #define ID_VIEW_CONVERTER               32772
 #define ID_VIEW_CONTROLS                32773
@@ -118,9 +124,9 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_3D_CONTROLS                     1
-#define _APS_NEXT_RESOURCE_VALUE        186
+#define _APS_NEXT_RESOURCE_VALUE        187
 #define _APS_NEXT_COMMAND_VALUE         32820
-#define _APS_NEXT_CONTROL_VALUE         1092
-#define _APS_NEXT_SYMED_VALUE           107
+#define _APS_NEXT_CONTROL_VALUE         1102
+#define _APS_NEXT_SYMED_VALUE           108
 #endif
 #endif

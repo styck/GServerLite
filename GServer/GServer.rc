@@ -233,7 +233,7 @@ FONT 10, "Courier"
 BEGIN
 END
 
-IDD_DEVICE_SETUP DIALOGEX 0, 0, 430, 124
+IDD_DEVICE_SETUP DIALOGEX 0, 0, 430, 128
 STYLE WS_CHILD | WS_CLIPCHILDREN | WS_BORDER
 FONT 8, "MS Sans Serif"
 BEGIN
@@ -243,7 +243,7 @@ BEGIN
     EDITTEXT        IDC_TCP_PORT,69,46,70,12,ES_AUTOHSCROLL
     CONTROL         "&Start Server",IDC_CHK_NET_SERVER,"Button",
                     BS_AUTOCHECKBOX | BS_PUSHLIKE | WS_TABSTOP,49,62,69,12
-    GROUPBOX        "TCP/IP Settings",IDC_SETTINGS_FRAME,15,20,237,88,0,
+    GROUPBOX        "TCP/IP Settings",IDC_SETTINGS_FRAME,15,24,235,97,0,
                     WS_EX_DLGMODALFRAME | WS_EX_TRANSPARENT | 
                     WS_EX_CLIENTEDGE
     CONTROL         "Progress1",IDC_NUM_CONNECTIONS,"msctls_progress32",
@@ -252,8 +252,32 @@ BEGIN
     LTEXT           "",IDC_NUM_CLIENTS_TEXT,223,57,19,8
     COMBOBOX        IDC_SERVER_COMBO,147,34,84,54,CBS_DROPDOWN | WS_VSCROLL | 
                     WS_TABSTOP
-    LISTBOX         IDC_STATUS_LIST,31,82,212,20,LBS_SORT | 
+    LISTBOX         IDC_STATUS_LIST,31,76,212,20,LBS_SORT | 
                     LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_TABSTOP
+    PUSHBUTTON      "Test Controls",IDC_TESTCONTROLS,255,25,50,14
+    PUSHBUTTON      "Clear Errors",IDC_CLEARERRORS,33,100,40,15
+END
+
+IDD_TESTCONTROLSSETUP DIALOG DISCARDABLE  0, 0, 361, 204
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "DCX Control Test Dialog"
+FONT 8, "MS Sans Serif"
+BEGIN
+    DEFPUSHBUTTON   "Done",IDOK,294,175,50,14
+    LTEXT           "Controls List",IDC_STATIC,13,14,88,10
+    LISTBOX         IDC_CTRLS_LIST,7,36,143,155,LBS_SORT | 
+                    LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_TABSTOP
+    CONTROL         "Slider1",IDC_CTRLS_SLIDER,"msctls_trackbar32",
+                    TBS_AUTOTICKS | TBS_VERT | TBS_TOP | WS_BORDER | 
+                    WS_TABSTOP,167,38,27,147
+    EDITTEXT        IDC_CTRLS_RDOUT,158,27,37,9,ES_AUTOHSCROLL | ES_READONLY
+    PUSHBUTTON      "Reset Bus",IDC_DCXCTRLS_RESTBUS,207,17,37,12
+    LTEXT           "Auto Delay (milliseconds)",IDC_STATIC,207,39,46,17
+    EDITTEXT        IDC_CTRLS_DELAY,259,39,32,12,ES_AUTOHSCROLL
+    PUSHBUTTON      "Activate",IDC_CTRLS_ACTIVATEAUTO,301,39,34,10
+    LTEXT           "Module Addr",IDC_STATIC,207,57,48,11
+    EDITTEXT        IDC_DCXCTRLS_MODULE,259,57,32,12,ES_AUTOHSCROLL
+    PUSHBUTTON      "Set",IDC_DCXCTRS_SETADDR,301,57,34,10
 END
 
 
@@ -290,7 +314,7 @@ BEGIN
             VALUE "OriginalFilename", "GServer.EXE\0"
             VALUE "PrivateBuild", "\0"
             VALUE "ProductName", "GServer Application\0"
-            VALUE "ProductVersion", "Version 5/30/99  Registry VUdelay and CTRLdelay \0"
+            VALUE "ProductVersion", "Version 8/21/99  Registry VUdelay and CTRLdelay \0"
             VALUE "SpecialBuild", "\0"
         END
     END
@@ -332,7 +356,15 @@ BEGIN
         LEFTMARGIN, 7
         RIGHTMARGIN, 423
         TOPMARGIN, 7
-        BOTTOMMARGIN, 117
+        BOTTOMMARGIN, 121
+    END
+
+    IDD_TESTCONTROLSSETUP, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 354
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 197
     END
 END
 #endif    // APSTUDIO_INVOKED
@@ -499,7 +531,7 @@ STRINGTABLE DISCARDABLE
 BEGIN
     IDS_SERVER_SHUTDOWN     "Shutdown!"
     IDS_SERVER_STARTED      "Server Started!"
-    IDS_SERVER_FAILEDTOSTART "Server Failed to Start!"
+    IDS_SERVER_FAILEDTOSTART "Server Failed to Start: Check TCP/IP Settings"
     IDS_MAX_CONNECTIONS     "Max Connections!"
     IDS_CONNECTION_CLOSED   "Connection Closed!"
 END

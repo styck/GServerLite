@@ -25,7 +25,7 @@ static char THIS_FILE[] = __FILE__;
 #define CYCLECOUNT
 
 
-#define BOGUS_DATA         // Define to send fake vu data
+// #define BOGUS_DATA         // Define to send fake vu data
 
 #ifdef BOGUS_DATA
 
@@ -437,6 +437,7 @@ WORD wFlag;     //  TEST TEST
 }
 
 
+#ifdef BOGUS_DATA
 
 BOOL amdInitialize()
 {
@@ -549,3 +550,5 @@ BOOL amdGetWaveMeterValue(LONG &lVal)
 
 	return TRUE;
 }
+#endif
+

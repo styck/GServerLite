@@ -213,13 +213,15 @@ BOOL    CGServerDoc::StartServer(LPCTSTR lpcs, UINT iPort)
 BOOL    bRet = TRUE;
 
 	if(m_pdcxNetwork)
-  {
+	{
 		bRet = m_pdcxNetwork->StartAsServer(lpcs, iPort);
 //		if(bRet)
 //			m_pServerMonitorView->StartMessagePump();
-  }
+	}
 	else
+	{
 		bRet = FALSE;
+	}
 
 	if(bRet)
 		DisplayGeneralMessage(IDS_SERVER_STARTED);
@@ -297,7 +299,8 @@ BOOL      bRet = TRUE;
 CString   cs;
 
 	if(cs.LoadString(uiMsgID))
-    TRACE0((LPSTR) LPCTSTR(cs));
+	DisplayGeneralMessage((LPSTR) LPCTSTR(cs));
+//    TRACE0((LPSTR) LPCTSTR(cs));
 
 return bRet;
 };

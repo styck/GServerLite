@@ -25,6 +25,7 @@ CFG=GServer - Win32 Debug
 # PROP AllowPerConfigDependencies 0
 # PROP Scc_ProjName ""$/GServer", BAAAAAAA"
 # PROP Scc_LocalPath "."
+# PROP WCE_FormatVersion ""
 CPP=cl.exe
 MTL=midl.exe
 RSC=rc.exe
@@ -91,6 +92,10 @@ LINK32=link.exe
 # Begin Group "Source Files"
 
 # PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
+# Begin Source File
+
+SOURCE=.\ControlDlg.cpp
+# End Source File
 # Begin Source File
 
 SOURCE=.\CorTekAsyncSocket.cpp
@@ -164,6 +169,10 @@ SOURCE=.\vuthread2.cpp
 # Begin Group "Header Files"
 
 # PROP Default_Filter "h;hpp;hxx;hm;inl"
+# Begin Source File
+
+SOURCE=.\ControlDlg.h
+# End Source File
 # Begin Source File
 
 SOURCE=.\CorTekAsyncSocket.h

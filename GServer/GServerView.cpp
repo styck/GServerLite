@@ -9,7 +9,7 @@
 #include "stdafx.h"
 #include "GServer.h"
 #include "Module.h"
-
+#include "ControlDlg.h"	// Controls test dialog
 #include "GServerDoc.h"
 #include "GServerView.h"
 
@@ -376,7 +376,8 @@ BEGIN_MESSAGE_MAP(CGServerView, CFormView)
 	ON_BN_CLICKED(IDC_CHK_NET_SERVER, OnChkNetServer)
 	ON_WM_ERASEBKGND()
 	ON_CBN_SELCHANGE(IDC_SERVER_COMBO, OnSelchangeServerCombo)
-
+	ON_BN_CLICKED(IDC_TESTCONTROLS, OnTestcontrols)
+	ON_BN_CLICKED(IDC_CLEARERRORS, OnClearerrors)
 	//}}AFX_MSG_MAP
 
 	ON_NOTIFY_EX_RANGE(TTN_NEEDTEXTA, 0, 0xFFFF, OnToolTipText)
@@ -1065,16 +1066,16 @@ void CGServerView::OnChkNetServer()
 
 
 	if(pDoc)	
-  {
+	{
 		UpdateData(TRUE);		// Get status of server button
 
 
 ///// A GAMBLE HACK - PRESS BUTTON COMMANDS, UNPRESS, AND THEN REPRESS
 
 		if(m_bServerStart)	// If it is down the start the server
-    {
+		{
 			if(pDoc->StartServer(LPCTSTR(m_csTcpAddr), m_iPort))
-      {
+			{
 				MessageBeep(MB_OK);
 				pDoc->m_VUthread = NULL;											// The VU thread hasn't started yet
 				pDoc->m_hEventKillVUThread = CreateEvent(NULL,FALSE, FALSE, NULL); // auto reset, initially reset
@@ -1102,30 +1103,30 @@ void CGServerView::OnChkNetServer()
       // Close these handles explicitly. These may be closed automatically
       // by the system but we do it here to make sure.
 
-      CloseHandle(pDoc->m_hEventKillVUThread);
-      CloseHandle(pDoc->m_hEventVUThreadKilled);
+			  CloseHandle(pDoc->m_hEventKillVUThread);
+			  CloseHandle(pDoc->m_hEventVUThreadKilled);
 
-      pDoc->m_hEventKillVUThread = NULL;
-      pDoc->m_hEventVUThreadKilled = NULL;
+			  pDoc->m_hEventKillVUThread = NULL;
+			  pDoc->m_hEventVUThreadKilled = NULL;
 
 
       // HACK BUTTON DOWN AGAIN
 
-			pDoc->StartServer(LPCTSTR(m_csTcpAddr), m_iPort);
-			MessageBeep(MB_OK);
-			pDoc->m_VUthread = NULL;											// The VU thread hasn't started yet
-			pDoc->m_hEventKillVUThread = CreateEvent(NULL,FALSE, FALSE, NULL); // auto reset, initially reset
-			pDoc->m_hEventVUThreadKilled = CreateEvent(NULL,FALSE, FALSE, NULL); // auto reset, initially reset
-			pDoc->StartVUthread();	// Start the thread to read the VU meters and update the member display variables
+				pDoc->StartServer(LPCTSTR(m_csTcpAddr), m_iPort);
+				MessageBeep(MB_OK);
+				pDoc->m_VUthread = NULL;											// The VU thread hasn't started yet
+				pDoc->m_hEventKillVUThread = CreateEvent(NULL,FALSE, FALSE, NULL); // auto reset, initially reset
+				pDoc->m_hEventVUThreadKilled = CreateEvent(NULL,FALSE, FALSE, NULL); // auto reset, initially reset
+				pDoc->StartVUthread();	// Start the thread to read the VU meters and update the member display variables
 
 
-      }
+			}
 			else
-      {
-				m_bServerStart = FALSE;
-				UpdateData(FALSE);
-      }
-    }
+			{
+					m_bServerStart = FALSE;
+					UpdateData(FALSE);
+			}
+		}
 		else
 		{
 
@@ -1147,16 +1148,14 @@ void CGServerView::OnChkNetServer()
       // Close these handles explicitly. These may be closed automatically
       // by the system but we do it here to make sure.
 
-      CloseHandle(pDoc->m_hEventKillVUThread);
-      CloseHandle(pDoc->m_hEventVUThreadKilled);
+			  CloseHandle(pDoc->m_hEventKillVUThread);
+			  CloseHandle(pDoc->m_hEventVUThreadKilled);
 
-      pDoc->m_hEventKillVUThread = NULL;
-      pDoc->m_hEventVUThreadKilled = NULL;
+			  pDoc->m_hEventKillVUThread = NULL;
+			  pDoc->m_hEventVUThreadKilled = NULL;
 
 		}
-
-
-  }
+	}
 }
 
 
@@ -1343,3 +1342,28 @@ void CGServerView::OnSelchangeServerCombo()
 }
 
 
+
+void CGServerView::OnTestcontrols() 
+{
+	// TODO: Add your control notification handler code here
+
+  CControlDlg TestControlsDlg;
+  CGServerDoc   *pDoc = GetDocument();
+
+	TestControlsDlg.SetPointerToDoc(pDoc);
+	TestControlsDlg.DoModal();
+	
+}
+
+//mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm
+// Name   : OnClearerrors() 
+//          
+// Descr. : Clear out the error list box.
+//          
+// Return : void
+//-----------------------------------------------------------------------------
+
+void CGServerView::OnClearerrors() 
+{
+	m_clbStatusList.ResetContent();	
+}
