@@ -179,7 +179,7 @@ CModule							cm_Module;		// Converts module number to DCX address
 			if(m_pDoc->m_dcxdevMap.GetModuleType(iCount) == m_iReg0FileType)
 			{
 
-				m_nAddress = cm_Module.GetModuleAddress(iCount+1);
+				m_nAddress = cm_Module.GetModuleAddress(iCount);
 
 				UpdateData(FALSE);
 				WriteRegZero();

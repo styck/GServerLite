@@ -1367,3 +1367,20 @@ void CGServerView::OnClearerrors()
 {
 	m_clbStatusList.ResetContent();	
 }
+
+
+//mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm
+// Name   : SetServerButton() 
+//          
+// Descr. : If the command line has a .gserv file then serialize will call this
+//			function to force the server to start.
+//          
+// Return : void
+//-----------------------------------------------------------------------------
+
+void CGServerView::SetServerButton()
+{
+	m_bServerStart = TRUE;	// Set server button state to down
+	UpdateData(FALSE);		// Update the state of the button
+	OnChkNetServer();		// Handle code to start the server
+}

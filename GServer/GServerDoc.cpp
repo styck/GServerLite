@@ -137,6 +137,8 @@ void CGServerDoc::Serialize(CArchive& ar)
 		//-----------------
 		InitGServerDoc();
 		UpdateAllViews(NULL);
+
+		pGServerView->SetServerButton();	// Force a click on Server button
 	}
 }
 
