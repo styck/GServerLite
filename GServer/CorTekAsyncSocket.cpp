@@ -138,6 +138,10 @@ void CCorTekAsyncSocket::OnAccept(int nErrorCode)
 void CCorTekAsyncSocket::OnClose(int nErrorCode) 
 {
 
+#ifdef _DEBUG
+char chBuffer[64];
+#endif
+
 // handle the Close Connection message ...
 //----------------------------------------
 //CSocket::OnClose(nErrorCode);
@@ -154,11 +158,32 @@ void CCorTekAsyncSocket::OnClose(int nErrorCode)
   // clear the lock flag for VUs that this client
   // was looking at
 
+	// Negate the current locks and add to the global locks
+
+	for(int i=0;i < MAX_VU_READ_DATA; i++)
+	{
+		m_pNet->m_pDoc->m_VUMetersArray.m_aVUReadData[i].cLock+=-m_pNet->m_pDoc->m_SocketVULocks[iSocketNumber][i];
+		if(m_pNet->m_pDoc->m_VUMetersArray.m_aVUReadData[i].cLock < 0)
+      m_pNet->m_pDoc->m_VUMetersArray.m_aVUReadData[i].cLock = 0;
+
+		m_pNet->m_pDoc->m_SocketVULocks[iSocketNumber][i] = 0;
+
+		// Show the resulting VU locks for DEBUG
+#ifdef _DEBUG
+						wsprintf(chBuffer,"%d",m_pNet->m_pDoc->m_VUMetersArray.m_aVUReadData[i].cLock);
+							OutputDebugString(chBuffer);
+#endif
+
+	}
+
+#ifdef _DEBUG
+							OutputDebugString("\n");
+#endif
+
   iSocketNumber = -1; // Invalidate the socket number
 
+	State = 0;					// Clear the recieve state
 
-
-	State = 0;
 	if(m_hFile != NULL)
 				CloseHandle(m_hFile);
 	m_hFile = NULL;
@@ -171,9 +196,9 @@ void CCorTekAsyncSocket::OnClose(int nErrorCode)
 
 ////////////////////////////////////////////////////////////////////
 //
+//	Get here when a client connects to the server
 //
-//
-//
+
 void CCorTekAsyncSocket::OnConnect(int nErrorCode) 
 {
 
@@ -192,7 +217,7 @@ void CCorTekAsyncSocket::OnConnect(int nErrorCode)
 
 ////////////////////////////////////////////////////////////////////
 //
-//
+//	Call the real Receive routine
 //
 //
 void CCorTekAsyncSocket::OnReceive(int nErrorCode) 
@@ -204,9 +229,9 @@ void CCorTekAsyncSocket::OnReceive(int nErrorCode)
 
 ////////////////////////////////////////////////////////////////////
 //
-//
-//
-//
+// Set flag to accept/no accept VU data
+// Client sends message saying if it accepts VU data or not
+
 void CCorTekAsyncSocket::AcceptVuData(BOOL b)
 {
   m_bSendVuData = b;  
@@ -214,9 +239,9 @@ void CCorTekAsyncSocket::AcceptVuData(BOOL b)
 
 ////////////////////////////////////////////////////////////////////
 //
+//	Return flag for sending VU data
 //
-//
-//
+
 BOOL CCorTekAsyncSocket::DoesAcceptVuData(void)
 {
   return m_bSendVuData;

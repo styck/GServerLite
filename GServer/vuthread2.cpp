@@ -144,7 +144,7 @@ CGServerDoc*	m_pDoc = (CGServerDoc*)pParam;
 //            {
               lstrcpy(chBuffer1, chBufferVUType);
 						  m_pDoc->m_pDCXDevice->Read(chBuffer1, sizeof(DCXPORT_WRITE_INPUT ), &ulIO);
-              OutputDebugString (chBuffer1);
+//              OutputDebugString (chBuffer1);
 //            }while(chBuffer1[0] == '!' && chBuffer1[1] == '$');
            
 

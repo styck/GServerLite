@@ -133,7 +133,6 @@ BOOL    CGDCXNetwork::StartAsServer(LPCTSTR lpcs, UINT  iPort)
 #endif
 
 
-
   // Find the master module and setup the VUMetersArray - TEMP TEMP ?????????
 	// This is just hardcoding what VU data to send
 	// The client will eventually set this array
@@ -157,71 +156,8 @@ BOOL    CGDCXNetwork::StartAsServer(LPCTSTR lpcs, UINT  iPort)
 				m_pDoc->m_pDCXDevice->Write(cModule.GetModuleAddress(i), chBufferVUType, &ulIO);	// Write VU type command
 				Sleep(10);
 				m_pDoc->m_pDCXDevice->Read(chBufferVUType, 64, &ulIO);		// Read response and discard
-		}
-
-#ifdef NOTUSED
-
-		// Setup to read MASTER VU's
-
-    if(m_pDoc->m_dcxdevMap.GetModuleType(i) == DCX_DEVMAP_MODULE_MASTER)
-    {
-
-		  m_pDoc->m_VUMetersArray.m_aVUReadData[i].iAddr=cModule.GetModuleAddress(i);							// the VUthread Reads from here(module address)
-//		  m_pDoc->m_VUMetersArray.m_aVUReadData[40+i].iVUType=3;							// the VUthread Reads from here(Pre, Post, Comp, Gate)
-		  m_pDoc->m_VUMetersArray.m_aVUReadData[i].iLock=1;							// if Zero nobody monitors this VU, so we don't need to read the damn thnig
-      m_pDoc->m_VUMetersArray.m_aVUReadData[i].iModuleIdx = i;
-
-		  m_pDoc->m_VUMetersArray.m_aVUReadData[i + 1].iAddr=cModule.GetModuleAddress(i);							// the VUthread Reads from here(module address)
-//		  m_pDoc->m_VUMetersArray.m_aVUReadData[40+i + 1].iVUType=4;							// the VUthread Reads from here(Pre, Post, Comp, Gate)
-		  m_pDoc->m_VUMetersArray.m_aVUReadData[i + 1].iLock=1;							// if Zero nobody monitors this VU, so we don't need to read the damn thnig
-      m_pDoc->m_VUMetersArray.m_aVUReadData[i + 1].iModuleIdx = i;
-
-    }
-     else if(m_pDoc->m_dcxdevMap.GetModuleType(i) == DCX_DEVMAP_MODULE_AUX)
-    {
-
-      if(iSubAux == 0xFFFFFFFF)
-      {
-        iSubAux = i;
-
-		    m_pDoc->m_VUMetersArray.m_aVUReadData[i].iAddr=cModule.GetModuleAddress(i);							// the VUthread Reads from here(module address)
-//		    m_pDoc->m_VUMetersArray.m_aVUReadData[60+i].iVUType=3;							// the VUthread Reads from here(Pre, Post, Comp, Gate)
-		    m_pDoc->m_VUMetersArray.m_aVUReadData[i].iLock=1;							// if Zero nobody monitors this VU, so we don't need to read the damn thnig
-        m_pDoc->m_VUMetersArray.m_aVUReadData[i].iModuleIdx = i;
-
-		    m_pDoc->m_VUMetersArray.m_aVUReadData[i+1].iAddr=cModule.GetModuleAddress(i);							// the VUthread Reads from here(module address)
-//		    m_pDoc->m_VUMetersArray.m_aVUReadData[60+i+1].iVUType=4;							// the VUthread Reads from here(Pre, Post, Comp, Gate)
-		    m_pDoc->m_VUMetersArray.m_aVUReadData[i+1].iLock=1;							// if Zero nobody monitors this VU, so we don't need to read the damn thnig
-        m_pDoc->m_VUMetersArray.m_aVUReadData[i+1].iModuleIdx = i;
-      }
-    }
-
-    // Store the Matrix Index in the global Array
-    //
-    if(m_pDoc->m_dcxdevMap.GetModuleType(i) == DCX_DEVMAP_MODULE_MATRIX)
-      if(iMatrix == 0xFFFFFFFF )
-        iMatrix = i;
-
-#endif
-			
+		}			
   }
-
-#ifdef NOTUSED
-
-  if(iSubAux != 0xFFFFFFFF && iMatrix  != 0xFFFFFFFF)
-  {
-		m_pDoc->m_VUMetersArray.m_aVUReadData[iMatrix + 80].iAddr=cModule.GetModuleAddress(iMatrix);							// the VUthread Reads from here(module address)
-//		m_pDoc->m_VUMetersArray.m_aVUReadData[iMatrix + 80].iVUType=7;							// the VUthread Reads from here(Pre, Post, Comp, Gate)
-		m_pDoc->m_VUMetersArray.m_aVUReadData[iMatrix + 80].iLock=1;							// if Zero nobody monitors this VU, so we don't need to read the damn thnig
-    m_pDoc->m_VUMetersArray.m_aVUReadData[iMatrix + 80].iModuleIdx = iSubAux; // Index for VACS Client
-
-		m_pDoc->m_VUMetersArray.m_aVUReadData[iMatrix + 81].iAddr=cModule.GetModuleAddress(iMatrix);							// the VUthread Reads from here(module address)
-//		m_pDoc->m_VUMetersArray.m_aVUReadData[iMatrix + 81].iVUType=8;							// the VUthread Reads from here(Pre, Post, Comp, Gate)
-		m_pDoc->m_VUMetersArray.m_aVUReadData[iMatrix + 81].iLock=1;							// if Zero nobody monitors this VU, so we don't need to read the damn thnig
-    m_pDoc->m_VUMetersArray.m_aVUReadData[iMatrix + 81].iModuleIdx = iSubAux; // Index for VACS Client
-  }
-
-#endif
 
 
 // First make sure the Listener is not opened already ... 
@@ -249,7 +185,6 @@ BOOL    CGDCXNetwork::StartAsServer(LPCTSTR lpcs, UINT  iPort)
 // Clear out our state memory for the controls
 // We should fill this in with the register zero values
 //
-	
 			ZeroMemory(&m_wCurrentState[0][0],512*80*sizeof(WORD));
 
 //////////////////////////////////////////////////
@@ -304,6 +239,13 @@ int                 iCount;
 			//----------------------------------------
 			pSocket->SetOptions();
 			m_connections[iCount] = (void *)pSocket; // Set this pointer to newly created object
+
+			// Clear out local locks for each socket connection
+
+			for(int i=0; i < MAX_VU_READ_DATA; i++)
+				m_pDoc->m_SocketVULocks[iCount][i] = 0;
+
+
     }
 		else
     {
@@ -424,11 +366,6 @@ void CGDCXNetwork::OnCloseConnection(int nErrorCode)
 	if(m_bIsClient)
 		ShutDown();
 
-	if(nErrorCode = 0)
-  {
-  }
-	else
-  {
 		LPVOID    lpvMsg = NULL;
 
 		if(::FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM,
@@ -439,8 +376,7 @@ void CGDCXNetwork::OnCloseConnection(int nErrorCode)
     
 			m_pDoc->DisplayNetErrorMessage((LPSTR)lpvMsg);
 			LocalFree(lpvMsg);
-    }
-  }  
+		}  
 
 	// Notify the Document that the Connection was just closed
 	//--------------------------------------------------------
@@ -662,12 +598,35 @@ int			iRecvd;				// Number of bytes recieved
 					// to the Lock.  Client must turn OFF showing VU's when it EXITS
 
 					for(i=0;i<MAX_VU_READ_DATA;i++)
-					{
+					{		// Get lock info into our vu data structure used in the vu thread
 						  m_pDoc->m_VUMetersArray.m_aVUReadData[i].cLock+=m_chNetBufferIn[i];
+
+							// Also needs to be in the socket locks to turn them off
+							// when client is closed
+
+							m_pDoc->m_SocketVULocks[psocket->iSocketNumber][i] = m_chNetBufferIn[i];
+
+							// Take into account that its not a perfect world.  Clients open/close and
+							// so can the server.  Everything may not be in sync. The total lock should
+							// never be below zero.
+
 						  if(m_pDoc->m_VUMetersArray.m_aVUReadData[i].cLock < 0)
                 m_pDoc->m_VUMetersArray.m_aVUReadData[i].cLock = 0;
-					}
 
+						  if(m_pDoc->m_VUMetersArray.m_aVUReadData[i].cLock < 0)
+								m_pDoc->m_SocketVULocks[psocket->iSocketNumber][i] = 0;
+
+#ifdef _DEBUG
+						wsprintf(chBuffer,"%d",m_pDoc->m_VUMetersArray.m_aVUReadData[i].cLock);
+							OutputDebugString(chBuffer);
+#endif
+
+				}
+
+
+#ifdef _DEBUG
+						OutputDebugString("\n");
+#endif
 					break;
 
 				default:

@@ -46,7 +46,9 @@ public:
   CGDCXNetwork    *m_pdcxNetwork;
   CDCXDevice      *m_pDCXDevice;
 	CWinThread*			m_VUthread;
-	CVUMeterArray		m_VUMetersArray;	// Holds all VU data that needs to be read
+	CVUMeterArray		m_VUMetersArray;	// Holds all VU data that needs to be read 
+
+	char m_SocketVULocks[MAX_ASYNC_SONNECTIONS][MAX_VU_READ_DATA];	// Keep tracks of locks for each connection
 
 	HANDLE	m_hEventKillVUThread;				// Handle for the event to kill the VU thread
 	HANDLE	m_hEventVUThreadKilled;			// Handle for event that thread has died
