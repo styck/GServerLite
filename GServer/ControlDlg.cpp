@@ -489,6 +489,10 @@ VU_READ *pVUData;
 				itoa(pVUData->wVUValue[m_ucVUTypeReq],chAverageVU,10);
 				itoa(pVUData->wPeakClipValue,chPeakVU,10);
 
+				// If we are clipping then give a little audio feedback
+				if(pVUData->wPeakClipValue > 0)
+					MessageBeep(MB_ICONHAND);
+
 			// Display the dBu value
 
 				m_VU1_RdOut.SetWindowText(chPeakVU);
