@@ -1,0 +1,682 @@
+//Microsoft Developer Studio generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "afxres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// English (U.S.) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+#ifdef _WIN32
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+#pragma code_page(1252)
+#endif //_WIN32
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "#include ""afxres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "#define _AFX_NO_OLE_RESOURCES\r\n"
+    "#define _AFX_NO_TRACKER_RESOURCES\r\n"
+    "#define _AFX_NO_PROPERTY_RESOURCES\r\n"
+    "\r\n"
+    "#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)\r\n"
+    "#ifdef _WIN32\r\n"
+    "LANGUAGE 9, 1\r\n"
+    "#pragma code_page(1252)\r\n"
+    "#endif\r\n"
+    "#include ""res\\GServer.rc2""  // non-Microsoft Visual C++ edited resources\r\n"
+    "#include ""afxres.rc""         // Standard components\r\n"
+    "#include ""afxprint.rc""       // printing/print preview resources\r\n"
+    "#endif\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDR_MAINFRAME           ICON    DISCARDABLE     "res\\GServer.ico"
+IDR_GSERVETYPE          ICON    DISCARDABLE     "res\\GServerDoc.ico"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Bitmap
+//
+
+IDR_MAINFRAME           BITMAP  MOVEABLE PURE   "res\\Toolbar.bmp"
+IDB_CORTEK_LOGO         BITMAP  DISCARDABLE     "res\\CorTekLogo.bmp"
+IDB_MODULE_DISABLED     BITMAP  DISCARDABLE     "res\\module_disabled.bmp"
+IDB_CIRCUIT_1           BITMAP  DISCARDABLE     "res\\circuit.bmp"
+IDB_SOFTBLUE_1          BITMAP  DISCARDABLE     "res\\softblu2.bmp"
+IDB_MODULE_NA           BITMAP  DISCARDABLE     "res\\noSelection.bmp"
+IDB_MODULE_INPUT        BITMAP  DISCARDABLE     "res\\inputSelection.bmp"
+IDB_MODULE_MASTER       BITMAP  DISCARDABLE     "res\\masterSelection.bmp"
+IDB_MODULE_AUX          BITMAP  DISCARDABLE     "res\\auxSelection.bmp"
+IDB_MODULE_COMPUTER     BITMAP  DISCARDABLE     "res\\ComputerModule.bmp"
+IDB_VERDE               BITMAP  DISCARDABLE     "res\\verde.bmp"
+IDB_MODULE_MATRIX       BITMAP  DISCARDABLE     "res\\matrix.bmp"
+IDB_MODULE_CUE          BITMAP  DISCARDABLE     "res\\cue.bmp"
+IDB_CLIP                BITMAP  DISCARDABLE     "res\\ppwr_in.bmp"
+IDB_NO_CLIP             BITMAP  DISCARDABLE     "res\\bvu_input.bmp"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Toolbar
+//
+
+IDR_MAINFRAME TOOLBAR DISCARDABLE  16, 15
+BEGIN
+    BUTTON      ID_FILE_NEW
+    BUTTON      ID_FILE_OPEN
+    BUTTON      ID_FILE_SAVE
+    SEPARATOR
+    BUTTON      ID_EDIT_CUT
+    SEPARATOR
+    BUTTON      ID_EDIT_COPY
+    BUTTON      ID_EDIT_PASTE
+    SEPARATOR
+    BUTTON      ID_FILE_PRINT
+    BUTTON      ID_APP_ABOUT
+    BUTTON      ID_CONTEXT_HELP
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Menu
+//
+
+IDR_MAINFRAME MENU PRELOAD DISCARDABLE 
+BEGIN
+    POPUP "&File"
+    BEGIN
+        MENUITEM "&New\tCtrl+N",                ID_FILE_NEW
+        MENUITEM "&Open...\tCtrl+O",            ID_FILE_OPEN
+        MENUITEM "&Save\tCtrl+S",               ID_FILE_SAVE
+        MENUITEM "Save &As...",                 ID_FILE_SAVE_AS
+        MENUITEM SEPARATOR
+        MENUITEM "&Print...\tCtrl+P",           ID_FILE_PRINT
+        MENUITEM "Print Pre&view",              ID_FILE_PRINT_PREVIEW
+        MENUITEM "P&rint Setup...",             ID_FILE_PRINT_SETUP
+        MENUITEM SEPARATOR
+        MENUITEM "Recent File",                 ID_FILE_MRU_FILE1, GRAYED
+        MENUITEM SEPARATOR
+        MENUITEM "E&xit",                       ID_APP_EXIT
+    END
+    POPUP "&Edit"
+    BEGIN
+        MENUITEM "&Undo\tCtrl+Z",               ID_EDIT_UNDO
+        MENUITEM SEPARATOR
+        MENUITEM "Cu&t\tCtrl+X",                ID_EDIT_CUT
+        MENUITEM "&Copy\tCtrl+C",               ID_EDIT_COPY
+        MENUITEM "&Paste\tCtrl+V",              ID_EDIT_PASTE
+    END
+    POPUP "&View"
+    BEGIN
+        MENUITEM "&Toolbar",                    ID_VIEW_TOOLBAR
+        MENUITEM "&Status Bar",                 ID_VIEW_STATUS_BAR
+        MENUITEM SEPARATOR
+    END
+    POPUP "&Help"
+    BEGIN
+        MENUITEM "&Help Topics",                ID_HELP_FINDER
+        MENUITEM SEPARATOR
+        MENUITEM "&About GServer...",           ID_APP_ABOUT
+    END
+END
+
+IDR_MENU_MODULESELECTION MENU DISCARDABLE 
+BEGIN
+    POPUP "Module &Assignments"
+    BEGIN
+        MENUITEM "Input Module",                ID_INPUTMODULE
+        MENUITEM "SUB-AUX Module",              ID_AUXMODULE
+        MENUITEM "Matrix Module",               ID_MATRIXMODULE
+        MENUITEM "CUE Module",                  ID_CUEMODULE
+        MENUITEM "Master Module",               ID_MASTERMODULE
+        MENUITEM SEPARATOR
+        MENUITEM "NA Type",                     ID_NATYPE
+    END
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Accelerator
+//
+
+IDR_MAINFRAME ACCELERATORS PRELOAD MOVEABLE PURE 
+BEGIN
+    "N",            ID_FILE_NEW,            VIRTKEY, CONTROL
+    "O",            ID_FILE_OPEN,           VIRTKEY, CONTROL
+    "S",            ID_FILE_SAVE,           VIRTKEY, CONTROL
+    "P",            ID_FILE_PRINT,          VIRTKEY, CONTROL
+    "Z",            ID_EDIT_UNDO,           VIRTKEY, CONTROL
+    "X",            ID_EDIT_CUT,            VIRTKEY, CONTROL
+    "C",            ID_EDIT_COPY,           VIRTKEY, CONTROL
+    "V",            ID_EDIT_PASTE,          VIRTKEY, CONTROL
+    VK_BACK,        ID_EDIT_UNDO,           VIRTKEY, ALT
+    VK_DELETE,      ID_EDIT_CUT,            VIRTKEY, SHIFT
+    VK_INSERT,      ID_EDIT_COPY,           VIRTKEY, CONTROL
+    VK_INSERT,      ID_EDIT_PASTE,          VIRTKEY, SHIFT
+    VK_F6,          ID_NEXT_PANE,           VIRTKEY 
+    VK_F6,          ID_PREV_PANE,           VIRTKEY, SHIFT
+    VK_F1,          ID_CONTEXT_HELP,        VIRTKEY, SHIFT
+    VK_F1,          ID_HELP,                VIRTKEY 
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_ABOUTBOX DIALOG DISCARDABLE  0, 0, 217, 158
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "About GServer"
+FONT 10, "Courier"
+BEGIN
+    ICON            IDR_MAINFRAME,IDC_STATIC,14,15,20,20
+    LTEXT           "GServer Version 1.0",IDC_STATIC,39,14,77,8,SS_NOPREFIX
+    LTEXT           "Copyright (C) 1998",IDC_STATIC,39,25,73,8
+    DEFPUSHBUTTON   "OK",IDOK,165,23,32,14,WS_GROUP
+    LTEXT           "CorTek Software, Inc.",IDC_STATIC,39,38,85,8
+    CONTROL         "",IDC_STATIC,"Static",SS_BLACKFRAME | SS_SUNKEN,15,57,
+                    187,84
+END
+
+IDD_NETWORK DIALOG DISCARDABLE  0, 0, 232, 87
+STYLE WS_CHILD | WS_CLIPSIBLINGS | WS_CLIPCHILDREN
+FONT 10, "Courier"
+BEGIN
+END
+
+IDD_SERVER_MONITOR DIALOGEX 0, 0, 366, 97
+STYLE WS_CHILD | WS_CLIPCHILDREN
+FONT 8, "Arial", 0, 0, 0x1
+BEGIN
+    GROUPBOX        "Network Traffic Monitor",IDC_STATIC,7,50,116,45,
+                    BS_CENTER,WS_EX_TRANSPARENT
+    LTEXT           "Bytes IN:",IDC_STATIC,15,65,30,8,0,WS_EX_TRANSPARENT
+    LTEXT           "Bytes OUT:",IDC_STATIC,15,75,38,8,0,WS_EX_TRANSPARENT
+    LTEXT           "...",IDC_NETMON_BYTESOUT,70,75,50,8,0,WS_EX_TRANSPARENT
+    LTEXT           "...",IDC_NETMON_BYTESIN,70,65,50,8,0,WS_EX_TRANSPARENT
+    LISTBOX         IDC_NET_MSG_LIST,123,0,210,96,LBS_NOINTEGRALHEIGHT | 
+                    LBS_NOSEL | WS_VSCROLL | WS_TABSTOP,WS_EX_DLGMODALFRAME
+    CTEXT           ". . .",IDC_TIME_DISPLAY,21,36,69,12,0,
+                    WS_EX_DLGMODALFRAME | WS_EX_TRANSPARENT
+    PUSHBUTTON      "Clear",IDC_MESSAGES_CLEAR,336,0,27,14
+    PUSHBUTTON      "OFF",IDC_MONITOR_ONOFF,337,78,22,12
+END
+
+IDD_DCX_CONTROLS DIALOGEX 0, 0, 366, 187
+STYLE WS_CHILD | WS_CLIPSIBLINGS | WS_CLIPCHILDREN
+FONT 10, "Courier", 0, 0, 0x1
+BEGIN
+    LTEXT           "",IDC_STATIC,224,24,128,149,NOT WS_GROUP
+    GROUPBOX        "VU Settings",IDC_STATIC,222,21,132,159,BS_CENTER,
+                    WS_EX_DLGMODALFRAME | WS_EX_TRANSPARENT | 
+                    WS_EX_CLIENTEDGE
+    LTEXT           "Module Address",IDC_STATIC,3,0,60,12,0,WS_EX_STATICEDGE
+    EDITTEXT        IDC_DCXCTRLS_MODULEADDR,63,0,20,12,ES_AUTOHSCROLL | 
+                    ES_NUMBER
+    PUSHBUTTON      "&Set",IDC_DCXCTRS_SETADDR,87,0,20,14
+    PUSHBUTTON      "&Reset Bus",IDC_DCXCTRLS_RESETBUS,120,0,50,14
+    LISTBOX         IDC_CTRLS_LIST,5,30,169,150,LBS_NOINTEGRALHEIGHT | NOT 
+                    WS_BORDER | WS_VSCROLL | WS_TABSTOP
+    GROUPBOX        "Controls List",IDC_STATIC,0,20,177,165,BS_CENTER,
+                    WS_EX_DLGMODALFRAME | WS_EX_TRANSPARENT
+    CONTROL         "Slider1",IDC_CTRLS_SLIDER,"msctls_trackbar32",
+                    TBS_AUTOTICKS | TBS_VERT | TBS_TOP | TBS_ENABLESELRANGE | 
+                    WS_TABSTOP,188,30,25,145,WS_EX_DLGMODALFRAME
+    CTEXT           "- - -",IDC_CTRLS_RDOUT,183,20,35,8,0,WS_EX_STATICEDGE
+    CTEXT           "- - -",IDC_CTRLS_NAME,183,175,35,8,0,WS_EX_STATICEDGE
+    LTEXT           "Delay",IDC_STATIC,282,0,30,8
+    EDITTEXT        IDC_CTRLS_DELAY,255,0,25,14,ES_AUTOHSCROLL
+    CONTROL         "Activate",IDC_CTRLS_ACTIVATEAUTO,"Button",
+                    BS_AUTOCHECKBOX | BS_PUSHLIKE | WS_TABSTOP,282,9,40,10
+    CONTROL         "Progress2",IDC_VUMETER_1,"msctls_progress32",WS_BORDER,
+                    225,41,126,11
+    CTEXT           "0000",IDC_VUMETER1_RDOUT,225,33,126,8
+    CONTROL         "Progress2",IDC_VUMETER_2,"msctls_progress32",WS_BORDER,
+                    225,63,126,11
+    CTEXT           "000",IDC_VUMETER2_RDOUT,225,55,126,8
+    LTEXT           "Auto Scroll Delay:",IDC_STATIC,180,0,73,8
+    CONTROL         "1",IDC_VU_1,"Button",BS_AUTORADIOBUTTON | BS_PUSHLIKE,
+                    240,143,20,10
+    CONTROL         "2",IDC_VU_2,"Button",BS_AUTORADIOBUTTON | BS_PUSHLIKE,
+                    264,143,20,10
+    CONTROL         "3",IDC_VU_3,"Button",BS_AUTORADIOBUTTON | BS_PUSHLIKE,
+                    287,143,20,10
+    CONTROL         "4",IDC_VU_4,"Button",BS_AUTORADIOBUTTON | BS_PUSHLIKE,
+                    312,143,20,10
+    PUSHBUTTON      "Start",IDC_VU_START,321,158,28,12
+    LTEXT           "VU METER SELECT",IDC_STATIC,253,132,72,9
+    CONTROL         "Check1",IDC_CLIP1,"Button",BS_AUTOCHECKBOX | 
+                    WS_DISABLED | WS_TABSTOP,299,85,8,8
+    CONTROL         "Check1",IDC_CLIP3,"Button",BS_AUTOCHECKBOX | 
+                    WS_DISABLED | WS_TABSTOP,311,85,8,8
+    CONTROL         "Check1",IDC_CLIP5,"Button",BS_AUTOCHECKBOX | 
+                    WS_DISABLED | WS_TABSTOP,323,85,8,8
+    CONTROL         "Check1",IDC_CLIP7,"Button",BS_AUTOCHECKBOX | 
+                    WS_DISABLED | WS_TABSTOP,334,85,8,8
+    CONTROL         "Check1",IDC_CLIP2,"Button",BS_AUTOCHECKBOX | 
+                    WS_DISABLED | WS_TABSTOP,299,97,8,8
+    CONTROL         "Check1",IDC_CLIP4,"Button",BS_AUTOCHECKBOX | 
+                    WS_DISABLED | WS_TABSTOP,311,97,8,8
+    CONTROL         "Check1",IDC_CLIP6,"Button",BS_AUTOCHECKBOX | 
+                    WS_DISABLED | WS_TABSTOP,323,97,8,8
+    CONTROL         "Check1",IDC_CLIP8,"Button",BS_AUTOCHECKBOX | 
+                    WS_DISABLED | WS_TABSTOP,334,97,8,8
+    LTEXT           "P1",IDC_STATIC,298,75,8,8
+    LTEXT           "P3",IDC_STATIC,311,75,8,8
+    LTEXT           "P5",IDC_STATIC,323,75,8,8
+    LTEXT           "P7",IDC_STATIC,334,75,8,8
+    LTEXT           "P2",IDC_STATIC,299,108,8,8
+    LTEXT           "P4",IDC_STATIC,310,108,8,8
+    LTEXT           "P6",IDC_STATIC,323,108,8,8
+    LTEXT           "P8",IDC_STATIC,334,108,8,8
+    PUSHBUTTON      "RESET",IDC_CLIP_RESET,267,95,27,13
+END
+
+IDD_DCX_CONVERTER DIALOGEX 0, 0, 227, 207
+STYLE WS_CHILD | WS_CLIPCHILDREN
+FONT 10, "Courier", 0, 0, 0x1
+BEGIN
+    LTEXT           "Destination",IDC_STATIC,3,1,51,12,0,WS_EX_STATICEDGE
+    EDITTEXT        IDC_CONV_DESTINATION,55,0,120,14,ES_AUTOHSCROLL,
+                    WS_EX_ACCEPTFILES
+    DEFPUSHBUTTON   "&Load",IDC_CONV_LOAD,185,0,35,14
+    LTEXT           "Source",IDC_STATIC,3,16,51,12,0,WS_EX_STATICEDGE
+    EDITTEXT        IDC_CONV_SOURCE,55,15,120,14,ES_AUTOHSCROLL,
+                    WS_EX_ACCEPTFILES
+    PUSHBUTTON      "&Go",IDC_CONV_GO,185,15,35,14
+    CONTROL         "Reverse Control Values",IDC_CONV_REVERSE_CTRLVALUES,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,55,35,105,10,
+                    WS_EX_STATICEDGE
+    LISTBOX         IDC_CTRLS_LIST,5,60,172,135,LBS_NOINTEGRALHEIGHT | NOT 
+                    WS_BORDER | WS_VSCROLL | WS_TABSTOP
+    GROUPBOX        "Controls List",IDC_STATIC,0,50,180,150,BS_CENTER,
+                    WS_EX_DLGMODALFRAME | WS_EX_TRANSPARENT
+END
+
+IDD_DEVICE_SETUP DIALOGEX 0, 0, 430, 221
+STYLE WS_CHILD | WS_CLIPCHILDREN | WS_BORDER
+FONT 8, "MS Sans Serif"
+BEGIN
+    LTEXT           "IP Address",IDC_STATIC,20,28,44,10,0,WS_EX_STATICEDGE
+    EDITTEXT        IDC_TCP_ADDRESS,67,28,70,12,ES_AUTOHSCROLL
+    LTEXT           "Port",IDC_STATIC,20,42,44,12,0,WS_EX_STATICEDGE
+    EDITTEXT        IDC_TCP_PORT,67,42,70,12,ES_AUTOHSCROLL
+    CONTROL         "&Start Server",IDC_CHK_NET_SERVER,"Button",
+                    BS_AUTOCHECKBOX | BS_PUSHLIKE | WS_TABSTOP,47,56,69,12
+    GROUPBOX        "TCP/IP Settings",IDC_STATIC,13,15,133,59,0,
+                    WS_EX_DLGMODALFRAME | WS_EX_TRANSPARENT | 
+                    WS_EX_CLIENTEDGE
+END
+
+IDD_DIALOG1 DIALOG DISCARDABLE  0, 0, 186, 97
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "="
+FONT 8, "MS Sans Serif"
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,129,7,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,129,24,50,14
+END
+
+
+#ifndef _MAC
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION 1,0,0,1
+ PRODUCTVERSION 1,0,0,1
+ FILEFLAGSMASK 0x3fL
+#ifdef _DEBUG
+ FILEFLAGS 0x1L
+#else
+ FILEFLAGS 0x0L
+#endif
+ FILEOS 0x4L
+ FILETYPE 0x1L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904b0"
+        BEGIN
+            VALUE "CompanyName", "CorTek Software, Inc.\0"
+            VALUE "FileDescription", "Server Application for the Gamble DCX\0"
+            VALUE "FileVersion", "1, 0, 0, 1\0"
+            VALUE "InternalName", "GServer\0"
+            VALUE "LegalCopyright", "Copyright (C) 1998 CorTek Software, Inc.\0"
+            VALUE "OriginalFilename", "GServer.EXE\0"
+            VALUE "ProductName", "GServer Application\0"
+            VALUE "ProductVersion", "1, 0, 0, 1\0"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x409, 1200
+    END
+END
+
+#endif    // !_MAC
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO DISCARDABLE 
+BEGIN
+    IDD_ABOUTBOX, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 210
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 151
+    END
+
+    IDD_NETWORK, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 225
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 80
+    END
+
+    IDD_SERVER_MONITOR, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 359
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 90
+    END
+
+    IDD_DCX_CONTROLS, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 359
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 180
+    END
+
+    IDD_DCX_CONVERTER, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 220
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 200
+    END
+
+    IDD_DEVICE_SETUP, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 423
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 214
+    END
+
+    IDD_DIALOG1, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 179
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 90
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDP_SOCKETS_INIT_FAILED "Windows sockets initialization failed."
+END
+
+STRINGTABLE PRELOAD DISCARDABLE 
+BEGIN
+    IDR_MAINFRAME           "GServer\n\nGServer\nGServer Files (*.gserv)\n.gserv\nGServer.Document\nGServer Document"
+END
+
+STRINGTABLE PRELOAD DISCARDABLE 
+BEGIN
+    AFX_IDS_APP_TITLE       "GServer"
+    AFX_IDS_IDLEMESSAGE     "For Help, press F1"
+    AFX_IDS_HELPMODEMESSAGE "Select an object on which to get Help"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    ID_INDICATOR_EXT        "EXT"
+    ID_INDICATOR_CAPS       "CAP"
+    ID_INDICATOR_NUM        "NUM"
+    ID_INDICATOR_SCRL       "SCRL"
+    ID_INDICATOR_OVR        "OVR"
+    ID_INDICATOR_REC        "REC"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    ID_FILE_NEW             "Create a new document\nNew"
+    ID_FILE_OPEN            "Open an existing document\nOpen"
+    ID_FILE_CLOSE           "Close the active document\nClose"
+    ID_FILE_SAVE            "Save the active document\nSave"
+    ID_FILE_SAVE_AS         "Save the active document with a new name\nSave As"
+    ID_FILE_PAGE_SETUP      "Change the printing options\nPage Setup"
+    ID_FILE_PRINT_SETUP     "Change the printer and printing options\nPrint Setup"
+    ID_FILE_PRINT           "Print the active document\nPrint"
+    ID_FILE_PRINT_PREVIEW   "Display full pages\nPrint Preview"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    ID_APP_ABOUT            "Display program information, version number and copyright\nAbout"
+    ID_APP_EXIT             "Quit the application; prompts to save documents\nExit"
+    ID_HELP_INDEX           "Opens Help\nHelp Topics"
+    ID_HELP_FINDER          "List Help topics\nHelp Topics"
+    ID_HELP_USING           "Display instructions about how to use help\nHelp"
+    ID_CONTEXT_HELP         "Display help for clicked on buttons, menus and windows\nHelp"
+    ID_HELP                 "Display help for current task or command\nHelp"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    ID_FILE_MRU_FILE1       "Open this document"
+    ID_FILE_MRU_FILE2       "Open this document"
+    ID_FILE_MRU_FILE3       "Open this document"
+    ID_FILE_MRU_FILE4       "Open this document"
+    ID_FILE_MRU_FILE5       "Open this document"
+    ID_FILE_MRU_FILE6       "Open this document"
+    ID_FILE_MRU_FILE7       "Open this document"
+    ID_FILE_MRU_FILE8       "Open this document"
+    ID_FILE_MRU_FILE9       "Open this document"
+    ID_FILE_MRU_FILE10      "Open this document"
+    ID_FILE_MRU_FILE11      "Open this document"
+    ID_FILE_MRU_FILE12      "Open this document"
+    ID_FILE_MRU_FILE13      "Open this document"
+    ID_FILE_MRU_FILE14      "Open this document"
+    ID_FILE_MRU_FILE15      "Open this document"
+    ID_FILE_MRU_FILE16      "Open this document"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    ID_NEXT_PANE            "Switch to the next window pane\nNext Pane"
+    ID_PREV_PANE            "Switch back to the previous window pane\nPrevious Pane"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    ID_WINDOW_SPLIT         "Split the active window into panes\nSplit"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    ID_EDIT_CLEAR           "Erase the selection\nErase"
+    ID_EDIT_CLEAR_ALL       "Erase everything\nErase All"
+    ID_EDIT_COPY            "Copy the selection and put it on the Clipboard\nCopy"
+    ID_EDIT_CUT             "Cut the selection and put it on the Clipboard\nCut"
+    ID_EDIT_FIND            "Find the specified text\nFind"
+    ID_EDIT_PASTE           "Insert Clipboard contents\nPaste"
+    ID_EDIT_REPEAT          "Repeat the last action\nRepeat"
+    ID_EDIT_REPLACE         "Replace specific text with different text\nReplace"
+    ID_EDIT_SELECT_ALL      "Select the entire document\nSelect All"
+    ID_EDIT_UNDO            "Undo the last action\nUndo"
+    ID_EDIT_REDO            "Redo the previously undone action\nRedo"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    ID_VIEW_TOOLBAR         "Show or hide the toolbar\nToggle ToolBar"
+    ID_VIEW_STATUS_BAR      "Show or hide the status bar\nToggle StatusBar"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    AFX_IDS_SCSIZE          "Change the window size"
+    AFX_IDS_SCMOVE          "Change the window position"
+    AFX_IDS_SCMINIMIZE      "Reduce the window to an icon"
+    AFX_IDS_SCMAXIMIZE      "Enlarge the window to full size"
+    AFX_IDS_SCNEXTWINDOW    "Switch to the next document window"
+    AFX_IDS_SCPREVWINDOW    "Switch to the previous document window"
+    AFX_IDS_SCCLOSE         "Close the active window and prompts to save the documents"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    AFX_IDS_SCRESTORE       "Restore the window to normal size"
+    AFX_IDS_SCTASKLIST      "Activate Task List"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    AFX_IDS_PREVIEW_CLOSE   "Close print preview mode\nCancel Preview"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_NET_ERROR_MSG       "** Network ERR:"
+    IDS_NET_ERROR_INVALIDHEADER "** Net Invalid Header"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_SERVER_SHUTDOWN     "Shutdown!"
+    IDS_SERVER_STARTED      "Server Started!"
+    IDS_SERVER_FAILEDTOSTART "Server Failed to Start!"
+    IDS_MAX_CONNECTIONS     "Max Connections!"
+    IDS_CONNECTION_CLOSED   "Connection Closed!"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_CLIENT_STARTED      "Client Started!"
+    IDS_CLIENT_FAILEDTOSTART "Client Failed to Start!"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    DCXDEV_ERROR_WRITE      "DCX Device Write Error!"
+    DCXDEV_ERROR_READ       "DCX Device Read Error!"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_NETMSG_NOT_IMPLEMET "** Net Message Not Implemented!"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    ID_VIEW_NETWORK         "Network Setup\nNetwork"
+    ID_VIEW_CONVERTER       "Controls Converter\nConverter"
+    ID_VIEW_CONTROLS        "Controls Tester\nControls"
+    ID_VIEW_DEVICE          "Device Setup\nDevice"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_TBNAME_GENERAL      "General Toolbar"
+    IDS_TBNAME_VIEWS        "Views Toolbar"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_CONVERSION_ERROR    "**ERROR: Conversion Error!"
+    IDS_DCXTABLE_LOAD_ERROR "**ERROR: DCX.BIN could not be loaded"""
+    IDS_DCX_CONTROLREMAP_ERROR "**ERROR: DCX Control Remap!"
+    IDS_DCX_CONTROLSEL_INVALID 
+                            "**ERROR: DCX Invalid Control! Please Select a Control!"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_CONVERSION_DONE     "DCX Conversion Done!"
+END
+
+#endif    // English (U.S.) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+#define _AFX_NO_OLE_RESOURCES
+#define _AFX_NO_TRACKER_RESOURCES
+#define _AFX_NO_PROPERTY_RESOURCES
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+#ifdef _WIN32
+LANGUAGE 9, 1
+#pragma code_page(1252)
+#endif
+#include "res\GServer.rc2"  // non-Microsoft Visual C++ edited resources
+#include "afxres.rc"         // Standard components
+#include "afxprint.rc"       // printing/print preview resources
+#endif
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+
