@@ -27,6 +27,7 @@ class CGServerApp : public CWinApp
 public:
 	virtual BOOL PreTranslateMessage(MSG* pMsg);
 	CGServerApp();
+	
 
   WSADATA   m_wsadata;
 
@@ -42,8 +43,8 @@ public:
 
 	//{{AFX_MSG(CGServerApp)
 	afx_msg void OnAppAbout();
-		// NOTE - the ClassWizard will add and remove member functions here.
-		//    DO NOT EDIT what you see in these blocks of generated code !
+	afx_msg void OnHelpContents();
+	afx_msg void OnHelp();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };

@@ -154,10 +154,9 @@ BEGIN
     END
     POPUP "&Help"
     BEGIN
-        MENUITEM "&Help Topics",                ID_HELP_FINDER
+        MENUITEM "&Help Topics",                ID_HELP_CONTENTS
         MENUITEM SEPARATOR
         MENUITEM "&About GServer...",           ID_APP_ABOUT
-        MENUITEM "Help",                        ID_HTML_HELP
     END
 END
 
@@ -236,7 +235,7 @@ END
 
 IDD_DEVICE_SETUP DIALOGEX 0, 0, 430, 104
 STYLE WS_CHILD | WS_CLIPCHILDREN | WS_BORDER
-FONT 8, "MS Sans Serif"
+FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
     LTEXT           "IP Address",IDC_STATIC,22,38,44,10,0,WS_EX_STATICEDGE
     EDITTEXT        IDC_TCP_ADDRESS,69,38,70,12,ES_AUTOHSCROLL

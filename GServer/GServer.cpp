@@ -26,12 +26,13 @@ static char THIS_FILE[] = __FILE__;
 BEGIN_MESSAGE_MAP(CGServerApp, CWinApp)
 	//{{AFX_MSG_MAP(CGServerApp)
 	ON_COMMAND(ID_APP_ABOUT, OnAppAbout)
-		// NOTE - the ClassWizard will add and remove mapping macros here.
-		//    DO NOT EDIT what you see in these blocks of generated code!
+	ON_COMMAND(ID_HELP_CONTENTS, OnHelpContents)
+	
 	//}}AFX_MSG_MAP
 	// Standard file based document commands
 	ON_COMMAND(ID_FILE_NEW, CWinApp::OnFileNew)
 	ON_COMMAND(ID_FILE_OPEN, CWinApp::OnFileOpen)
+	
 	// Standard print setup command
 	ON_COMMAND(ID_FILE_PRINT_SETUP, CWinApp::OnFilePrintSetup)
 END_MESSAGE_MAP()
@@ -41,6 +42,7 @@ END_MESSAGE_MAP()
 
 CGServerApp::CGServerApp()
 {
+	free((void*)m_pszHelpFilePath);
 	// TODO: add construction code here,
 	// Place all significant initialization in InitInstance
 }
@@ -55,6 +57,10 @@ CGServerApp theApp;
 
 BOOL CGServerApp::InitInstance()
 {
+	m_pszHelpFilePath = _tcsdup(_T("..\\hlp\\VACS Server.HLP"));
+	//m_pszHelpFilePath = _tcsdup(_T("d:\\Work\\VACS Server.HLP"));
+	
+
 \
 	{
 \
@@ -309,3 +315,12 @@ int CGServerApp::ExitInstance()
 	
 return CWinApp::ExitInstance();
 }
+
+
+
+void CGServerApp::OnHelpContents() 
+{
+	CWinApp::WinHelp(0,HELP_CONTENTS);	
+}
+
+

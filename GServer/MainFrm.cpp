@@ -32,11 +32,11 @@ BEGIN_MESSAGE_MAP(CMainFrame, CFrameWnd)
 	ON_WM_CREATE()
 	//}}AFX_MSG_MAP
 	// Global help commands
-	ON_COMMAND(ID_HELP_FINDER, CFrameWnd::OnHelpFinder)  
-	ON_COMMAND(ID_HELP, CFrameWnd::OnHelp)
+//	ON_COMMAND(ID_HELP_FINDER, CFrameWnd::OnHelpFinder) 
+//	ON_COMMAND(ID_HELP, CFrameWnd::OnHelp)
 	ON_COMMAND(ID_CONTEXT_HELP, CFrameWnd::OnContextHelp)
 	ON_COMMAND(ID_DEFAULT_HELP, CFrameWnd::OnHelpFinder)
-	ON_COMMAND(ID_HTML_HELP, OnLaunchHTMLHelp)
+	
 END_MESSAGE_MAP()
 
 static UINT indicators[] =
@@ -52,6 +52,7 @@ static UINT indicators[] =
 
 CMainFrame::CMainFrame()
 {
+	
 }
 
 CMainFrame::~CMainFrame()
