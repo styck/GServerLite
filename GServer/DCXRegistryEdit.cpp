@@ -54,7 +54,9 @@ BOOL CDCXRegistryEdit::GetDCXDelayData(DWORD * m_dwBasedelay, DWORD * m_dwVudela
 		DWORD dwValue; 
 		DWORD dwBufferSize = sizeof( dwValue );  
 
-	// get the DCX base delay from the registry
+		//////////////////////////////////////////////
+    // get the DCX base delay from the registry
+
 		szRegValue = "BaseDelay";
 		if ( ::RegQueryValueEx( 
 					hKey, 
@@ -65,7 +67,7 @@ BOOL CDCXRegistryEdit::GetDCXDelayData(DWORD * m_dwBasedelay, DWORD * m_dwVudela
 					&dwBufferSize ) != ERROR_SUCCESS ) 
 		{ 
 			TRACE( "No delay set, setting default values\n" ); 
-			dwValue = 104850;
+			dwValue = 9000;   // 104850;
 			::RegSetValueEx( hKey, 
 							szRegValue, 
 							0, 
@@ -78,7 +80,9 @@ BOOL CDCXRegistryEdit::GetDCXDelayData(DWORD * m_dwBasedelay, DWORD * m_dwVudela
 		* m_dwBasedelay = dwValue; // copy registry value
 
 
-	// get the DCX VU delay from the registry
+	  //////////////////////////////////////////////
+  	// get the DCX VU delay from the registry
+
 		szRegValue = "VuDelay";
 		if ( ::RegQueryValueEx( 
 					hKey, 
@@ -89,7 +93,7 @@ BOOL CDCXRegistryEdit::GetDCXDelayData(DWORD * m_dwBasedelay, DWORD * m_dwVudela
 					&dwBufferSize ) != ERROR_SUCCESS ) 
 		{ 
 			TRACE( "No delay set, setting default values\n" ); 
-			dwValue = 7;
+			dwValue = 50;   // 7
 			::RegSetValueEx( hKey, 
 							szRegValue, 
 							0, 
@@ -102,7 +106,9 @@ BOOL CDCXRegistryEdit::GetDCXDelayData(DWORD * m_dwBasedelay, DWORD * m_dwVudela
 		* m_dwVudelay = dwValue; // copy registry value
 
 
-	// get the DCX Control delay from the registry
+	  //////////////////////////////////////////////
+    // get the DCX Control delay from the registry
+
 		szRegValue = "CtrlDelay";
 		if ( ::RegQueryValueEx( 
 					hKey, 
@@ -113,7 +119,7 @@ BOOL CDCXRegistryEdit::GetDCXDelayData(DWORD * m_dwBasedelay, DWORD * m_dwVudela
 					&dwBufferSize ) != ERROR_SUCCESS ) 
 		{ 
 			TRACE( "No delay set, setting default values\n" ); 
-			dwValue = 7;
+			dwValue = 65;   // 7
 			::RegSetValueEx( hKey, 
 							szRegValue, 
 							0, 
