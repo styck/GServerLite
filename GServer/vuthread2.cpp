@@ -122,8 +122,8 @@ CGServerDoc*	m_pDoc = (CGServerDoc*)pParam;
 
 				// Set the module address
 
-				iAddr = pVUData->iAddr;
-				if(pVUData->iLock > 0)	// Use this to determine if we should read this
+				iAddr = pVUData->wAddr;
+				if(pVUData->bLock > 0)	// Use this to determine if we should read this
 				{
 
             //ZeroMemory(chBuffer1, sizeof(DCXPORT_WRITE_INPUT ));
@@ -168,10 +168,10 @@ CGServerDoc*	m_pDoc = (CGServerDoc*)pParam;
 										chPeakVU[3] = chBuffer1[4];
 										chPeakVU[4] = 0;
 
-										pVUData->iVUValue[0] = atoi(chPeakVU);
+										pVUData->wVUValue[0] = atoi(chPeakVU);
 
-										if(pVUData->iVUValue[0] < 0 || pVUData->iVUValue[0] > 4095)
-											pVUData->iVUValue[0] = 0;
+										if(pVUData->wVUValue[0] < 0 || pVUData->wVUValue[0] > 4095)
+											pVUData->wVUValue[0] = 0;
 
 
         ///////////////////////////////////////////////////////////////////////////////
@@ -183,10 +183,10 @@ CGServerDoc*	m_pDoc = (CGServerDoc*)pParam;
 										chPeakVU[3] = chBuffer1[9];
 										chPeakVU[4] = 0;
 
-										pVUData->iVUValue[1] = atoi(chPeakVU);
+										pVUData->wVUValue[1] = atoi(chPeakVU);
 
-										if(pVUData->iVUValue[1] < 0 || pVUData->iVUValue[1] > 4095)
-											pVUData->iVUValue[1] = 0;
+										if(pVUData->wVUValue[1] < 0 || pVUData->wVUValue[1] > 4095)
+											pVUData->wVUValue[1] = 0;
 
 
         ///////////////////////////////////////////////////////////////////////////////
@@ -198,10 +198,10 @@ CGServerDoc*	m_pDoc = (CGServerDoc*)pParam;
 										chPeakVU[3] = chBuffer1[14];
 										chPeakVU[4] = 0;
 
-										pVUData->iVUValue[2] = atoi(chPeakVU);
+										pVUData->wVUValue[2] = atoi(chPeakVU);
 
-										if(pVUData->iVUValue[2] < 0 || pVUData->iVUValue[2] > 4095)
-											pVUData->iVUValue[2] = 0;
+										if(pVUData->wVUValue[2] < 0 || pVUData->wVUValue[2] > 4095)
+											pVUData->wVUValue[2] = 0;
 
         ///////////////////////////////////////////////////////////////////////////////
 				// Set the VU3 data
@@ -212,10 +212,10 @@ CGServerDoc*	m_pDoc = (CGServerDoc*)pParam;
 										chPeakVU[3] = chBuffer1[19];
 										chPeakVU[4] = 0;
 
-										pVUData->iVUValue[3] = atoi(chPeakVU);
+										pVUData->wVUValue[3] = atoi(chPeakVU);
 
-										if(pVUData->iVUValue[3] < 0 || pVUData->iVUValue[3] > 4095)
-											pVUData->iVUValue[3] = 0;
+										if(pVUData->wVUValue[3] < 0 || pVUData->wVUValue[3] > 4095)
+											pVUData->wVUValue[3] = 0;
 
 
 
@@ -228,10 +228,10 @@ CGServerDoc*	m_pDoc = (CGServerDoc*)pParam;
 										chPeakVU[3] = chBuffer1[24];
 										chPeakVU[4] = 0;
 
-										pVUData->iVUValue[4] = atoi(chPeakVU);
+										pVUData->wVUValue[4] = atoi(chPeakVU);
 
-										if(pVUData->iVUValue[4] < 0 || pVUData->iVUValue[4] > 4095)
-											pVUData->iVUValue[4] = 0;
+										if(pVUData->wVUValue[4] < 0 || pVUData->wVUValue[4] > 4095)
+											pVUData->wVUValue[4] = 0;
 
 
         ///////////////////////////////////////////////////////////////////////////////
@@ -243,10 +243,10 @@ CGServerDoc*	m_pDoc = (CGServerDoc*)pParam;
 										chPeakVU[3] = chBuffer1[29];
 										chPeakVU[4] = 0;
 
-										pVUData->iVUValue[5] = atoi(chPeakVU);
+										pVUData->wVUValue[5] = atoi(chPeakVU);
 
-										if(pVUData->iVUValue[5] < 0 || pVUData->iVUValue[5] > 4095)
-											pVUData->iVUValue[5] = 0;
+										if(pVUData->wVUValue[5] < 0 || pVUData->wVUValue[5] > 4095)
+											pVUData->wVUValue[5] = 0;
 
 
         ///////////////////////////////////////////////////////////////////////////////
@@ -258,10 +258,10 @@ CGServerDoc*	m_pDoc = (CGServerDoc*)pParam;
 										chPeakVU[3] = chBuffer1[34];
 										chPeakVU[4] = 0;
 
-										pVUData->iVUValue[6] = atoi(chPeakVU);
+										pVUData->wVUValue[6] = atoi(chPeakVU);
 
-										if(pVUData->iVUValue[6] < 0 || pVUData->iVUValue[6] > 4095)
-											pVUData->iVUValue[6] = 0;
+										if(pVUData->wVUValue[6] < 0 || pVUData->wVUValue[6] > 4095)
+											pVUData->wVUValue[6] = 0;
 
         ///////////////////////////////////////////////////////////////////////////////
 				// Set the VU7 data
@@ -272,10 +272,10 @@ CGServerDoc*	m_pDoc = (CGServerDoc*)pParam;
 										chPeakVU[3] = chBuffer1[39];
 										chPeakVU[4] = 0;
 
-										pVUData->iVUValue[7] = atoi(chPeakVU);
+										pVUData->wVUValue[7] = atoi(chPeakVU);
 
-										if(pVUData->iVUValue[7] < 0 || pVUData->iVUValue[7] > 4095)
-											pVUData->iVUValue[7] = 0;
+										if(pVUData->wVUValue[7] < 0 || pVUData->wVUValue[7] > 4095)
+											pVUData->wVUValue[7] = 0;
 
 
         ///////////////////////////////////////////////////////////////////////////////
@@ -287,10 +287,10 @@ CGServerDoc*	m_pDoc = (CGServerDoc*)pParam;
 										chClip1[2] = chBuffer1[44];
 										chClip1[3] = 0;
 
-										pVUData->iPeakClipValue = atoi(chClip1);
+										pVUData->wPeakClipValue = atoi(chClip1);
 
-										if(pVUData->iPeakClipValue < 0 || pVUData->iPeakClipValue > 4095)
-											pVUData->iPeakClipValue = 0;
+										if(pVUData->wPeakClipValue < 0 || pVUData->wPeakClipValue > 4095)
+											pVUData->wPeakClipValue = 0;
 
 
 					// Send the vu data to the clients

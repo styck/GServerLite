@@ -661,7 +661,7 @@ int			iRecvd;				// Number of bytes recieved
 
 					for(i=0;i<MAX_VU_READ_DATA;i++)
 					{
-						  m_pDoc->m_VUMetersArray.m_aVUReadData[i].iLock+=m_chNetBufferIn[i];
+						  m_pDoc->m_VUMetersArray.m_aVUReadData[i].bLock+=m_chNetBufferIn[i];
 					}
 
 					break;

@@ -35,8 +35,8 @@ CVUMeterArray::CVUMeterArray()
 
 	for(int i=0;i<MAX_VU_READ_DATA;i++)
 	{
-		m_aVUReadData[i].iAddr=cModule.GetModuleAddress(i);							// the VUthread Reads from here(module address)
-		m_aVUReadData[i].iLock=0;							// if Zero nobody monitors this VU, so we don't need to read the damn thnig
+		m_aVUReadData[i].wAddr=cModule.GetModuleAddress(i);							// the VUthread Reads from here(module address)
+		m_aVUReadData[i].bLock=0;							// if Zero nobody monitors this VU, so we don't need to read the damn thnig
 
 #ifdef NOTUSED
 		m_aVUReadData[i].iVUValue[0]=0;			// data. VUthread writes here
@@ -48,8 +48,8 @@ CVUMeterArray::CVUMeterArray()
 		m_aVUReadData[i].iVUValue[6]=0;			// data. VUthread writes here
 		m_aVUReadData[i].iVUValue[7]=0;			// data. VUthread writes here
 #endif
-		m_aVUReadData[i].iPeakClipValue=0;		// data
-    m_aVUReadData[i].iModuleIdx = i;
+		m_aVUReadData[i].wPeakClipValue=0;		// data
+    m_aVUReadData[i].wModuleIdx = i;
 	}
 
   /////////////////////////////////////////////////
@@ -57,9 +57,9 @@ CVUMeterArray::CVUMeterArray()
 #ifdef JUNK
 	for(int j=0;j<NUM_VU_READ;j++)
 	{
-		m_aVUReadData[j].iAddr=33+j;							// the VUthread Reads from here(module address)
+		m_aVUReadData[j].wAddr=33+j;							// the VUthread Reads from here(module address)
 //		m_aVUReadData[j].iVUType=1;							// the VUthread Reads from here(Pre, Post, Comp, Gate)
-		m_aVUReadData[j].iLock=1;							// if Zero nobody monitors this VU, so we don't need to read the damn thnig
+		m_aVUReadData[j].wLock=1;							// if Zero nobody monitors this VU, so we don't need to read the damn thnig
 #ifdef NOTUSED
 		m_aVUReadData[i].iVUValue[0]=0;			// data. VUthread writes here
 		m_aVUReadData[i].iVUValue[1]=0;			// data. VUthread writes here
@@ -70,8 +70,8 @@ CVUMeterArray::CVUMeterArray()
 		m_aVUReadData[i].iVUValue[6]=0;			// data. VUthread writes here
 		m_aVUReadData[i].iVUValue[7]=0;			// data. VUthread writes here
 #endif
-		m_aVUReadData[j].iPeakClipValue=0;		// data
-    m_aVUReadData[j].iModuleIdx = j;
+		m_aVUReadData[j].wPeakClipValue=0;		// data
+    m_aVUReadData[j].wModuleIdx = j;
 	}
 #endif
 
@@ -97,7 +97,7 @@ int CVUMeterArray::GetNextReadIdx(int iNext)
   }
   else
   {
-    while(m_aVUReadData[m_iCurrentReadIndex].iLock == 0)
+    while(m_aVUReadData[m_iCurrentReadIndex].bLock == 0)
     {
       m_iCurrentReadIndex ++;  
       if(m_iCurrentReadIndex >= MAX_VU_READ_DATA)
@@ -109,7 +109,7 @@ int CVUMeterArray::GetNextReadIdx(int iNext)
   }
 
   // Franchesko please check this logic again !! ???? Hristo
-  if(m_aVUReadData[m_iCurrentReadIndex].iLock == 0)
+  if(m_aVUReadData[m_iCurrentReadIndex].bLock == 0)
   {
     return 0xffffffff;
   }
