@@ -493,7 +493,9 @@ int			iRecvd;				// Number of bytes recieved
 					DCX_CTRLDATA  dcxCtrlData;
 					ULONG         ulWrite;
 					int           iCount;
-        
+
+          // Cast the recieve buffer into the control data structure
+
 					ctrld = (CONTROLDATA *)m_chNetBufferIn;
 
 					// Do some error checking to keep the program from crashing
@@ -503,24 +505,26 @@ int			iRecvd;				// Number of bytes recieved
 					if( (ctrld->wCtrl < MAX_NUM_CONTROLS) && (ctrld->wChannel < 80) )	
 					{
 							// Save the value of this control on this channel (module)
+              // so that other clients have access to its settings
 
 							m_wCurrentState[ctrld->wChannel][ctrld->wCtrl] = ctrld->wVal;
 
 							// Resend the control data to all other clients so that they can update their displays
-							// MAY NOT SEND DATA.  USE THE CALLBACK WAY OF SENDING
 
 							m_pDoc->m_pdcxNetwork->BroadcastMsgType(ctrld, sizeof(CONTROLDATA), DCX_TCP_CONTROL_DATA, psocket, ALL);
 
-							if(m_pDoc->m_dcxBinTable.RemapControlData(ctrld, &dcxCtrlData))
+              // Get the pot vaules from the dcx.bin file
+              // (GOOD FUNCTION TO OPTIMIZE)
+
+              if(m_pDoc->m_dcxBinTable.RemapControlData(ctrld, &dcxCtrlData))
 							{
-//								m_pDoc->DisplayGeneralMessage("&& Msg Data &&");
+								m_pDoc->DisplayGeneralMessage("&& Msg Data &&");
 
 							/////////////////////////////////////////////////////////////////////////////
 							// Loop thru all the pots for this control and write the XXW to the DCX
 
 								for(iCount = 0; iCount < dcxCtrlData.iPotCount; iCount++)    
 								{
-
                   if( ! m_pDoc->m_pDCXDevice->Write(dcxCtrlData.arPotData[iCount].iAddr,
 																							dcxCtrlData.arPotData[iCount].szData, &ulWrite))
                   {
@@ -545,7 +549,7 @@ int			iRecvd;				// Number of bytes recieved
 #endif
 
 								}
-//								m_pDoc->DisplayGeneralMessage("&& Msg Data End &&");
+								m_pDoc->DisplayGeneralMessage("&& Msg Data End &&");
 							}
 					}
 					break;
@@ -598,8 +602,8 @@ int			iRecvd;				// Number of bytes recieved
 								m_pDoc->m_SocketVULocks[psocket->iSocketNumber][i] = 0;
 
 #ifdef _DEBUG
-//						wsprintf(chBuffer,"%d",m_pDoc->m_VUMetersArray.m_aVUReadData[i].cLock);
-//							OutputDebugString(chBuffer);
+						wsprintf(chBuffer,"%d",m_pDoc->m_VUMetersArray.m_aVUReadData[i].cLock);
+							TRACE0(chBuffer);
 #endif
 
             }
@@ -607,7 +611,7 @@ int			iRecvd;				// Number of bytes recieved
 
 
 #ifdef _DEBUG
-//						OutputDebugString("\n");
+						TRACE0("\n");
 #endif
 					break;
 

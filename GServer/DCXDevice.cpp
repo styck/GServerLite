@@ -4,7 +4,6 @@
 //
 // DCXDevice.cpp: implementation of the CDCXDevice class.
 //
-//  @@@ U160 - Input module (next to LTC) ... Pull it out of the Socket
 //
 ////////////////////////////////////////////////////////////////////////
 
@@ -29,10 +28,12 @@ static char THIS_FILE[]=__FILE__;
 
 CDCXDevice::CDCXDevice(CGServerDoc *pDoc)
 {
+
 // Allocate the buffer for read. The Write buffer is not fully implemented yet
 // because there seems to be no reason to do this
 //----------------------------------------------------------------------------
-	m_pchBuffWrite = (DCXPORT_WRITE_INPUT *)GlobalAlloc(GPTR, sizeof(DCXPORT_WRITE_INPUT)); 
+
+  m_pchBuffWrite = (DCXPORT_WRITE_INPUT *)GlobalAlloc(GPTR, sizeof(DCXPORT_WRITE_INPUT)); 
 	m_pchBuffRead  = (DCXPORT_WRITE_INPUT *)GlobalAlloc(GPTR, sizeof(DCXPORT_WRITE_INPUT));
 
 
@@ -58,11 +59,13 @@ CDCXDevice::~CDCXDevice()
 //
 // Open the DCX device
 //
+/////////////////////////////////////////////////////////////////////
+
 BOOL  CDCXDevice::Open(void)
 {
 BOOL    bRet = TRUE;
 
-#ifndef DEMO
+#ifndef DEMO    // If NOT demo then open the DCX device driver
 
 	if(m_hDevice == INVALID_HANDLE_VALUE && m_pchBuffRead != NULL && m_pchBuffWrite != NULL)
   {
@@ -91,15 +94,17 @@ return bRet;
 }
 
 /////////////////////////////////////////////////////////////////////
-//  MEMBER FUNCTION: Close(void)
+//  MEMBER FUNCTION: Close(void) the DCX driver
 //                   
 //  ALWAYS RETURNS TRUE ??????????????
 //
+/////////////////////////////////////////////////////////////////////
+
 BOOL  CDCXDevice::Close(void) 
 {
 BOOL    bRet = TRUE;
 
-#ifndef DEMO
+#ifndef DEMO  // Close the device if NOT compiled as DEMO
 	if(m_hDevice != INVALID_HANDLE_VALUE)
   {
 		CloseHandle(m_hDevice);
@@ -113,17 +118,19 @@ return bRet;
 /////////////////////////////////////////////////////////////////////
 //  MEMBER FUNCTION: Write(int iAddr, LPSTR lpsz, UINT  *puiWrite)
 //
+//  Write data to the DCX device.
 //
-//
+/////////////////////////////////////////////////////////////////////
+
 BOOL  CDCXDevice::Write(int iAddr, LPSTR lpsz, ULONG  *pulWrite)
 {
 
 int                 iBufferLength;
 BOOL                bIoctlResult = FALSE;
 
-#ifndef DEMO
+#ifndef DEMO  // Write to DCX if NOT a demo version
 
-    m_DeviceIOLock.Lock();
+    m_DeviceIOLock.Lock();    // Lock this resource until we read the response
 
 		if(m_hDevice  != INVALID_HANDLE_VALUE)
 		{
@@ -134,7 +141,6 @@ BOOL                bIoctlResult = FALSE;
 
 			m_pchBuffWrite->ulLength = lstrlen(m_pchBuffWrite->arChar);
 			iBufferLength = sizeof(DCXPORT_WRITE_INPUT);
-
 
 			bIoctlResult = DeviceIoControl(
 													m_hDevice,                     // Handle to device
@@ -180,7 +186,8 @@ int                 iAddr;
 BOOL                bIoctlResult = FALSE;
 
 #ifndef DEMO
-  m_DeviceIOLock.Lock();
+
+  m_DeviceIOLock.Lock();  // Lock this resource until we read the response
 
 	if(m_hDevice  != INVALID_HANDLE_VALUE)
   {
@@ -263,7 +270,7 @@ BOOL                bIoctlResult = FALSE;
 			bIoctlResult = TRUE;
 		}
 	}
-			m_DeviceIOLock.Unlock();
+			m_DeviceIOLock.Unlock();  // Unlock this resource after reading result.
 
 #else
 

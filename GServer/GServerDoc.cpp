@@ -302,8 +302,8 @@ BOOL    CGServerDoc::DisplayGeneralMessage(UINT   uiMsgID)
 BOOL      bRet = TRUE;
 CString   cs;
 
-//	if(cs.LoadString(uiMsgID))
-//    OutputDebugString((LPSTR) LPCTSTR(cs));
+	if(cs.LoadString(uiMsgID))
+    TRACE0((LPSTR) LPCTSTR(cs));
 
 return bRet;
 };
@@ -316,7 +316,7 @@ BOOL    CGServerDoc::DisplayGeneralMessage(LPSTR lps)
 {
 BOOL      bRet = TRUE;
 
-//    OutputDebugString((LPSTR) LPCTSTR(lps));
+    TRACE0((LPSTR) LPCTSTR(lps));
 //	DisplayGeneralMsg(lps);
 
 return bRet;
@@ -350,7 +350,7 @@ CString   cs;
 
 	cs.LoadString(IDS_NET_ERROR_MSG);
 	cs = cs + " " + lps;
-    OutputDebugString((LPSTR) LPCTSTR(cs));
+    TRACE0((LPSTR) LPCTSTR(cs));
 //	m_pServerMonitorView->DisplayNetErrorMsg((LPSTR) LPCTSTR(cs));
 
 return bRet;

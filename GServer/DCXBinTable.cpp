@@ -408,7 +408,7 @@ return iRet;
 //        TRUE   = OK
 //
 // NOTE:   This function remaps the DCX control data
-//      All pot values and strings are stored int the
+//  All pot values and strings are stored in the
 //  DCX_POT_CTRLDATA data structure which is part of the
 //  DCX_CTRLDATA.
 //

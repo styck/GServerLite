@@ -186,14 +186,14 @@ char chBuffer[64];
 
 		// Show the resulting VU locks for DEBUG
 #ifdef _DEBUG
-//						wsprintf(chBuffer,"%d",m_pNet->m_pDoc->m_VUMetersArray.m_aVUReadData[i].cLock);
-//							OutputDebugString(chBuffer);
+						wsprintf(chBuffer,"%d",m_pNet->m_pDoc->m_VUMetersArray.m_aVUReadData[i].cLock);
+							TRACE0(chBuffer);
 #endif
 
 	}
 
 #ifdef _DEBUG
-//							OutputDebugString("\n");
+							TRACE0("\n");
 #endif
 
   iSocketNumber = -1; // Invalidate the socket number

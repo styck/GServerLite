@@ -100,6 +100,10 @@ SOURCE=.\CorTekTBCtrl.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\cputicker.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\DCXBinTable.cpp
 # End Source File
 # Begin Source File
@@ -112,6 +116,10 @@ SOURCE=.\DCXDeviceMap.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\DCXRegistryEdit.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\GDCXNetwork.cpp
 # End Source File
 # Begin Source File
@@ -121,13 +129,6 @@ SOURCE=.\GServer.cpp
 # Begin Source File
 
 SOURCE=.\GServer.rc
-
-!IF  "$(CFG)" == "GServer - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "GServer - Win32 Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
@@ -172,6 +173,10 @@ SOURCE=.\CorTekTBCtrl.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\cputicker.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\DCXBinTable.h
 # End Source File
 # Begin Source File
@@ -185,6 +190,10 @@ SOURCE=.\DCXDeviceMap.h
 # Begin Source File
 
 SOURCE=.\DCXparser.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\DCXRegistryEdit.h
 # End Source File
 # Begin Source File
 
@@ -249,6 +258,10 @@ SOURCE=.\res\circuit.bmp
 # Begin Source File
 
 SOURCE=.\res\ComputerModule.bmp
+# End Source File
+# Begin Source File
+
+SOURCE=".\res\CorTek260x89@72ppi-rgb-indexedcolor.BMP"
 # End Source File
 # Begin Source File
 

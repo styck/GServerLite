@@ -51,6 +51,7 @@ void    CTekSleep(DWORD dwDelay )
 #ifdef CYCLECOUNT
 
 #define PPRO_NOP_MSEC_COUNTER  90000    // NOT USED
+
 void CTekSleep(DWORD dwBasedelay,DWORD dwDelay)
 {
 DWORD dwTickCountDelay;
@@ -172,7 +173,7 @@ WORD wFlag;     //  TEST TEST
 
             //ZeroMemory(chBuffer1, sizeof(DCXPORT_WRITE_INPUT ));
 						wsprintf(chBufferVUType, "*%03dXVU?\n", iAddr);			// ALL VU DATA
-//            OutputDebugString (chBufferVUType);
+//            TRACE0 (chBufferVUType);
 #ifndef BOGUS_DATA
   					m_pDoc->m_pDCXDevice->Write(iAddr, chBufferVUType, &ulIO);
 #endif
@@ -201,14 +202,13 @@ WORD wFlag;     //  TEST TEST
           if(wFlag & 1)
           {
               lstrcpy(chBuffer1, "!0000,0000,0000,0000,0000,0000,0000,0000,/123");
-//              OutputDebugString (chBuffer1);
+//              TRACE0 (chBuffer1);
           }
           else
           {
 
               lstrcpy(chBuffer1, "!4000,2000,3000,2500,2000,1500,1000,0500,/123");
-//              OutputDebugString (chBuffer1);
-
+//              TRACE0 (chBuffer1);
           }
 
 #endif
@@ -224,12 +224,12 @@ WORD wFlag;     //  TEST TEST
 
 
 #ifdef BOGUS_DATA
-										pVUData->wVUValue[0]++;
+										pVUData->wVUValue[0] = pVUData->wVUValue[0]+250;
 #else
 										pVUData->wVUValue[0] = atoi(chPeakVU);
 #endif
 
-										if(pVUData->wVUValue[0] < 0 || pVUData->wVUValue[0] > 4095)
+										if(pVUData->wVUValue[0] < 0 || pVUData->wVUValue[0] > MAX_VU_VALUE)
 											pVUData->wVUValue[0] = 0;
 
 
@@ -243,12 +243,12 @@ WORD wFlag;     //  TEST TEST
 										chPeakVU[4] = 0;
 
 #ifdef BOGUS_DATA
-										pVUData->wVUValue[1]=pVUData->wVUValue[0]+500;
+										pVUData->wVUValue[1]=pVUData->wVUValue[0];
 #else
 										pVUData->wVUValue[1] = atoi(chPeakVU);
 #endif
 
-										if(pVUData->wVUValue[1] < 0 || pVUData->wVUValue[1] > 4095)
+										if(pVUData->wVUValue[1] < 0 || pVUData->wVUValue[1] > MAX_VU_VALUE)
 											pVUData->wVUValue[1] = 0;
 
 
@@ -267,7 +267,7 @@ WORD wFlag;     //  TEST TEST
 										pVUData->wVUValue[2] = atoi(chPeakVU);
 #endif
 
-										if(pVUData->wVUValue[2] < 0 || pVUData->wVUValue[2] > 4095)
+										if(pVUData->wVUValue[2] < 0 || pVUData->wVUValue[2] > MAX_VU_VALUE)
 											pVUData->wVUValue[2] = 0;
 
         ///////////////////////////////////////////////////////////////////////////////
@@ -285,7 +285,7 @@ WORD wFlag;     //  TEST TEST
 										pVUData->wVUValue[3] = atoi(chPeakVU);
 #endif
 
-										if(pVUData->wVUValue[3] < 0 || pVUData->wVUValue[3] > 4095)
+										if(pVUData->wVUValue[3] < 0 || pVUData->wVUValue[3] > MAX_VU_VALUE)
 											pVUData->wVUValue[3] = 0;
 
 
@@ -304,7 +304,7 @@ WORD wFlag;     //  TEST TEST
 #else
 										pVUData->wVUValue[4] = atoi(chPeakVU);
 #endif
-										if(pVUData->wVUValue[4] < 0 || pVUData->wVUValue[4] > 4095)
+										if(pVUData->wVUValue[4] < 0 || pVUData->wVUValue[4] > MAX_VU_VALUE)
 											pVUData->wVUValue[4] = 0;
 
 
@@ -322,7 +322,7 @@ WORD wFlag;     //  TEST TEST
 #else
 										pVUData->wVUValue[5] = atoi(chPeakVU);
 #endif
-										if(pVUData->wVUValue[5] < 0 || pVUData->wVUValue[5] > 4095)
+										if(pVUData->wVUValue[5] < 0 || pVUData->wVUValue[5] > MAX_VU_VALUE)
 											pVUData->wVUValue[5] = 0;
 
 
@@ -341,7 +341,7 @@ WORD wFlag;     //  TEST TEST
 										pVUData->wVUValue[6] = atoi(chPeakVU);
 #endif
 
-										if(pVUData->wVUValue[6] < 0 || pVUData->wVUValue[6] > 4095)
+										if(pVUData->wVUValue[6] < 0 || pVUData->wVUValue[6] > MAX_VU_VALUE)
 											pVUData->wVUValue[6] = 0;
 
         ///////////////////////////////////////////////////////////////////////////////
@@ -358,7 +358,7 @@ WORD wFlag;     //  TEST TEST
 #else
 										pVUData->wVUValue[7] = atoi(chPeakVU);
 #endif
-										if(pVUData->wVUValue[7] < 0 || pVUData->wVUValue[7] > 4095)
+										if(pVUData->wVUValue[7] < 0 || pVUData->wVUValue[7] > MAX_VU_VALUE)
 											pVUData->wVUValue[7] = 0;
 
 
@@ -373,7 +373,7 @@ WORD wFlag;     //  TEST TEST
 
 										pVUData->wPeakClipValue = atoi(chClip1);
 
-										if(pVUData->wPeakClipValue < 0 || pVUData->wPeakClipValue > 4095)
+										if(pVUData->wPeakClipValue < 0 || pVUData->wPeakClipValue > MAX_VU_VALUE)
 											pVUData->wPeakClipValue = 0;
 
 
@@ -382,8 +382,7 @@ WORD wFlag;     //  TEST TEST
 					// since the client is sending control data and we are not
 					// locking our resource at this time because of speed
 
-//					if( (chPeakVU[1] != '$') || (chAverageVU[1] != '$') )
-
+					if( chBuffer1[1] != '$' )
 	          m_pDoc->m_pdcxNetwork->BroadcastMsgType(pVUData, sizeof(VU_READ), DCX_VU_DATA, NULL, 0);
 
 				}
