@@ -101,57 +101,6 @@ BOOL    CGDCXNetwork::IsStartedAsServer(void)
 	return (m_pAssListener != NULL && ! m_bIsClient);
 }
 
-////////////////////////////////////////////////////////////////////
-// MEMBER FUNCTION: StartAsClient(void)
-//
-//
-BOOL    CGDCXNetwork::StartAsClient(void)
-{
-	return StartAsClient(LPCTSTR (m_csIPAddress), m_iPort);
-}
-
-BOOL    CGDCXNetwork::StartAsClient(LPCTSTR lpcs, UINT iPort)
-{
-BOOL    bRet = FALSE;
-int			iErr;
-
-	// First make sure the Listener is not opened already ... 
-	//-------------------------------------------------------
-	if(m_pAssListener == NULL)
-	{
-		if(InitListener())
-		{
-			if(m_pAssListener->Create(iPort,SOCK_STREAM))
-			{
-				m_pAssListener->SetOptions();
-				iErr = m_pAssListener->Connect(lpcs, iPort);
-
-		// For the CAsnycSocket, iErr can be zero but the last error
-		// will be WSAEWOULDBLOCK
-
-				if( iErr || (GetLastError( ) == WSAEWOULDBLOCK) )
-				{
-					m_iPort = iPort;
-					m_csIPAddress = lpcs;
-					bRet = TRUE;
-				}
-				else
-				{
-					iErr = GetLastError( );
-				}
-			}
-		}
-	}
-
-	if(bRet == FALSE)
-	{
-		ShutDown();
-	}
-	else
-		m_bIsClient = TRUE;
-
-return bRet;
-}
 
 ////////////////////////////////////////////////////////////////////
 // MEMBER FUNCTION: StartAsServer
@@ -645,7 +594,7 @@ int			iRecvd;				// Number of bytes recieved
 
 							if(m_pDoc->m_dcxBinTable.RemapControlData(ctrld, &dcxCtrlData))
 							{
-								m_pDoc->DisplayGeneralMessage("&& Msg Data &&");
+//								m_pDoc->DisplayGeneralMessage("&& Msg Data &&");
 
 							/////////////////////////////////////////////////////////////////////////////
 							// Loop thru all the pots for this control and write the XXW to the DCX
@@ -668,9 +617,10 @@ int			iRecvd;				// Number of bytes recieved
 										m_pDoc->DisplayGeneralMessage(dcxCtrlData.arPotData[iCount].szData);
 										lstrcpy(chBuffer,dcxCtrlData.arPotData[iCount].szData); // must pass the address in string
 										m_pDoc->m_pDCXDevice->Read(chBuffer, 64, &ulIO);
+										m_pDoc->DisplayGeneralMessage(dcxCtrlData.arPotData[iCount].szData);
 
 								}
-								m_pDoc->DisplayGeneralMessage("&& Msg Data End &&");
+//								m_pDoc->DisplayGeneralMessage("&& Msg Data End &&");
 							}
 					}
 					break;
@@ -758,7 +708,7 @@ CCorTekAsyncSocket* pSocket = NULL;
 int                 iCount;
 int									iSent;
 
-	if(IsStartedAsServer())
+	if(IsStartedAsServer() )
   {
 		if( iSize <= MAX_NET_BUFFER) 
     {
@@ -792,24 +742,39 @@ int									iSent;
 							  (pSocket != pCurrentSocket)		// and not the current socket
 							) 														
 						{
-			// If its VU data and client accepts vu data then send it
-							if( (uiType == DCX_VU_DATA) && pSocket->DoesAcceptVuData() )
-								iSent=pSocket->Send(m_chNetBufferOut, iSize + sizeof(HDR_DCXTCP));
-			// If it is not VU data then just send it
-							else if(uiType != DCX_VU_DATA)
+
+              // If its VU data and client accepts vu data then send it
+							if( (uiType == DCX_VU_DATA) && pSocket->DoesAcceptVuData()) 
+              {
 								iSent=pSocket->Send(m_chNetBufferOut, iSize + sizeof(HDR_DCXTCP));
 
-							// If it all didn't go out then report an error
+                // If it all didn't go out then report an error
 
-							if(iSent != iSize + (int) sizeof(HDR_DCXTCP) )
-							{
-											bRet = FALSE;
-											m_pDoc->DisplayGeneralMessage("*** BroadcastMsgType: incomplete ***");
-							}
-						}
-					}
-				}
-			}
+							  if(iSent != iSize + (int) sizeof(HDR_DCXTCP) )
+							  {
+											  bRet = FALSE;
+											  m_pDoc->DisplayGeneralMessage("*** BroadcastMsgType: incomplete ***");
+							  }
+              }
+ 							else if(uiType != DCX_VU_DATA)  // If it is not VU data then just send it
+              {
+								iSent=pSocket->Send(m_chNetBufferOut, iSize + sizeof(HDR_DCXTCP));
+
+                // If it all didn't go out then report an error
+
+							  if(iSent != iSize + (int) sizeof(HDR_DCXTCP) )
+							  {
+											  bRet = FALSE;
+											  m_pDoc->DisplayGeneralMessage("*** BroadcastMsgType: incomplete ***");
+							  }
+
+
+              }
+
+            } // end if not current socket and socke opened
+          } // end for iCount
+        } // sending to ALL?
+      } // if iSize < MAX_NET_BUFFER
 			else
 			{
 					m_pDoc->DisplayGeneralMessage("BroadcastMsgType: Size too big");

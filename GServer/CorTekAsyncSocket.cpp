@@ -386,7 +386,6 @@ void CCorTekAsyncSocket::OnSend(int nErrorCode)
 
 				case	DCX_TCP_SEND_CONTROL_STATES:
 				{
-					BOOL								bResult;
 					HDR_DCXTCP					*pHdr=(HDR_DCXTCP *)SendBuf;
 					DWORD               dwDataSize;
 					int									iSent;

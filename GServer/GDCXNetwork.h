@@ -71,9 +71,6 @@ public:
   BOOL    StartAsServer(void);
   BOOL    StartAsServer(LPCTSTR lpcs, UINT iPort);
 
-  BOOL    StartAsClient(void);
-  BOOL    StartAsClient(LPCTSTR lpcs, UINT iPort);
-
   BOOL    InitClients(void);
   BOOL    InitListener(void);
   BOOL    ShutDown(void);    

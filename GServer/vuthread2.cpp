@@ -128,7 +128,7 @@ CGServerDoc*	m_pDoc = (CGServerDoc*)pParam;
 
             //ZeroMemory(chBuffer1, sizeof(DCXPORT_WRITE_INPUT ));
 						wsprintf(chBufferVUType, "*%03dXVU?\n", iAddr);			// ALL VU DATA
-            OutputDebugString (chBufferVUType);
+//            OutputDebugString (chBufferVUType);
 
   					m_pDoc->m_pDCXDevice->Write(iAddr, chBufferVUType, &ulIO);
 
@@ -137,13 +137,16 @@ CGServerDoc*	m_pDoc = (CGServerDoc*)pParam;
             CTekSleep(RW_DELAY);
 
 						// Read ALL the VU data
+            // If we read an ACK from the control data then ignore it and
+            // find the real data
 
-            lstrcpy(chBuffer1, chBufferVUType);
-						m_pDoc->m_pDCXDevice->Read(chBuffer1, sizeof(DCXPORT_WRITE_INPUT ), &ulIO);
-
-//            lstrcpy(chBuffer1,"!0000,0001,0002,0003,0004,0005,0006,0007,/123");
-
-            OutputDebugString (chBuffer1);
+//            do
+//            {
+              lstrcpy(chBuffer1, chBufferVUType);
+						  m_pDoc->m_pDCXDevice->Read(chBuffer1, sizeof(DCXPORT_WRITE_INPUT ), &ulIO);
+//              OutputDebugString (chBuffer1);
+//            }while(chBuffer1[0] == '!' && chBuffer1[1] == '$');
+           
 
           ////////////////////////////////////////////////////
 					// Now parse the data and display it ...
