@@ -321,9 +321,10 @@ int iCnt;
 
 	pos = GetFirstViewPosition();
 	pGServerView = (CGServerView *)GetNextView(pos);
-	pGServerView->m_clbStatusList.AddString(lps);
-	iCnt = pGServerView->m_clbStatusList.GetCount();
-	pGServerView->m_clbStatusList.SetCurSel(iCnt);	// Move to last selection
+	pGServerView->m_clbStatusList.InsertString(0,lps);
+
+//	iCnt = pGServerView->m_clbStatusList.GetCount();
+//	pGServerView->m_clbStatusList.SetTopIndex(iCnt);	// Move to last selection
 
 //#endif
 
@@ -358,14 +359,17 @@ BOOL    CGServerDoc::DisplayNetErrorMessage(LPSTR lps)
 BOOL      bRet = TRUE;
 CString   cs;
 POSITION pos;
+CGServerView* pGServerView;
+int iCnt;
 
 // Always display network errors in status list box
 
-  CGServerView* pGServerView;
-  pos = GetFirstViewPosition();
-  pGServerView = (CGServerView *)GetNextView(pos);
+	pos = GetFirstViewPosition();
+	pGServerView = (CGServerView *)GetNextView(pos);
+	pGServerView->m_clbStatusList.InsertString(0,lps);
 
-	pGServerView->m_clbStatusList.AddString(lps);
+//	iCnt = pGServerView->m_clbStatusList.GetCount();
+//	pGServerView->m_clbStatusList.SetTopIndex(iCnt);	// Move to last selection
 
 	cs.LoadString(IDS_NET_ERROR_MSG);
 	cs = cs + " " + lps;

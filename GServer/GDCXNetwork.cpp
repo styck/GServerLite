@@ -158,23 +158,23 @@ BOOL    CGDCXNetwork::StartAsServer(LPCTSTR lpcs, UINT  iPort)
 
   for(i=0;i<DCX_DEVMAP_MAXSIZE;i++)
   {
-		if(m_pDoc->m_dcxdevMap.GetModuleType(i) != DCX_DEVMAP_MODULE_NA)
-		{
-			char	chBufferVUType[64];
-			char	chBufferDataType[64];
-			ULONG   ulIO;
+	if(m_pDoc->m_dcxdevMap.GetModuleType(i) != DCX_DEVMAP_MODULE_NA)
+	{
+		char	chBufferVUType[64];
+		char	chBufferDataType[64];
+		ULONG   ulIO;
 
-				wsprintf(chBufferVUType, "*%03dXVUg\n", cModule.GetModuleAddress(i));
-				m_pDoc->m_pDCXDevice->Write(cModule.GetModuleAddress(i), chBufferVUType, &ulIO, FALSE);	// Write VU type command
-				Sleep(20);
-				m_pDoc->m_pDCXDevice->Read(chBufferVUType, 64, &ulIO);		// Read response and discard
+		wsprintf(chBufferVUType, "*%03dXVUg\n", cModule.GetModuleAddress(i));
+		m_pDoc->m_pDCXDevice->Write(cModule.GetModuleAddress(i), chBufferVUType, &ulIO, FALSE);	// Write VU type command
+		Sleep(20);
+		m_pDoc->m_pDCXDevice->Read(chBufferVUType, 64, &ulIO);		// Read response and discard
 
         wsprintf(chBufferDataType, "*%03dXXW470000\n",cModule.GetModuleAddress(i));
         m_pDoc->m_pDCXDevice->Write(cModule.GetModuleAddress(i), chBufferDataType, &ulIO, FALSE); // Write Control Data command
         Sleep(20);
-				m_pDoc->m_pDCXDevice->Read(chBufferVUType, 64, &ulIO);		// Read response and discard
+		m_pDoc->m_pDCXDevice->Read(chBufferVUType, 64, &ulIO);		// Read response and discard
 
-		}			
+	}			
   }
 
 
@@ -222,13 +222,15 @@ BOOL    CGDCXNetwork::InitListener(void)
 BOOL                bRet = TRUE;
 
 	if(m_pAssListener == NULL)
-  {
+	{
 		m_pAssListener  = new CCorTekAsyncSocket(this);
 		if(m_pAssListener == NULL)  
 			bRet = FALSE;
-  }
+	}
 	else
+	{
 	  bRet = FALSE;  
+	}
 
 return bRet;
 
@@ -342,7 +344,7 @@ CCorTekAsyncSocket* pSocket = NULL;
       {
 				m_pAssListener->Accept(*pSocket);
 				pSocket->Init();
-        pSocket->iSocketNumber = iCount;  // Keep track of socket number
+				pSocket->iSocketNumber = iCount;  // Keep track of socket number
 
 				break;
       }
@@ -559,10 +561,10 @@ int			iRecvd;				// Number of bytes recieved
 
 							m_pDoc->m_pdcxNetwork->BroadcastMsgType(ctrld, sizeof(CONTROLDATA), DCX_TCP_CONTROL_DATA, psocket, ALL);
 
-              // Get the pot vaules from the dcx.bin file
-              // (GOOD FUNCTION TO OPTIMIZE)
+							  // Get the pot vaules from the dcx.bin file
+							  // (GOOD FUNCTION TO OPTIMIZE)
 
-              if(m_pDoc->m_dcxBinTable.RemapControlData(ctrld, &dcxCtrlData))
+							  if(m_pDoc->m_dcxBinTable.RemapControlData(ctrld, &dcxCtrlData))
 							{
 //								m_pDoc->DisplayGeneralMessage("&& Msg Data &&");
 
@@ -571,9 +573,9 @@ int			iRecvd;				// Number of bytes recieved
 
 								for(iCount = 0; iCount < dcxCtrlData.iPotCount; iCount++)    
 								{
-                  if( ! m_pDoc->m_pDCXDevice->Write(dcxCtrlData.arPotData[iCount].iAddr,
-																							dcxCtrlData.arPotData[iCount].szData, &ulWrite, FALSE) )
-                  {
+								  if( ! m_pDoc->m_pDCXDevice->Write(dcxCtrlData.arPotData[iCount].iAddr,
+										dcxCtrlData.arPotData[iCount].szData, &ulWrite, FALSE) )
+								  {
 										m_pDoc->DisplayGeneralMessage(DCXDEV_ERROR_WRITE);
 										break;
 									}                                          
@@ -648,7 +650,7 @@ int			iRecvd;				// Number of bytes recieved
               // Take into account that its not a perfect world.  Clients open/close and
 							// so can the server.  Everything may not be in sync. The total lock should
 							// never be below zero.
-						  if(m_pDoc->m_VUMetersArray.m_aVUReadData[i].cLock < 0)
+				if(m_pDoc->m_VUMetersArray.m_aVUReadData[i].cLock < 0)
                 m_pDoc->m_VUMetersArray.m_aVUReadData[i].cLock = 0;
 
 

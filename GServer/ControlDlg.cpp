@@ -244,6 +244,8 @@ BOOL CControlDlg::OnInitDialog()
 	CDialog::OnInitDialog();
 
 	// Setup default values and update the dialog box
+
+	m_ShowControlData.SetCheck(m_pDoc->m_pdcxNetwork->iShowControlData);
 	m_iDelay=10;		// 10ms default delay
 	m_iModuleAddr=33;	// Default starting module is 33 for DCX
 	UpdateData(FALSE);
@@ -462,6 +464,7 @@ void CControlDlg::OnOK()
 		KillTimer(m_uiAutoScrollTimerID);
 		m_uiAutoScrollTimerID=0;
 	}
+
 	
 	CDialog::OnOK();
 }
