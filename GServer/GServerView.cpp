@@ -701,7 +701,7 @@ CGServerDoc*  pDoc;
   // Position tool bar window and make it on top.
 
 #define MODULE_SETUP_SCREEN_X		20
-#define MODULE_SETUP_SCREEN_Y		260			//180
+#define MODULE_SETUP_SCREEN_Y		300			//180
 
 
     m_tbCtrlModule.SetWindowPos(&wndTop, 
