@@ -63,6 +63,8 @@ protected:
 	virtual void OnOK();
 	afx_msg void OnWriteRegisterZero();
 	afx_msg void OnShowcontroldata();
+	afx_msg void OnOscOn();
+	afx_msg void OnOscOff();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 private:

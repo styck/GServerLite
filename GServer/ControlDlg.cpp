@@ -74,6 +74,8 @@ BEGIN_MESSAGE_MAP(CControlDlg, CDialog)
 	ON_WM_TIMER()
 	ON_BN_CLICKED(IDC_WRITE_REGISTER_ZERO, OnWriteRegisterZero)
 	ON_BN_CLICKED(IDC_SHOWCONTROLDATA, OnShowcontroldata)
+	ON_BN_CLICKED(IDC_OSC_ON, OnOscOn)
+	ON_BN_CLICKED(IDC_OSC_OFF, OnOscOff)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
@@ -273,7 +275,6 @@ void CControlDlg::HandleSliderMove(int iPos)
 
 	DCX_CTRLDATA  ctrlData;
 	int           iCount;
-	CONTROLDATA   ctrld;
 	ULONG         ulWrite;
 
 	char    chBuffer[64];	// throw away buffer to read the response from DCX
@@ -486,4 +487,93 @@ void CControlDlg::OnShowcontroldata()
 {
 	// TODO: Add your control notification handler code here
 	m_pDoc->m_pdcxNetwork->iShowControlData= m_ShowControlData.GetCheck();
+}
+
+
+
+//mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm
+// Name   : OnOscOn() 
+//          
+// Descr. : User clicked on a Oscillator On button. Find the oscillator level 
+//			control and move the slider to the -15 db level 
+//          
+// Return : void
+//-----------------------------------------------------------------------------
+
+void CControlDlg::OnOscOn() 
+{
+DCX_CTRL_DESC CtrlDesc;
+
+	for(int i=0; i < m_CControlListBox.GetCount(); i++)
+	{
+		// Loop through all the controls to find oscillator level
+
+		if(m_pDoc->m_dcxBinTable.GetControlDesc(i, &CtrlDesc))
+		{
+			// See if its the oscillator level
+
+			if(strcmp("OSCILLATOR LEVEL", CtrlDesc.szName) == 0)
+			{
+				m_iCurValue = -1;
+				m_CtrlSlider.SetRange(0, CtrlDesc.iNumEntr - 1, TRUE);
+
+				// We found the oscillator level so set the current selection
+				// to this index and set the member variable
+				m_iControl=i;
+				m_CControlListBox.SetCurSel(m_iControl);
+
+				// Move slider to -15 (Max entry minus 6 gets us there for current table)
+				m_CtrlSlider.SetPos(CtrlDesc.iNumEntr-6);
+				// and send the value out to the DCX via the HandleSliderMove
+				HandleSliderMove(CtrlDesc.iNumEntr-6);
+
+			}
+		}
+
+	}
+
+}
+	
+//mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm
+// Name   : OnOscOff() 
+//          
+// Descr. : User clicked on a Oscillator OFF button. Find the oscillator level 
+//			control and move the slider to the register zero value 
+//          
+// Return : void
+//-----------------------------------------------------------------------------
+
+
+void CControlDlg::OnOscOff() 
+{
+DCX_CTRL_DESC CtrlDesc;
+
+	for(int i=0; i < m_CControlListBox.GetCount(); i++)
+	{
+		// Loop through all the controls to find oscillator level
+
+		if(m_pDoc->m_dcxBinTable.GetControlDesc(i, &CtrlDesc))
+		{
+			// See if its the oscillator level
+
+			if(strcmp("OSCILLATOR LEVEL", CtrlDesc.szName) == 0)
+			{
+				m_iCurValue = -1;
+				m_CtrlSlider.SetRange(0, CtrlDesc.iNumEntr - 1, TRUE);
+
+				// We found the oscillator level so set the current selection
+				// to this index and set the member variable
+				m_iControl=i;
+				m_CControlListBox.SetCurSel(m_iControl);
+
+				// Move slider Register zero value
+				m_CtrlSlider.SetPos(CtrlDesc.iREG0);
+				// and send the value out to the DCX via the HandleSliderMove
+				HandleSliderMove(CtrlDesc.iREG0);
+
+			}
+		}
+
+	}
+	
 }

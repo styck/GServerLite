@@ -235,7 +235,7 @@ END
 
 IDD_DEVICE_SETUP DIALOGEX 0, 0, 430, 149
 STYLE WS_CHILD | WS_CLIPCHILDREN | WS_BORDER
-FONT 8, "MS Sans Serif"
+FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
     LTEXT           "IP Address",IDC_STATIC,13,38,44,10,0,WS_EX_STATICEDGE
     EDITTEXT        IDC_TCP_ADDRESS,61,38,70,12,ES_AUTOHSCROLL
@@ -278,10 +278,12 @@ BEGIN
     PUSHBUTTON      "Activate",IDC_CTRLS_ACTIVATEAUTO,301,39,34,10
     LTEXT           "Module Addr",IDC_STATIC,207,57,48,11
     EDITTEXT        IDC_DCXCTRLS_MODULE,259,57,32,12,ES_AUTOHSCROLL
-    PUSHBUTTON      "Set",IDC_DCXCTRS_SETADDR,301,57,34,10
+    PUSHBUTTON      "Set",IDC_DCXCTRS_SETADDR,301,59,34,10
     PUSHBUTTON      "Write Reg0",IDC_WRITE_REGISTER_ZERO,296,14,52,13
     CONTROL         "Show Control Data",IDC_SHOWCONTROLDATA,"Button",
                     BS_AUTOCHECKBOX | WS_TABSTOP,213,105,85,14
+    PUSHBUTTON      "OSC ON",IDC_OSC_ON,301,79,34,12
+    PUSHBUTTON      "OSC OFF",IDC_OSC_OFF,302,95,34,12
 END
 
 IDD_REG0DIALOG DIALOG DISCARDABLE  0, 0, 346, 193
@@ -338,7 +340,7 @@ BEGIN
             VALUE "OriginalFilename", "GServer.EXE\0"
             VALUE "PrivateBuild", "\0"
             VALUE "ProductName", "GServer Application\0"
-            VALUE "ProductVersion", "Version 9/23/99  Registry VUdelay and CTRLdelay \0"
+            VALUE "ProductVersion", "Version 9/28/99  Registry VUdelay and CTRLdelay \0"
             VALUE "SpecialBuild", "\0"
         END
     END
