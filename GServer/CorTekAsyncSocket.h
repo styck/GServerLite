@@ -7,7 +7,6 @@
 // CorTekAsyncSocket.h : header file
 
 #include "DCXBinTable.h"
-// #include "..\inc\DCXTCP_protocol.h"
 
 class     CGDCXNetwork; // external class
 
