@@ -20,6 +20,11 @@ static char THIS_FILE[]=__FILE__;
 #include  "GServerDoc.h"		// Includes many other header files
 #include	"DCXDeviceMap.h"
 
+#include "cputicker.h"
+
+// #define HIGHRESOLUTIONTIMER   // Use MultiMedia timers if defined
+
+
 extern void    CTekSleep(DWORD dwDelay);	// see vuthread2.cpp
 
 //////////////////////////////////////////////////////////////////////
@@ -29,9 +34,9 @@ extern void    CTekSleep(DWORD dwDelay);	// see vuthread2.cpp
 CGDCXNetwork::CGDCXNetwork(CGServerDoc *pDoc)
 {
 	m_pDoc = pDoc;
-	m_pAssListener  = NULL; //new CCorTekAsyncSocket(this);
-	m_iPort = 9191;
-	m_csIPAddress = "";
+	m_pAssListener  = NULL; 
+	m_iPort = 9191;         // Default Port address
+	m_csIPAddress = "";     // Default Server address
 
 	// Array of Connection Objects
 	//----------------------------
@@ -95,6 +100,7 @@ BOOL    CGDCXNetwork::IsStartedAsClient(void)
 ////////////////////////////////////////////////////////////////////
 // MEMBER FUNCTION: IsStartedAsServer(void)
 //
+// Returns true is we are started as a server
 //
 BOOL    CGDCXNetwork::IsStartedAsServer(void)
 {
@@ -125,7 +131,7 @@ BOOL    CGDCXNetwork::StartAsServer(LPCTSTR lpcs, UINT  iPort)
   // First lets initialize the precision of our multimedia timer
   // used for read/write delays
 
-#ifdef NOTUSED    // NEED TO TEST THIS MORE. CURRENTLY NOT WORKING
+#ifdef HIGHRESOLUTIONTIMER    // NEED TO TEST THIS MORE. CURRENTLY NOT WORKING
   if(timeBeginPeriod(1) != TIMERR_NOERROR) // Set it to 1ms
   {
     AfxMessageBox(_T("High resolution timing is not available on this CPU"));
@@ -185,7 +191,9 @@ BOOL    CGDCXNetwork::StartAsServer(LPCTSTR lpcs, UINT  iPort)
 // Clear out our state memory for the controls
 // We should fill this in with the register zero values
 //
-			ZeroMemory(&m_wCurrentState[0][0],512*80*sizeof(WORD));
+// No more than 256 unique controls
+
+			ZeroMemory(&m_wCurrentState[0][0],256*80*sizeof(WORD));
 
 //////////////////////////////////////////////////
 
@@ -527,10 +535,10 @@ int			iRecvd;				// Number of bytes recieved
 					ctrld = (CONTROLDATA *)m_chNetBufferIn;
 
 					// Do some error checking to keep the program from crashing
-					// The control number should never be 512 or greater
+					// The control number should never be 256 or greater
 					// and we are currently limited to 80 channels
 
-					if( (ctrld->wCtrl < 512) && (ctrld->wChannel < 80) )	
+					if( (ctrld->wCtrl < 256) && (ctrld->wChannel < 80) )	
 					{
 							// Save the value of this control on this channel (module)
 
@@ -550,19 +558,21 @@ int			iRecvd;				// Number of bytes recieved
 
 								for(iCount = 0; iCount < dcxCtrlData.iPotCount; iCount++)    
 								{
-									if( ! m_pDoc->m_pDCXDevice->Write(dcxCtrlData.arPotData[iCount].iAddr,
+
+                  if( ! m_pDoc->m_pDCXDevice->Write(dcxCtrlData.arPotData[iCount].iAddr,
 																							dcxCtrlData.arPotData[iCount].szData, &ulWrite))
-									{
+                  {
 										m_pDoc->DisplayGeneralMessage(DCXDEV_ERROR_WRITE);
 										break;
 									}                                          
-      
+                 
+
                   //////////////////////////////////////////////////////////////////
                   // Delay between writing a control value and reading the response
 
-										CTekSleep(7);		// Delay 6 ms so that we can read our response
-										
-										// Read the response which should be !ccggp\n. We do nothing with this
+                  CTekSleep(m_pDoc->m_dwCtrldelay);		// Delay 7 ms so that we can read our response
+
+                    // Read the response which should be !ccggp\n. We do nothing with this
 										// cc - target chip, gg - group on the DCX board the chip is in
 										// p - the target pot
 
@@ -728,7 +738,7 @@ int									iSent;
 					if( pCurrentSocket->IsOpened())
 							pCurrentSocket->Send(m_chNetBufferOut, iSize + sizeof(HDR_DCXTCP));
 				}
-				else
+				else if (uiWho == ALL)
 				{			// uiWho == ALL so send to all other clients
 					for(iCount = 0; iCount < MAX_ASYNC_SONNECTIONS; iCount++)
 					{
