@@ -599,7 +599,7 @@ int			iRecvd;				// Number of bytes recieved
 										// else simulate the same amount of delay
 										if(iShowControlData)
 											m_pDoc->DisplayGeneralMessage(dcxCtrlData.arPotData[iCount].szData);
-										else
+// Always delay per Gamble 10/12/99 email			else
 											CTekSleep(m_pDoc->m_dwBasedelay,25);		// Delay 2.5 ms as per Jim Gamble
 
 
@@ -617,8 +617,8 @@ int			iRecvd;				// Number of bytes recieved
           psocket->AcceptVuData(TRUE);
           break;
         case DCX_STOP_VU_DATA:
-//          psocket->AcceptVuData(FALSE);
-			m_pDoc->m_pDCXDevice->ResetBus();
+          psocket->AcceptVuData(FALSE);
+//			m_pDoc->m_pDCXDevice->ResetBus();
           break;
 
 
