@@ -65,7 +65,7 @@ BOOL CDCXRegistryEdit::GetDCXDelayData(DWORD * m_dwBasedelay, DWORD * m_dwVudela
 					&dwBufferSize ) != ERROR_SUCCESS ) 
 		{ 
 			TRACE( "No delay set, setting default values\n" ); 
-			dwValue = 90000;
+			dwValue = 104850;
 			::RegSetValueEx( hKey, 
 							szRegValue, 
 							0, 
@@ -89,7 +89,7 @@ BOOL CDCXRegistryEdit::GetDCXDelayData(DWORD * m_dwBasedelay, DWORD * m_dwVudela
 					&dwBufferSize ) != ERROR_SUCCESS ) 
 		{ 
 			TRACE( "No delay set, setting default values\n" ); 
-			dwValue = 4;
+			dwValue = 7;
 			::RegSetValueEx( hKey, 
 							szRegValue, 
 							0, 
@@ -113,7 +113,7 @@ BOOL CDCXRegistryEdit::GetDCXDelayData(DWORD * m_dwBasedelay, DWORD * m_dwVudela
 					&dwBufferSize ) != ERROR_SUCCESS ) 
 		{ 
 			TRACE( "No delay set, setting default values\n" ); 
-			dwValue = 6;
+			dwValue = 7;
 			::RegSetValueEx( hKey, 
 							szRegValue, 
 							0, 
