@@ -595,8 +595,12 @@ int			iRecvd;				// Number of bytes recieved
 
 										// If checkbox is checked on Control Test Dialog then
 										// lets show what the client sent us
+										// else simulate the same amount of delay
 										if(iShowControlData)
 											m_pDoc->DisplayGeneralMessage(dcxCtrlData.arPotData[iCount].szData);
+										else
+											CTekSleep(m_pDoc->m_dwBasedelay,25);		// Delay 2.5 ms as per Jim Gamble
+
 
 								}
 //								m_pDoc->DisplayGeneralMessage("&& Msg Data End &&");
