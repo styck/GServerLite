@@ -132,10 +132,6 @@ SOURCE=.\GServerView.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\LBShowAdd.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\MainFrm.cpp
 # End Source File
 # Begin Source File
@@ -198,10 +194,6 @@ SOURCE=.\GServerDoc.h
 # Begin Source File
 
 SOURCE=.\GServerView.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\LBShowAdd.h
 # End Source File
 # Begin Source File
 

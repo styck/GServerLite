@@ -86,8 +86,6 @@ IDB_MODULE_COMPUTER     BITMAP  DISCARDABLE     "res\\ComputerModule.bmp"
 IDB_VERDE               BITMAP  DISCARDABLE     "res\\verde.bmp"
 IDB_MODULE_MATRIX       BITMAP  DISCARDABLE     "res\\matrix.bmp"
 IDB_MODULE_CUE          BITMAP  DISCARDABLE     "res\\cue.bmp"
-IDB_CLIP                BITMAP  DISCARDABLE     "res\\ppwr_in.bmp"
-IDB_NO_CLIP             BITMAP  DISCARDABLE     "res\\bvu_input.bmp"
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -332,7 +330,7 @@ END
 
 IDD_DEVICE_SETUP DIALOGEX 0, 0, 430, 221
 STYLE WS_CHILD | WS_CLIPCHILDREN | WS_BORDER
-FONT 8, "MS Sans Serif"
+FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
     LTEXT           "IP Address",IDC_STATIC,20,28,44,10,0,WS_EX_STATICEDGE
     EDITTEXT        IDC_TCP_ADDRESS,67,28,70,12,ES_AUTOHSCROLL

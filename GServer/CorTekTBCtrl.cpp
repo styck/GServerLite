@@ -4,6 +4,7 @@
 //
 // CorTekTBCtrl.cpp : implementation file
 //
+// This is for the device setup tool bars
 
 #include "stdafx.h"
 #include "GServer.h"
@@ -45,9 +46,6 @@ BOOL CCorTekTBCtrl::OnEraseBkgnd(CDC* pDC)
 {
 RECT    r;
 CBrush  cbrush;
-
-	// TODO: Add your message handler code here and/or call default
-	//return CToolBarCtrl::OnEraseBkgnd(pDC);
 
 // Erase background of device setup
 
