@@ -597,22 +597,26 @@ int			iRecvd;				// Number of bytes recieved
             {
               // Get lock info into our vu data structure used in the vu thread
 
-              m_pDoc->m_VUMetersArray.m_aVUReadData[i].cLock+=m_chNetBufferIn[i];
 
 							// Also needs to be in the socket locks to turn them off
 							// when client is closed
 
 							m_pDoc->m_SocketVULocks[psocket->iSocketNumber][i] += m_chNetBufferIn[i];
 
-							// Take into account that its not a perfect world.  Clients open/close and
+              // validate the VU information on per Socket basis
+						  if(m_pDoc->m_SocketVULocks[psocket->iSocketNumber][i] < 0)
+								m_pDoc->m_SocketVULocks[psocket->iSocketNumber][i] = 0;
+              else
+                // the data is valid so we can use it
+                m_pDoc->m_VUMetersArray.m_aVUReadData[i].cLock+=m_chNetBufferIn[i];
+              
+              // Take into account that its not a perfect world.  Clients open/close and
 							// so can the server.  Everything may not be in sync. The total lock should
 							// never be below zero.
-
 						  if(m_pDoc->m_VUMetersArray.m_aVUReadData[i].cLock < 0)
                 m_pDoc->m_VUMetersArray.m_aVUReadData[i].cLock = 0;
 
-						  if(m_pDoc->m_VUMetersArray.m_aVUReadData[i].cLock < 0)
-								m_pDoc->m_SocketVULocks[psocket->iSocketNumber][i] = 0;
+
 
 #ifdef _DEBUG
 						wsprintf(chBuffer,"%d",m_pDoc->m_VUMetersArray.m_aVUReadData[i].cLock);
