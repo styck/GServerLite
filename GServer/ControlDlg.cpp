@@ -166,7 +166,9 @@ void CControlDlg::OnCtrlsActivateauto()
 		}	
 	}
 	else
+	{
 		MessageBox("Select a Control from the Control List before activiating",NULL,MB_OK);
+	}
 	
 }
 
@@ -178,9 +180,9 @@ void CControlDlg::OnCtrlsActivateauto()
 // Return : void
 //-----------------------------------------------------------------------------
 
-void CControlDlg::FillCtrlListBox()
+BOOL CControlDlg::FillCtrlListBox()
 {
-
+	BOOL bRet=TRUE;
 	DCX_CTRL_DESC CtrlDesc;
 	int           iCounter, iCtrlNum;
 	char          szBuffer[255];
@@ -202,8 +204,11 @@ void CControlDlg::FillCtrlListBox()
 		}
 	}
 	else
+	{
 		MessageBox("You must open a gserv configuration before testing",NULL, MB_OK);
-
+		bRet = FALSE;
+	}
+	return bRet;
 }
 
 //mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm
@@ -230,15 +235,18 @@ void CControlDlg::SetPointerToDoc(CGServerDoc *pDoc)
 //-----------------------------------------------------------------------------
 BOOL CControlDlg::OnInitDialog() 
 {
+	BOOL bRet;
 	CDialog::OnInitDialog();
 
 	// Setup default values and update the dialog box
 	m_iDelay=30;
 	m_iModuleAddr=33;
 	UpdateData(FALSE);
-
+ 
 	// Fill in the list of controls
-	FillCtrlListBox();
+	// If success then returns TRUE, else FALSE
+	bRet = FillCtrlListBox();
+	// should check bRet and close dialog if false 
 
 	return TRUE;
 }

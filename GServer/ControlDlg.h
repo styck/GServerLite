@@ -18,7 +18,7 @@ class CControlDlg : public CDialog
 // Construction
 public:
 	void SetPointerToDoc(CGServerDoc *pDoc);
-	void FillCtrlListBox();
+	BOOL FillCtrlListBox();
 	CControlDlg(CWnd* pParent = NULL);   // standard constructor
 
   CGServerDoc             *m_pDoc;

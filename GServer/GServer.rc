@@ -255,7 +255,7 @@ BEGIN
     LISTBOX         IDC_STATUS_LIST,31,76,212,20,LBS_SORT | 
                     LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_TABSTOP
     PUSHBUTTON      "Test Controls",IDC_TESTCONTROLS,255,25,50,14
-    PUSHBUTTON      "Clear Errors",IDC_CLEARERRORS,33,100,40,15
+    PUSHBUTTON      "Clear",IDC_CLEARERRORS,33,100,40,15
 END
 
 IDD_TESTCONTROLSSETUP DIALOG DISCARDABLE  0, 0, 361, 204
@@ -314,7 +314,7 @@ BEGIN
             VALUE "OriginalFilename", "GServer.EXE\0"
             VALUE "PrivateBuild", "\0"
             VALUE "ProductName", "GServer Application\0"
-            VALUE "ProductVersion", "Version 8/21/99  Registry VUdelay and CTRLdelay \0"
+            VALUE "ProductVersion", "Version 8/21/99- b  Registry VUdelay and CTRLdelay \0"
             VALUE "SpecialBuild", "\0"
         END
     END

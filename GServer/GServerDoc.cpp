@@ -223,10 +223,8 @@ BOOL    bRet = TRUE;
 		bRet = FALSE;
 	}
 
-	if(bRet)
-		DisplayGeneralMessage(IDS_SERVER_STARTED);
-	else
-		DisplayGeneralMessage(IDS_SERVER_FAILEDTOSTART);
+		if(!bRet)
+			DisplayGeneralMessage(IDS_SERVER_FAILEDTOSTART);
 
 	return bRet;
 };
@@ -243,7 +241,7 @@ BOOL    bRet = TRUE;
   {
 //	  m_pServerMonitorView->StopMessagePump();
 	  bRet = m_pdcxNetwork->ShutDown();
-	  DisplayGeneralMessage(IDS_SERVER_SHUTDOWN);
+//	  DisplayGeneralMessage(IDS_SERVER_SHUTDOWN);
   }
 	else
 		bRet = FALSE;
@@ -313,17 +311,21 @@ BOOL    CGServerDoc::DisplayGeneralMessage(LPSTR lps)
 {
 BOOL      bRet = TRUE;
 
-#ifdef _DEBUG
+//#ifdef _DEBUG
 
 // Display General messages in the status list box if we are debugging
 
 POSITION pos;
 CGServerView* pGServerView;
+int iCnt;
+
 	pos = GetFirstViewPosition();
 	pGServerView = (CGServerView *)GetNextView(pos);
 	pGServerView->m_clbStatusList.AddString(lps);
+	iCnt = pGServerView->m_clbStatusList.GetCount();
+	pGServerView->m_clbStatusList.SetCurSel(iCnt);	// Move to last selection
 
-#endif
+//#endif
 
     TRACE0((LPSTR) LPCTSTR(lps));
 
