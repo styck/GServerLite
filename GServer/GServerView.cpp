@@ -974,9 +974,14 @@ RECT      rClient;
 void CGServerView::OnChkNetServer() 
 {
 	CGServerDoc   *pDoc = GetDocument();
+
+
 	if(pDoc)	
   {
 		UpdateData(TRUE);		// Get status of server button
+
+
+///// A GAMBLE HACK - PRESS BUTTON COMMANDS, UNPRESS, AND THEN REPRESS
 
 		if(m_bServerStart)	// If it is down the start the server
     {
@@ -987,6 +992,45 @@ void CGServerView::OnChkNetServer()
 				pDoc->m_hEventKillVUThread = CreateEvent(NULL,FALSE, FALSE, NULL); // auto reset, initially reset
 				pDoc->m_hEventVUThreadKilled = CreateEvent(NULL,FALSE, FALSE, NULL); // auto reset, initially reset
 				pDoc->StartVUthread();	// Start the thread to read the VU meters and update the member display variables
+
+//////////////////////////////////////
+// HACK BUTTON UP COMMAND
+
+			// KILL Thread
+			// Signel the VU thread to exit
+
+			SetEvent(pDoc->m_hEventKillVUThread);		
+
+			// Wait until thread kills itself
+			// Cannot wait INFINITE since thread may have not been started
+			// so wait 900 ms
+
+			WaitForSingleObject(pDoc->m_hEventVUThreadKilled,900);  // CRASHES HERE IF SERVER STOPPED AND VUS ARE GOINS
+
+      // Shutdown netork after killing the VU thread
+
+			pDoc->ShutDownNetwork();
+
+      // Close these handles explicitly. These may be closed automatically
+      // by the system but we do it here to make sure.
+
+      CloseHandle(pDoc->m_hEventKillVUThread);
+      CloseHandle(pDoc->m_hEventVUThreadKilled);
+
+      pDoc->m_hEventKillVUThread = NULL;
+      pDoc->m_hEventVUThreadKilled = NULL;
+
+
+      // HACK BUTTON DOWN AGAIN
+
+			pDoc->StartServer(LPCTSTR(m_csTcpAddr), m_iPort);
+			MessageBeep(MB_OK);
+			pDoc->m_VUthread = NULL;											// The VU thread hasn't started yet
+			pDoc->m_hEventKillVUThread = CreateEvent(NULL,FALSE, FALSE, NULL); // auto reset, initially reset
+			pDoc->m_hEventVUThreadKilled = CreateEvent(NULL,FALSE, FALSE, NULL); // auto reset, initially reset
+			pDoc->StartVUthread();	// Start the thread to read the VU meters and update the member display variables
+
+
       }
 			else
       {
@@ -1012,7 +1056,6 @@ void CGServerView::OnChkNetServer()
 
 			pDoc->ShutDownNetwork();
 
-
       // Close these handles explicitly. These may be closed automatically
       // by the system but we do it here to make sure.
 
@@ -1023,6 +1066,8 @@ void CGServerView::OnChkNetServer()
       pDoc->m_hEventVUThreadKilled = NULL;
 
 		}
+
+
   }
 }
 
