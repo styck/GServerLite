@@ -269,7 +269,7 @@ BEGIN
             VALUE "LegalTrademarks", "VACS® is a registered trademark of CorTek Software, Inc.\0"
             VALUE "OriginalFilename", "GServer.EXE\0"
             VALUE "ProductName", "GServer Application\0"
-            VALUE "ProductVersion", "1, 0, 0, 1 8/16/98\0"
+            VALUE "ProductVersion", "Version 8/16/98\0"
         END
     END
     BLOCK "VarFileInfo"
