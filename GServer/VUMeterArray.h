@@ -15,7 +15,10 @@
 
 class CVUMeterArray : public CObject  
 {
-#define		MAX_VU_READ_DATA		256
+
+#define		MAX_VU_READ_DATA		80  // Sending all VUs for each module
+                                  // so we have a max of 80 modules with VU data
+
 // define some offsets here within the global array of VU meters
 // ... Francis ... ask me about this if I forget to tell you !!!!
 
