@@ -56,7 +56,7 @@ public:
 
   BOOL LoadBinTable(CString  &csFName)
   {
-    if(m_dcxBinTable.ReadDCXTableFile( (LPSTR)LPCSTR(csFName)) == 0)
+    if(m_dcxBinTable.ReadDCXTableFile( (LPSTR)LPCSTR(csFName)))
     {
       return TRUE;
     }

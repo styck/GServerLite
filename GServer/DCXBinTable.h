@@ -55,7 +55,6 @@ public:
   DCX_MEM_MAP     m_DcxMemMap;
   int             m_iLastError;
   LPSTR           m_pDCXBuffer;
-//  int             m_iChanAddrOffset;
                   
 public:
 	virtual void Serialize(CArchive& ar);
