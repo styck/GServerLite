@@ -233,7 +233,7 @@ FONT 10, "Courier"
 BEGIN
 END
 
-IDD_DEVICE_SETUP DIALOGEX 0, 0, 430, 221
+IDD_DEVICE_SETUP DIALOGEX 0, 0, 430, 104
 STYLE WS_CHILD | WS_CLIPCHILDREN | WS_BORDER
 FONT 8, "MS Sans Serif"
 BEGIN
@@ -243,7 +243,7 @@ BEGIN
     EDITTEXT        IDC_TCP_PORT,69,50,70,12,ES_AUTOHSCROLL
     CONTROL         "&Start Server",IDC_CHK_NET_SERVER,"Button",
                     BS_AUTOCHECKBOX | BS_PUSHLIKE | WS_TABSTOP,49,66,69,12
-    GROUPBOX        "TCP/IP Settings",IDC_STATIC,15,24,237,66,0,
+    GROUPBOX        "TCP/IP Settings",IDC_SETTINGS_FRAME,15,24,237,66,0,
                     WS_EX_DLGMODALFRAME | WS_EX_TRANSPARENT | 
                     WS_EX_CLIENTEDGE
     CONTROL         "Progress1",IDC_NUM_CONNECTIONS,"msctls_progress32",
@@ -280,7 +280,7 @@ BEGIN
         BEGIN
             VALUE "CompanyName", "CorTek Software, Inc.\0"
             VALUE "FileDescription", "GServer Application for VACS®\0"
-            VALUE "FileVersion", "1, 0, 0, 2\0"
+            VALUE "FileVersion", "1, 0, 0, 3\0"
             VALUE "InternalName", "GServer for the Gamble DCX\0"
             VALUE "LegalCopyright", "Copyright © CorTek Software, Inc. 1997 - 1998\0"
             VALUE "LegalTrademarks", "VACS® is a registered trademark of CorTek Software, Inc.\0"
@@ -327,7 +327,7 @@ BEGIN
         LEFTMARGIN, 7
         RIGHTMARGIN, 423
         TOPMARGIN, 7
-        BOTTOMMARGIN, 214
+        BOTTOMMARGIN, 97
     END
 END
 #endif    // APSTUDIO_INVOKED

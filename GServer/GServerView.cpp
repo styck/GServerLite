@@ -316,7 +316,7 @@ CGServerView::CGServerView()
   
   m_dwCurModuleSel = 0;   // Default to the first module
   m_iServerType = 0;      // Default to CUSTOM configuration
-
+  m_bServerStart = FALSE;
 }
 
 CGServerView::~CGServerView()
@@ -480,6 +480,8 @@ BOOL CGServerView::Create(LPCTSTR lpszClassName, LPCTSTR lpszWindowName, DWORD d
 {
 BOOL      bRet;
 RECT      r;
+RECT      Rect;
+
 CBitmap   cbmp;
 BITMAP    bmpInfo;
 int       iIdx;
@@ -607,7 +609,8 @@ CGServerDoc*  pDoc;
   // Position tool bar window and make it on top.
 
 #define MODULE_SETUP_SCREEN_X		12
-#define MODULE_SETUP_SCREEN_Y		160
+#define MODULE_SETUP_SCREEN_Y		170
+
 
   m_tbCtrlModule.SetWindowPos(&wndTop, 
 															MODULE_SETUP_SCREEN_X, MODULE_SETUP_SCREEN_Y, 
@@ -1054,7 +1057,7 @@ void CGServerView::Serialize(CArchive& ar)
     UpdateData(TRUE);
 		ar << m_iPort;       
 		ar << m_csTcpAddr;                
-		ar << m_bServerStart;
+//		ar << m_bServerStart;
     ar << m_iServerType;
 
 	}
@@ -1063,7 +1066,7 @@ void CGServerView::Serialize(CArchive& ar)
 
 		ar >> m_iPort;       
 		ar >> m_csTcpAddr;                
-		ar >> m_bServerStart;
+//		ar >> m_bServerStart;
     ar >> m_iServerType;
     UpdateData(FALSE);
 
