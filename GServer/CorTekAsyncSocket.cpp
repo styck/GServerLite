@@ -93,7 +93,7 @@ BOOL	bOpt = TRUE;
 int									iErr;
 
 
-  if(!CAsyncSocket::SetSockOpt(SO_RCVBUF, &iSize, sizeof(int), SOL_SOCKET))
+  if(!CCorTekAsyncSocket::SetSockOpt(SO_RCVBUF, &iSize, sizeof(int), SOL_SOCKET))
   {
 			iErr=GetLastError();
 			bRet=FALSE;

@@ -132,7 +132,7 @@ BOOL    CGDCXNetwork::StartAsServer(LPCTSTR lpcs, UINT  iPort)
 
 				wsprintf(chBufferVUType, "*%03dXVUg\n", cModule.GetModuleAddress(i));
 				m_pDoc->m_pDCXDevice->Write(cModule.GetModuleAddress(i), chBufferVUType, &ulIO, FALSE);	// Write VU type command
-				Sleep(10);
+				Sleep(50);
 				m_pDoc->m_pDCXDevice->Read(chBufferVUType, 64, &ulIO);		// Read response and discard
 		}			
   }
