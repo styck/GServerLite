@@ -52,9 +52,7 @@ CGServerView::CGServerView()
 	m_csNumClients = _T("");
 	//}}AFX_DATA_INIT
 
-	
-	// TODO: add construction code here
-	m_dwCurModuleSel = 0;
+  m_dwCurModuleSel = 0;   // Default to the first module
 
 }
 
@@ -124,7 +122,6 @@ CGServerDoc* CGServerView::GetDocument() // non-debug version is inline
 
 void CGServerView::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint) 
 {
-	// TODO: Add your specialized code here and/or call the base class
 
 	CGServerDoc   *pDoc = GetDocument();
 
@@ -133,8 +130,8 @@ void CGServerView::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
 
 	if(pDoc)
   {
-		m_iPort       = pDoc->m_pdcxNetwork->m_iPort;
-		m_csTcpAddr   = pDoc->m_pdcxNetwork->m_csIPAddress;
+		m_iPort       = pDoc->m_pdcxNetwork->m_iPort;         // Port number
+		m_csTcpAddr   = pDoc->m_pdcxNetwork->m_csIPAddress;   // IP Address
 
     // Show the number of clients currently connected
 
@@ -149,6 +146,7 @@ void CGServerView::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
     m_NumClientsProgress.SetPos(0);
 
     // indicate the number of client connections
+
     m_NumClientsProgress.SetPos(pDoc->m_pdcxNetwork->m_iConnInUse);
 
   }
@@ -160,14 +158,16 @@ void CGServerView::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
   int           iIdx;
   int           iBitmap;
 
-#define VU_BITMAP_OFFSET  6
+#define VU_BITMAP_OFFSET  6   // Offset for a bitmap to a bitmap with VU
 
 	for(iIdx = 0; iIdx < DCX_DEVMAP_MAXSIZE; iIdx ++)
   {
 
+    //--------------------------------------------------------------------
     // check the VU lock flag.  If it is not zero then we are sending
     // VU data for this module.  Set the bitmap offset to display module
     // bitmap indicating VU data is being sent.
+    //--------------------------------------------------------------------
 
 		if(pDoc->m_VUMetersArray.m_aVUReadData[iIdx].cLock)
       iBitmap = VU_BITMAP_OFFSET;
@@ -225,6 +225,7 @@ CString   csTipText;
 CGServerDoc*  pDoc;
 
 
+//-------------------------------------------------------
 // Create the Window ... first
 // and then we can get the Document binded to this View
 //-------------------------------------------------------
@@ -284,7 +285,9 @@ CGServerDoc*  pDoc;
   tbb.dwData  = 0;
 
 
+  //-------------------------------------------------------
   // Build the device bitmap of the system
+  //-------------------------------------------------------
 
   for(iIdx = 0; iIdx < DCX_DEVMAP_MAXSIZE; iIdx ++)
   {
@@ -393,11 +396,10 @@ CModule				cm_Module;		// Converts module number to DCX address
 	if(pttctrl == NULL)
 		return FALSE;
 
-
 	ASSERT(pttctrl->m_hWnd != (HWND)pNMHDR->hwndFrom || pNMHDR->code == TTN_NEEDTEXT );
 
 
-// nID is the module number (1-80)
+  // nID is the module number (1-80)
 
 	if (nID != 0 && pttctrl->m_hWnd == (HWND)pNMHDR->hwndFrom) // will be zero on a separator
 	{
@@ -623,6 +625,13 @@ void CGServerView::OnInitialUpdate()
 	
 }
 
+
+/////////////////////////////////////////////////////////////////////
+//  MEMBER FUNCTION: void CGServerView::OnPaint() 
+//
+//  Update the background of the main window
+//
+
 void CGServerView::OnPaint() 
 {
 CDC       dcMem ;
@@ -641,7 +650,7 @@ RECT      rClient;
     CPaintDC  dc(this); // device context for painting
 
 	  GetClientRect(&rClient);
-	  cBmp.LoadBitmap(IDB_CIRCUIT_1);
+	  cBmp.LoadBitmap(IDB_BITMAP1);
 	  cBmp.GetBitmap(&bmpInfo);
 
 		  CGServerDoc* pDoc = GetDocument();

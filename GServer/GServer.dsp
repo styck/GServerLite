@@ -129,13 +129,6 @@ SOURCE=.\GServer.cpp
 # Begin Source File
 
 SOURCE=.\GServer.rc
-
-!IF  "$(CFG)" == "GServer - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "GServer - Win32 Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
@@ -353,6 +346,10 @@ SOURCE=.\res\softblu2.bmp
 # Begin Source File
 
 SOURCE=.\Splsh16.bmp
+# End Source File
+# Begin Source File
+
+SOURCE=.\res\test.bmp
 # End Source File
 # Begin Source File
 
