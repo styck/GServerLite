@@ -25,7 +25,25 @@ static char THIS_FILE[] = __FILE__;
 #define CYCLECOUNT
 
 
-// #define BOGUS_DATA         // Define to send fake vu data
+#define BOGUS_DATA         // Define to send fake vu data
+
+#ifdef BOGUS_DATA
+
+	UINT m_nNumMixers;
+	HMIXER m_hMixer;
+	MIXERCAPS m_mxcaps;
+
+	CString m_strWaveLineName, m_strMeterControlName;
+	LONG m_lMinimum, m_lMaximum;
+	DWORD m_dwMeterControlID;
+
+	BOOL amdUninitialize();
+	BOOL amdInitialize();
+	BOOL amdGetWaveMeterControl();
+	BOOL amdGetWaveMeterValue(LONG &lVal);
+
+#endif
+
 
 ////////////////////////////////////////////
 //
@@ -132,6 +150,14 @@ CGServerDoc*	m_pDoc = (CGServerDoc*)pParam;
 
 #ifdef BOGUS_DATA
 WORD wFlag;     //  TEST TEST
+
+	amdInitialize();
+	// get the Control ID and the names
+	amdGetWaveMeterControl();
+
+
+
+
 #endif
 
 	if(m_pDoc != NULL)
@@ -200,6 +226,11 @@ WORD wFlag;     //  TEST TEST
 					//--------------------------------------
 #ifdef BOGUS_DATA
 
+		LONG lval;
+		amdGetWaveMeterValue(lval); // get value from soundcard mixer
+		wsprintf(chBuffer1,"!%d.4,%d.4,%d.4,%d.4,%d.4,%d.4,%d.4,%d.4,/123",lval, lval, lval, lval, lval, lval, lval, lval);
+		TRACE0(chBuffer1);
+#ifdef NOTUSED
           if(wFlag & 1)
           {
               lstrcpy(chBuffer1, "!0000,0000,0000,0000,0000,0000,0000,0000,/123");
@@ -211,6 +242,8 @@ WORD wFlag;     //  TEST TEST
               lstrcpy(chBuffer1, "!4000,2000,3000,2500,2000,1500,1000,0500,/123");
 //              TRACE0 (chBuffer1);
           }
+
+#endif
 
 #endif
 
@@ -393,6 +426,11 @@ WORD wFlag;     //  TEST TEST
 
 	}
 
+
+#ifdef BOGUS_DATA	
+	amdUninitialize();
+#endif
+
 	SetEvent(m_pDoc->m_hEventVUThreadKilled);		// Tell the GServerDOC destructor that we have died
 
 	return 0;
@@ -400,3 +438,114 @@ WORD wFlag;     //  TEST TEST
 
 
 
+BOOL amdInitialize()
+{
+	// get the number of mixer devices present in the system
+	m_nNumMixers = ::mixerGetNumDevs();
+
+	m_hMixer = NULL;
+	::ZeroMemory(&m_mxcaps, sizeof(MIXERCAPS));
+
+	// open the first mixer
+	// A "mapper" for audio mixer devices does not currently exist.
+	if (m_nNumMixers != 0)
+	{
+		if (::mixerOpen(&m_hMixer,
+						0,
+						0,
+						NULL,
+						MIXER_OBJECTF_MIXER)
+			!= MMSYSERR_NOERROR)
+			return FALSE;
+
+		if (::mixerGetDevCaps((UINT)m_hMixer, &m_mxcaps, sizeof(MIXERCAPS))
+			!= MMSYSERR_NOERROR)
+			return FALSE;
+	}
+
+	return TRUE;
+}
+
+BOOL amdUninitialize()
+{
+	BOOL bSucc = TRUE;
+
+	if (m_hMixer != NULL)
+	{
+		bSucc = ::mixerClose(m_hMixer) == MMSYSERR_NOERROR;
+		m_hMixer = NULL;
+	}
+
+	return bSucc;
+}
+
+BOOL amdGetWaveMeterControl()
+{
+	m_strWaveLineName.Empty();
+	m_strMeterControlName.Empty();
+
+	if (m_hMixer == NULL)
+		return FALSE;
+
+	// get dwLineID
+	MIXERLINE mxl;
+	mxl.cbStruct = sizeof(MIXERLINE);
+	mxl.dwComponentType = MIXERLINE_COMPONENTTYPE_SRC_WAVEOUT;
+	if (::mixerGetLineInfo((HMIXEROBJ)m_hMixer,
+		                   &mxl,
+			    		   MIXER_OBJECTF_HMIXER |
+				    	   MIXER_GETLINEINFOF_COMPONENTTYPE)
+		!= MMSYSERR_NOERROR)
+		return FALSE;
+
+	// get dwControlID
+	MIXERCONTROL mxc;
+	MIXERLINECONTROLS mxlc;
+	mxlc.cbStruct = sizeof(MIXERLINECONTROLS);
+	mxlc.dwLineID = mxl.dwLineID;
+	mxlc.dwControlType = MIXERCONTROL_CONTROLTYPE_PEAKMETER;
+	mxlc.cControls = 1;
+	mxlc.cbmxctrl = sizeof(MIXERCONTROL);
+	mxlc.pamxctrl = &mxc;
+	if (::mixerGetLineControls((HMIXEROBJ)m_hMixer,
+		                       &mxlc,
+			    			   MIXER_OBJECTF_HMIXER |
+				    		   MIXER_GETLINECONTROLSF_ONEBYTYPE)
+	    != MMSYSERR_NOERROR)
+		return FALSE;
+
+	// record dwControlID
+	m_strWaveLineName = mxl.szName;
+	m_strMeterControlName = mxc.szName;
+	m_lMinimum = mxc.Bounds.lMinimum;
+	m_lMaximum = mxc.Bounds.lMaximum;
+	m_dwMeterControlID = mxc.dwControlID;
+
+	return TRUE;
+}
+
+BOOL amdGetWaveMeterValue(LONG &lVal)
+{
+	if (m_hMixer == NULL ||
+		m_strWaveLineName.IsEmpty() || m_strMeterControlName.IsEmpty())
+		return FALSE;
+
+	MIXERCONTROLDETAILS_SIGNED mxcdMeter;
+    MIXERCONTROLDETAILS mxcd;
+	mxcd.cbStruct = sizeof(MIXERCONTROLDETAILS);
+    mxcd.dwControlID = m_dwMeterControlID;
+    mxcd.cChannels = 1;
+    mxcd.cMultipleItems = 0;
+    mxcd.cbDetails = sizeof(MIXERCONTROLDETAILS_SIGNED);
+    mxcd.paDetails = &mxcdMeter;
+	if (::mixerGetControlDetails((HMIXEROBJ)m_hMixer,
+		                         &mxcd,
+		                         MIXER_OBJECTF_HMIXER |
+				    			 MIXER_GETCONTROLDETAILSF_VALUE)
+		!= MMSYSERR_NOERROR)
+		return FALSE;
+	
+	lVal = mxcdMeter.lValue;
+
+	return TRUE;
+}
