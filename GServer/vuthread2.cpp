@@ -382,7 +382,7 @@ WORD wFlag;     //  TEST TEST
 					// since the client is sending control data and we are not
 					// locking our resource at this time because of speed
 
-					if( chBuffer1[1] != '$' )
+//					if( chBuffer1[1] != '$' )
 	          m_pDoc->m_pdcxNetwork->BroadcastMsgType(pVUData, sizeof(VU_READ), DCX_VU_DATA, NULL, 0);
 
 				}
