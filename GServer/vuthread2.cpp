@@ -11,6 +11,7 @@
 #include "VUthread2.h"
 #include "gserverdoc.h"
 #include	"VUMeterArray.h"
+#include "DCXReadRegistry.h"
 
 
 #ifdef _DEBUG
@@ -18,6 +19,9 @@
 #undef THIS_FILE
 static char THIS_FILE[] = __FILE__;
 #endif
+
+
+#define HIGHRESOLUTIONTIMER   // Use MultiMedia timers if defined
 
 /////////////////////////////////////////////////////////////////////////////
 // This RW_DELAY is being changed from 4 to 7 per Gamble's request after his 
@@ -37,7 +41,7 @@ static char THIS_FILE[] = __FILE__;
 // The precision is set in the GDCXNetwork.cpp file in the StartAsServer() function
 //
 
-#ifdef NOTUSED
+#ifdef HIGHRESOLUTIONTIMER
 void    CTekSleep(DWORD dwDelay )
 {
   DWORD  dwStartTime;
@@ -66,7 +70,7 @@ void    CTekSleep(DWORD dwDelay )
 
   while(dwDelay -- > 0 )
   {
-    dwTickCountDelay = PPRO_NOP_MSEC_COUNTER;
+    dwTickCountDelay = m_pDoc->m_dwBasedelay;
     while(dwTickCountDelay > 0)
     {
       dwTickCountDelay --;
@@ -90,13 +94,14 @@ char	chClip1[8];
 char	chPeakVU[5];
 char	chBufferVUType[128];
 char  chBuffer1[sizeof(DCXPORT_WRITE_INPUT )];
+
 DCXPORT_WRITE_INPUT   *RBuffer=(DCXPORT_WRITE_INPUT *)chBuffer1; //->arChar;
 ULONG   ulIO;
 int     iVUtoRead;
 VU_READ *pVUData;		// Data structure for our VU data
 
-
 CGServerDoc*	m_pDoc = (CGServerDoc*)pParam;
+
 
 	if(m_pDoc != NULL)
 	{
@@ -141,7 +146,7 @@ CGServerDoc*	m_pDoc = (CGServerDoc*)pParam;
             // Delay between write and read as selected above by the #define
             // This is the delay for the VU reads
 
-            CTekSleep(RW_DELAY);
+            CTekSleep(m_pDoc->m_dwVudelay);
 
 						// Read ALL the VU data
             // If we read an ACK from the control data then ignore it and
