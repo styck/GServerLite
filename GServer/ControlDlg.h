@@ -32,6 +32,7 @@ public:
 // Dialog Data
 	//{{AFX_DATA(CControlDlg)
 	enum { IDD = IDD_TESTCONTROLSSETUP };
+	CButton	m_ShowControlData;
 	CListBox	m_CControlListBox;
 	CSliderCtrl	m_CtrlSlider;
 	CEdit	m_CtrlRdOut;
@@ -61,6 +62,7 @@ protected:
 	afx_msg void OnTimer(UINT nIDEvent);
 	virtual void OnOK();
 	afx_msg void OnWriteRegisterZero();
+	afx_msg void OnShowcontroldata();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 private:

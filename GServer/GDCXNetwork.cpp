@@ -42,7 +42,7 @@ CGDCXNetwork::CGDCXNetwork(CGServerDoc *pDoc)
 	m_pDoc = pDoc;
 	m_pAssListener  = NULL; 
 	m_iPort = 9191;         // Default Port address
-
+	iShowControlData = 0;	// Default don't show control data
 
 	// Lets get our host name and find the IP address to display
 
@@ -590,9 +590,11 @@ int			iRecvd;				// Number of bytes recieved
 
 										lstrcpy(chBuffer,dcxCtrlData.arPotData[iCount].szData); // must pass the address in string
 										m_pDoc->m_pDCXDevice->Read(chBuffer, 64, &ulIO);
-#ifdef _DEBUG
-										m_pDoc->DisplayGeneralMessage(dcxCtrlData.arPotData[iCount].szData);
-#endif
+
+										// If checkbox is checked on Control Test Dialog then
+										// lets show what the client sent us
+										if(iShowControlData)
+											m_pDoc->DisplayGeneralMessage(dcxCtrlData.arPotData[iCount].szData);
 
 								}
 //								m_pDoc->DisplayGeneralMessage("&& Msg Data End &&");

@@ -63,6 +63,7 @@ public:
 	BOOL		m_bSendingVUData[MAX_ASYNC_SONNECTIONS];	// true if sending VU data on socket
 
 public:
+	int iShowControlData;
   // General Network Interface Funvtions
   //------------------------------------
 

@@ -52,6 +52,7 @@ void CControlDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CControlDlg)
+	DDX_Control(pDX, IDC_SHOWCONTROLDATA, m_ShowControlData);
 	DDX_Control(pDX, IDC_CTRLS_LIST, m_CControlListBox);
 	DDX_Control(pDX, IDC_CTRLS_SLIDER, m_CtrlSlider);
 	DDX_Control(pDX, IDC_CTRLS_RDOUT, m_CtrlRdOut);
@@ -72,6 +73,7 @@ BEGIN_MESSAGE_MAP(CControlDlg, CDialog)
 	ON_WM_VSCROLL()
 	ON_WM_TIMER()
 	ON_BN_CLICKED(IDC_WRITE_REGISTER_ZERO, OnWriteRegisterZero)
+	ON_BN_CLICKED(IDC_SHOWCONTROLDATA, OnShowcontroldata)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
@@ -475,4 +477,10 @@ void CControlDlg::OnWriteRegisterZero()
 	dlg.m_pDoc = m_pDoc;				// Make sure it knows about the document functions
 	int ret =  dlg.DoModal();			// do it
 
+}
+
+void CControlDlg::OnShowcontroldata() 
+{
+	// TODO: Add your control notification handler code here
+	m_pDoc->m_pdcxNetwork->iShowControlData= m_ShowControlData.GetCheck();
 }
