@@ -49,7 +49,6 @@ CGServerView::CGServerView()
 	//{{AFX_DATA_INIT(CGServerView)
 	m_csTcpAddr = _T("");
 	m_iPort = 0;
-	m_bServerStart = FALSE;
 	//}}AFX_DATA_INIT
 
 	
@@ -134,8 +133,6 @@ void CGServerView::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
   {
 		m_iPort       = pDoc->m_pdcxNetwork->m_iPort;
 		m_csTcpAddr   = pDoc->m_pdcxNetwork->m_csIPAddress;
-
-		m_bServerStart = pDoc->m_pdcxNetwork->IsStartedAsServer();
 
 		UpdateData(FALSE);
   }
@@ -660,7 +657,6 @@ void CGServerView::OnChkNetServer()
     }
 		else
 		{
-			pDoc->ShutDownNetwork();
 
 			// KILL Thread
 			// Signel the VU thread to exit
@@ -669,9 +665,17 @@ void CGServerView::OnChkNetServer()
 
 			// Wait until thread kills itself
 			// Cannot wait INFINITE since thread may have not been started
-			// so wait 500 ms
+			// so wait 900 ms
 
-			WaitForSingleObject(pDoc->m_hEventVUThreadKilled,500);
+			WaitForSingleObject(pDoc->m_hEventVUThreadKilled,900);  // CRASHES HERE IF SERVER STOPPED AND VUS ARE GOINS
+
+      // Shutdown netork after killing the VU thread
+
+			pDoc->ShutDownNetwork();
+
+
+      // Close these handles explicitly. These may be closed automatically
+      // by the system but we do it here to make sure.
 
       CloseHandle(pDoc->m_hEventKillVUThread);
       CloseHandle(pDoc->m_hEventVUThreadKilled);
