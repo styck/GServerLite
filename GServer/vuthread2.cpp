@@ -49,19 +49,12 @@ UINT ThreadProc(LPVOID pParam)
 	// TODO: Add your specialized code here and/or call the base class
 
 	
-BOOL	bErr;
 int		iAddr;
-char	chClip1[4];
-char	chClip2[4];
-
+char	chClip1[8];
 char	chPeakVU[5];
-char	chAverageVU[5];
-
-char	chBufferVUType[64];
-char	chBufferVUType2[64];
-
-char    chBuffer1[64];
-char    chBuffer2[64];
+char	chBufferVUType[128];
+char  chBuffer1[sizeof(DCXPORT_WRITE_INPUT )];
+DCXPORT_WRITE_INPUT   *RBuffer=(DCXPORT_WRITE_INPUT *)chBuffer1; //->arChar;
 
 
 
@@ -79,7 +72,7 @@ CGServerDoc*	m_pDoc = (CGServerDoc*)pParam;
 		// Loop until we get an EventKill from someone
 		// Read the VU's for each module and place in its associated array
 
-		while(TRUE)
+    while(TRUE)
 		{
 
 // Look for the EventKill to exit the thread
@@ -102,159 +95,37 @@ CGServerDoc*	m_pDoc = (CGServerDoc*)pParam;
 				// Set the module address
 
 				iAddr = pVUData->iAddr;
-		
-				bErr = FALSE;		
-
-#ifdef NOTUSED
-				char szTemp[80];
-        wsprintf(szTemp,"%d %d %d %d ",iVUtoRead,pVUData->iAddr, pVUData->iVUType, pVUData->iLock);
-        m_pDoc->DisplayGeneralMessage(szTemp);
-#endif
-
 				if(pVUData->iLock == 1)	// Use this to determine if we should read this
 				{
 
-					// Depending on the type of VU, send commands to DCX
-					// Comments are for INPUT MODULE ONLY
+            //ZeroMemory(chBuffer1, sizeof(DCXPORT_WRITE_INPUT ));
+						wsprintf(chBufferVUType, "*%03dXVU?\n", iAddr);			// ALL VU DATA
+            OutputDebugString (chBufferVUType);
 
-					switch(pVUData->iVUType)
-					{
-						// Pre fader VU
-						case 1:	
-								wsprintf(chBufferVUType, "*%03dXVUa\n", iAddr);			// PRE VU
-								wsprintf(chBuffer1, "*%03dXVU0\n", iAddr);					// Peak
-								wsprintf(chBuffer2, "*%03dXVU1\n", iAddr);					// Avg.
-						break;
-				
-						// Post fader VU
-						case 2:	
-								wsprintf(chBufferVUType, "*%03dXVUb\n", iAddr);			// POST VU
-								wsprintf(chBuffer1, "*%03dXVU2\n", iAddr);					// Peak 
-								wsprintf(chBuffer2, "*%03dXVU3\n", iAddr);					// Avg. 
-						break;
-				
-						// Comp fader VU
-						case 3:	
-						case 7:	
-								wsprintf(chBufferVUType, "*%03dXVUc\n", iAddr);			// COMP VU
-								wsprintf(chBuffer1, "*%03dXVU4\n", iAddr);					// Peak
-								// Comp/Gate Averages not needed
-								wsprintf(chBufferVUType2, "*%03dXVUd\n", iAddr);		// NO COMP VU
-								wsprintf(chBuffer2, "*%03dXVU5\n", iAddr);					// Avg. 
-						break;
-				
-						// Gate fader VU
-						case 4:	
-						case 8:	
-								wsprintf(chBufferVUType, "*%03dXVUe\n", iAddr);		// GATE VU
-								wsprintf(chBuffer1, "*%03dXVU6\n", iAddr);				// Peak
-								// Comp/Gate Averages not needed
-								wsprintf(chBufferVUType2, "*%03dXVUf\n", iAddr);	// NO GATE VU
-								wsprintf(chBuffer2, "*%03dXVU7\n", iAddr);				// Avg. 
-						break;
-				
-						default:
-							bErr = TRUE;
-						break;
-				
-					}
-
-	///////////////////////////////////////////////////////////////////////
-
-					if( ! bErr)
-					{
-
-	///////////////////////////////////////////////////////////////////////
-	// Handle pre and post the same
-
-						if((pVUData->iVUType == 1) || (pVUData->iVUType == 2))
-						{
-
-	///////////////////////////////////////////////////////////////////////
-	// Write VU0 read command for PEAK data
-
-								m_pDoc->m_pDCXDevice->Write(iAddr, chBuffer1, &ulIO);
+  					m_pDoc->m_pDCXDevice->Write(iAddr, chBufferVUType, &ulIO);
 
 						// Delay between write and read as selected by user
 
-                CTekSleep(RW_DELAY);
+            CTekSleep(RW_DELAY);
 
-						// Read VU0 peak data
+						// Read ALL the VU data
 
-								m_pDoc->m_pDCXDevice->Read(chBuffer1, 64, &ulIO);
+            lstrcpy(chBuffer1, chBufferVUType);
+						m_pDoc->m_pDCXDevice->Read(chBuffer1, sizeof(DCXPORT_WRITE_INPUT ), &ulIO);
 
-	///////////////////////////////////////////////////////////////////////
-	// Write VU1 read command for AVERAGE data
+//            lstrcpy(chBuffer1,"!0000,0001,0002,0003,0004,0005,0006,0007,/123");
 
-								m_pDoc->m_pDCXDevice->Write(iAddr, chBuffer2, &ulIO);
-
-						// Delay between write and read as selected by user
-
-                CTekSleep(RW_DELAY);
-								
-						// Read VU1 average data
-
-								m_pDoc->m_pDCXDevice->Read(chBuffer2, 64, &ulIO);
-
-						}
-
-	//////////////////////////////////////////////////////////////////
-	// Handle comp and gate the same
-						if(pVUData->iVUType == 3 || pVUData->iVUType == 7) 
-						{
-	///////////////////////////////////////////////////////////////////////
-	// Write VU read command for Peak data
-
-								m_pDoc->m_pDCXDevice->Write(iAddr, chBuffer1, &ulIO);
-
-						// Delay between write and read as selected by user
-
-                CTekSleep(RW_DELAY);
-
-						// Read VU peak data
-
-								m_pDoc->m_pDCXDevice->Read(chBuffer1, 64, &ulIO);
-
-						}
-              
-             if (pVUData->iVUType == 4 || pVUData->iVUType == 8)
-						{
-
-	///////////////////////////////////////////////////////////////////////
-	// Write VU read command for Peak data
-
-								m_pDoc->m_pDCXDevice->Write(iAddr, chBuffer1, &ulIO);
-
-						// Delay between write and read as selected by user
-
-                CTekSleep(RW_DELAY);
-
-						// Read VU peak data
-
-								m_pDoc->m_pDCXDevice->Read(chBuffer1, 64, &ulIO);
-
-
-	///////////////////////////////////////////////////////////////////////
-	// Write VU read command for Average data
-
-								m_pDoc->m_pDCXDevice->Write(iAddr, chBuffer2, &ulIO);
-
-						// Delay between write and read as selected by user
-
-                CTekSleep(RW_DELAY);
-								
-						// Read VU average data
-
-								m_pDoc->m_pDCXDevice->Read(chBuffer2, 64, &ulIO);
-
-						}
-
+            OutputDebugString (chBuffer1);
+            //OutputDebugString (RBuffer->arChar);
 	////////////////////////////////////////////////////
 
-					// Now parse the data and dipslay it ...
-					// "!0000/000"  ... this parsing needs
+					// Now parse the data and display it ...
+					// "!0000,0000,0000,0000,0000,0000,0000,0000,/000"  ... this parsing needs
 					// to be done better .. maybe
 					//--------------------------------------
+
+        ///////////////////////////////////////////////////////////////////////////////
+				// Set the VU0 data
 
 										chPeakVU[0] = chBuffer1[1];
 										chPeakVU[1] = chBuffer1[2];
@@ -262,57 +133,130 @@ CGServerDoc*	m_pDoc = (CGServerDoc*)pParam;
 										chPeakVU[3] = chBuffer1[4];
 										chPeakVU[4] = 0;
 
-										chClip1[0] = chBuffer1[6];
-										chClip1[1] = chBuffer1[7];
-										chClip1[2] = chBuffer1[8];
-										chClip1[3] = 0;
-  
-										chAverageVU[0] = chBuffer2[1];
-										chAverageVU[1] = chBuffer2[2];
-										chAverageVU[2] = chBuffer2[3];
-										chAverageVU[3] = chBuffer2[4];
-										chAverageVU[4] = 0;
+										pVUData->iVUValue[0] = atoi(chPeakVU);
 
-										chClip2[0] = chBuffer2[6];
-										chClip2[1] = chBuffer2[7];
-										chClip2[2] = chBuffer2[8];
-										chClip2[3] = 0;
+										if(pVUData->iVUValue[0] < 0 || pVUData->iVUValue[0] > 4095)
+											pVUData->iVUValue[0] = 0;
 
 
-				// Set the VU Peak and Average data
+        ///////////////////////////////////////////////////////////////////////////////
+				// Set the VU1 data
+                    
+                    chPeakVU[0] = chBuffer1[6];
+										chPeakVU[1] = chBuffer1[7];
+										chPeakVU[2] = chBuffer1[8];
+										chPeakVU[3] = chBuffer1[9];
+										chPeakVU[4] = 0;
 
-										pVUData->iVUPeakValue = atoi(chPeakVU);
+										pVUData->iVUValue[1] = atoi(chPeakVU);
 
-										if(pVUData->iVUPeakValue < 0 || pVUData->iVUPeakValue > 4095)
-											pVUData->iVUPeakValue = 0;
+										if(pVUData->iVUValue[1] < 0 || pVUData->iVUValue[1] > 4095)
+											pVUData->iVUValue[1] = 0;
 
-										pVUData->iVUAverageValue = atoi(chAverageVU);
 
-										if(pVUData->iVUAverageValue < 0 || pVUData->iVUAverageValue > 4095)
-											pVUData->iVUAverageValue = 0;
+        ///////////////////////////////////////////////////////////////////////////////
+				// Set the VU2 data
+                    
+                    chPeakVU[0] = chBuffer1[11];
+										chPeakVU[1] = chBuffer1[12];
+										chPeakVU[2] = chBuffer1[13];
+										chPeakVU[3] = chBuffer1[14];
+										chPeakVU[4] = 0;
 
+										pVUData->iVUValue[2] = atoi(chPeakVU);
+
+										if(pVUData->iVUValue[2] < 0 || pVUData->iVUValue[2] > 4095)
+											pVUData->iVUValue[2] = 0;
+
+        ///////////////////////////////////////////////////////////////////////////////
+				// Set the VU3 data
+                    
+                    chPeakVU[0] = chBuffer1[16];
+										chPeakVU[1] = chBuffer1[17];
+										chPeakVU[2] = chBuffer1[18];
+										chPeakVU[3] = chBuffer1[19];
+										chPeakVU[4] = 0;
+
+										pVUData->iVUValue[3] = atoi(chPeakVU);
+
+										if(pVUData->iVUValue[3] < 0 || pVUData->iVUValue[3] > 4095)
+											pVUData->iVUValue[3] = 0;
+
+
+
+        ///////////////////////////////////////////////////////////////////////////////
+				// Set the VU4 data
+                    
+                    chPeakVU[0] = chBuffer1[21];
+										chPeakVU[1] = chBuffer1[22];
+										chPeakVU[2] = chBuffer1[23];
+										chPeakVU[3] = chBuffer1[24];
+										chPeakVU[4] = 0;
+
+										pVUData->iVUValue[4] = atoi(chPeakVU);
+
+										if(pVUData->iVUValue[4] < 0 || pVUData->iVUValue[4] > 4095)
+											pVUData->iVUValue[4] = 0;
+
+
+        ///////////////////////////////////////////////////////////////////////////////
+				// Set the VU5 data
+                    
+                    chPeakVU[0] = chBuffer1[26];
+										chPeakVU[1] = chBuffer1[27];
+										chPeakVU[2] = chBuffer1[28];
+										chPeakVU[3] = chBuffer1[29];
+										chPeakVU[4] = 0;
+
+										pVUData->iVUValue[5] = atoi(chPeakVU);
+
+										if(pVUData->iVUValue[5] < 0 || pVUData->iVUValue[5] > 4095)
+											pVUData->iVUValue[5] = 0;
+
+
+        ///////////////////////////////////////////////////////////////////////////////
+				// Set the VU6 data
+                    
+                    chPeakVU[0] = chBuffer1[31];
+										chPeakVU[1] = chBuffer1[32];
+										chPeakVU[2] = chBuffer1[33];
+										chPeakVU[3] = chBuffer1[34];
+										chPeakVU[4] = 0;
+
+										pVUData->iVUValue[6] = atoi(chPeakVU);
+
+										if(pVUData->iVUValue[6] < 0 || pVUData->iVUValue[6] > 4095)
+											pVUData->iVUValue[6] = 0;
+
+        ///////////////////////////////////////////////////////////////////////////////
+				// Set the VU7 data
+                    
+                    chPeakVU[0] = chBuffer1[36];
+										chPeakVU[1] = chBuffer1[37];
+										chPeakVU[2] = chBuffer1[38];
+										chPeakVU[3] = chBuffer1[39];
+										chPeakVU[4] = 0;
+
+										pVUData->iVUValue[7] = atoi(chPeakVU);
+
+										if(pVUData->iVUValue[7] < 0 || pVUData->iVUValue[7] > 4095)
+											pVUData->iVUValue[7] = 0;
+
+
+        ///////////////////////////////////////////////////////////////////////////////
 				// Set clip values
+
+
+										chClip1[0] = chBuffer1[42];
+										chClip1[1] = chBuffer1[43];
+										chClip1[2] = chBuffer1[44];
+										chClip1[3] = 0;
 
 										pVUData->iPeakClipValue = atoi(chClip1);
 
 										if(pVUData->iPeakClipValue < 0 || pVUData->iPeakClipValue > 4095)
 											pVUData->iPeakClipValue = 0;
 
-										pVUData->iAverageClipValue = atoi(chClip2);
-
-										if(pVUData->iAverageClipValue < 0 || pVUData->iAverageClipValue > 4095)
-											pVUData->iAverageClipValue = 0;
-					}
-					else
-					{
-									pVUData->iVUPeakValue = 0;
-									pVUData->iVUAverageValue = 0;
-
-							// Set clip values
-
-									pVUData->iPeakClipValue = 0;
-									pVUData->iAverageClipValue = 0;
-					}
 
 					// Send the vu data to the clients
 					// only if we didn't get and ACK character from the read
@@ -332,6 +276,7 @@ CGServerDoc*	m_pDoc = (CGServerDoc*)pParam;
 			}
 
 		} // END WHILE
+
 	}
 
 	SetEvent(m_pDoc->m_hEventVUThreadKilled);		// Tell the GServerDOC destructor that we have died

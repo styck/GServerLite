@@ -76,14 +76,13 @@ typedef DCX_MEM_MAP * LPDCX_MEM_MAP;
 typedef struct
 {
 	int		iAddr;							// the VUthread Reads from here(module address)
-	BYTE	iVUType;						// the VUthread Reads from here(Pre, Post, Comp, Gate)
+//	BYTE	iVUType;					// the VUthread Reads from here(Pre, Post, Comp, Gate)
 	int		iLock;							// if Zero nobody monitors this VU, so we don't need to read the damn thnig
-	int		iVUPeakValue;				// data. VUthread writes here
-	int		iVUAverageValue;		// data
+	int		iVUValue[8];		    // data. VUthread writes here
 	int		iPeakClipValue;			// data
-	int		iAverageClipValue;	// data
   int   iModuleIdx;
 }VU_READ;
+
 
 #pragma pack() // default packing
 

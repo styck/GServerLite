@@ -300,10 +300,9 @@ BOOL    CGServerDoc::DisplayGeneralMessage(UINT   uiMsgID)
 BOOL      bRet = TRUE;
 CString   cs;
 
-#ifdef NOTUSEDYET
 	if(cs.LoadString(uiMsgID))
+    OutputDebugString((LPSTR) LPCTSTR(cs));
 //	  m_pServerMonitorView->DisplayGeneralMsg((LPSTR) LPCTSTR(cs));
-#endif
 
 return bRet;
 };
@@ -349,6 +348,7 @@ CString   cs;
 
 	cs.LoadString(IDS_NET_ERROR_MSG);
 	cs = cs + " " + lps;
+    OutputDebugString((LPSTR) LPCTSTR(cs));
 //	m_pServerMonitorView->DisplayNetErrorMsg((LPSTR) LPCTSTR(cs));
 
 return bRet;

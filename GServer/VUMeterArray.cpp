@@ -33,12 +33,17 @@ CVUMeterArray::CVUMeterArray()
 	for(int i=0;i<MAX_VU_READ_DATA;i++)
 	{
 		m_aVUReadData[i].iAddr=0;							// the VUthread Reads from here(module address)
-		m_aVUReadData[i].iVUType=1;							// the VUthread Reads from here(Pre, Post, Comp, Gate)
+//		m_aVUReadData[i].iVUType=1;							// the VUthread Reads from here(Pre, Post, Comp, Gate)
 		m_aVUReadData[i].iLock=0;							// if Zero nobody monitors this VU, so we don't need to read the damn thnig
-		m_aVUReadData[i].iVUPeakValue=0;			// data. VUthread writes here
-		m_aVUReadData[i].iVUAverageValue=0;		// data
+		m_aVUReadData[i].iVUValue[0]=0;			// data. VUthread writes here
+		m_aVUReadData[i].iVUValue[1]=0;			// data. VUthread writes here
+		m_aVUReadData[i].iVUValue[2]=0;			// data. VUthread writes here
+		m_aVUReadData[i].iVUValue[3]=0;			// data. VUthread writes here
+		m_aVUReadData[i].iVUValue[4]=0;			// data. VUthread writes here
+		m_aVUReadData[i].iVUValue[5]=0;			// data. VUthread writes here
+		m_aVUReadData[i].iVUValue[6]=0;			// data. VUthread writes here
+		m_aVUReadData[i].iVUValue[7]=0;			// data. VUthread writes here
 		m_aVUReadData[i].iPeakClipValue=0;		// data
-		m_aVUReadData[i].iAverageClipValue=0;	// data
     m_aVUReadData[i].iModuleIdx = i;
 	}
 
@@ -48,12 +53,17 @@ CVUMeterArray::CVUMeterArray()
 	for(int j=0;j<NUM_VU_READ;j++)
 	{
 		m_aVUReadData[j].iAddr=33+j;							// the VUthread Reads from here(module address)
-		m_aVUReadData[j].iVUType=1;							// the VUthread Reads from here(Pre, Post, Comp, Gate)
+//		m_aVUReadData[j].iVUType=1;							// the VUthread Reads from here(Pre, Post, Comp, Gate)
 		m_aVUReadData[j].iLock=1;							// if Zero nobody monitors this VU, so we don't need to read the damn thnig
-		m_aVUReadData[j].iVUPeakValue=0;			// data. VUthread writes here
-		m_aVUReadData[j].iVUAverageValue=0;		// data
+		m_aVUReadData[i].iVUValue[0]=0;			// data. VUthread writes here
+		m_aVUReadData[i].iVUValue[1]=0;			// data. VUthread writes here
+		m_aVUReadData[i].iVUValue[2]=0;			// data. VUthread writes here
+		m_aVUReadData[i].iVUValue[3]=0;			// data. VUthread writes here
+		m_aVUReadData[i].iVUValue[4]=0;			// data. VUthread writes here
+		m_aVUReadData[i].iVUValue[5]=0;			// data. VUthread writes here
+		m_aVUReadData[i].iVUValue[6]=0;			// data. VUthread writes here
+		m_aVUReadData[i].iVUValue[7]=0;			// data. VUthread writes here
 		m_aVUReadData[j].iPeakClipValue=0;		// data
-		m_aVUReadData[j].iAverageClipValue=0;	// data
     m_aVUReadData[j].iModuleIdx = j;
 	}
 }
