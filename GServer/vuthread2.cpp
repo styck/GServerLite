@@ -224,9 +224,7 @@ WORD wFlag;     //  TEST TEST
 										chPeakVU[4] = 0;
 
 
-#ifdef BOGUS_DATA
-										pVUData->wVUValue[0] = pVUData->wVUValue[0]+250;
-#else
+#ifndef BOGUS_DATA
 										pVUData->wVUValue[0] = atoi(chPeakVU);
 #endif
 
@@ -243,9 +241,7 @@ WORD wFlag;     //  TEST TEST
 										chPeakVU[3] = chBuffer1[9];
 										chPeakVU[4] = 0;
 
-#ifdef BOGUS_DATA
-										pVUData->wVUValue[1]=pVUData->wVUValue[0];
-#else
+#ifndef BOGUS_DATA
 										pVUData->wVUValue[1] = atoi(chPeakVU);
 #endif
 
@@ -262,9 +258,7 @@ WORD wFlag;     //  TEST TEST
 										chPeakVU[3] = chBuffer1[14];
 										chPeakVU[4] = 0;
 
-#ifdef BOGUS_DATA
-										pVUData->wVUValue[2]=pVUData->wVUValue[1];
-#else
+#ifndef BOGUS_DATA
 										pVUData->wVUValue[2] = atoi(chPeakVU);
 #endif
 
@@ -280,9 +274,7 @@ WORD wFlag;     //  TEST TEST
 										chPeakVU[3] = chBuffer1[19];
 										chPeakVU[4] = 0;
 
-#ifdef BOGUS_DATA
-										pVUData->wVUValue[3]=pVUData->wVUValue[2];
-#else
+#ifndef BOGUS_DATA
 										pVUData->wVUValue[3] = atoi(chPeakVU);
 #endif
 
@@ -300,9 +292,7 @@ WORD wFlag;     //  TEST TEST
 										chPeakVU[3] = chBuffer1[24];
 										chPeakVU[4] = 0;
 
-#ifdef BOGUS_DATA
-										pVUData->wVUValue[4]=pVUData->wVUValue[3];
-#else
+#ifndef BOGUS_DATA
 										pVUData->wVUValue[4] = atoi(chPeakVU);
 #endif
 										if(pVUData->wVUValue[4] < 0 || pVUData->wVUValue[4] > MAX_VU_VALUE)
@@ -318,9 +308,7 @@ WORD wFlag;     //  TEST TEST
 										chPeakVU[3] = chBuffer1[29];
 										chPeakVU[4] = 0;
 
-#ifdef BOGUS_DATA
-										pVUData->wVUValue[5]=pVUData->wVUValue[4];
-#else
+#ifndef BOGUS_DATA
 										pVUData->wVUValue[5] = atoi(chPeakVU);
 #endif
 										if(pVUData->wVUValue[5] < 0 || pVUData->wVUValue[5] > MAX_VU_VALUE)
@@ -336,9 +324,7 @@ WORD wFlag;     //  TEST TEST
 										chPeakVU[3] = chBuffer1[34];
 										chPeakVU[4] = 0;
 
-#ifdef BOGUS_DATA
-										pVUData->wVUValue[6]=pVUData->wVUValue[5];
-#else
+#ifndef BOGUS_DATA
 										pVUData->wVUValue[6] = atoi(chPeakVU);
 #endif
 
@@ -354,14 +340,23 @@ WORD wFlag;     //  TEST TEST
 										chPeakVU[3] = chBuffer1[39];
 										chPeakVU[4] = 0;
 
-#ifdef BOGUS_DATA
-										pVUData->wVUValue[7]=pVUData->wVUValue[6];
-#else
+#ifndef BOGUS_DATA
 										pVUData->wVUValue[7] = atoi(chPeakVU);
 #endif
 										if(pVUData->wVUValue[7] < 0 || pVUData->wVUValue[7] > MAX_VU_VALUE)
 											pVUData->wVUValue[7] = 0;
 
+
+#ifdef BOGUS_DATA
+
+ 										pVUData->wVUValue[0] = pVUData->wVUValue[0]+250;
+										pVUData->wVUValue[1]=pVUData->wVUValue[0];
+										pVUData->wVUValue[2]=pVUData->wVUValue[1];
+										pVUData->wVUValue[3]=pVUData->wVUValue[2];
+										pVUData->wVUValue[4]=pVUData->wVUValue[3];
+										pVUData->wVUValue[5]=pVUData->wVUValue[4];
+										pVUData->wVUValue[6]=pVUData->wVUValue[5];
+#endif
 
         ///////////////////////////////////////////////////////////////////////////////
 				// Set clip values
