@@ -25,7 +25,8 @@ static char THIS_FILE[] = __FILE__;
 #define CYCLECOUNT
 
 
-// #define BOGUS_DATA         // Define to send fake vu data
+//#define BOGUS_DATA         // Define to send fake vu data
+//#define USEMIXER
 
 #ifdef BOGUS_DATA
 #ifdef USEMIXER
@@ -182,7 +183,7 @@ WORD wFlag;     //  TEST TEST
 
 #ifdef BOGUS_DATA
               wFlag++;    // Toggle fake vu data, low or high
-		       CTekSleep(m_pDoc->m_dwBasedelay,1000); // slow it down
+		       CTekSleep(m_pDoc->m_dwBasedelay,4000); // slow it down
 
 #endif
 
@@ -200,9 +201,8 @@ WORD wFlag;     //  TEST TEST
 
 
 				// Set the module address
-				
-				iAddr = pVUData->wAddr;
 
+				iAddr = pVUData->wAddr;
 #ifdef BOGUS_DATA
 				if( m_pDoc->m_pdcxNetwork->iReadVUData )	// Use this to determine if we should read this
 #else
@@ -246,12 +246,14 @@ WORD wFlag;     //  TEST TEST
 #else
           if(wFlag & 1)
           {
-              lstrcpy(chBuffer1, "!0000,0000,0000,0000,0000,0000,0000,0000,/000");
+              lstrcpy(chBuffer1, "!0000,0000,0000,0000,0000,0000,0000,0000,/123");
+//              TRACE0 (chBuffer1);
           }
           else
           {
 
               lstrcpy(chBuffer1, "!4000,2000,3000,2500,2000,1500,1000,0500,/123");
+//              TRACE0 (chBuffer1);
           }
 
 #endif
@@ -416,9 +418,6 @@ WORD wFlag;     //  TEST TEST
 										if(pVUData->wPeakClipValue < 0 || pVUData->wPeakClipValue > MAX_VU_VALUE)
 											pVUData->wPeakClipValue = 0;
 
-										
-
-#ifdef BOGUS_DATA
 
 					// Send the vu data to the clients
 					// only if we didn't get and ACK character from the read
@@ -426,15 +425,7 @@ WORD wFlag;     //  TEST TEST
 					// locking our resource at this time because of speed
 
 //					if( chBuffer1[1] != '$' )
-
-// Handle modules that have two independent clip values
-// SUB/AUX and Matrix   \ These have clip values on one packet, we need to get their individual
-// MASTER and CUE       / clip values and send it to the client in the upper byte.
-					if( (m_pDoc->m_dcxdevMap.GetModuleType(iVUtoRead) == DCX_DEVMAP_MODULE_MATRIX) ||
-						(m_pDoc->m_dcxdevMap.GetModuleType(iVUtoRead) == DCX_DEVMAP_MODULE_MATRIX))
-#endif // BOGUS_DATA
-					  m_pDoc->m_pdcxNetwork->BroadcastMsgType(pVUData, sizeof(VU_READ), DCX_VU_DATA, NULL, 0);
-
+	          m_pDoc->m_pdcxNetwork->BroadcastMsgType(pVUData, sizeof(VU_READ), DCX_VU_DATA, NULL, 0);
 
 				}
 
