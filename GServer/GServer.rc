@@ -199,7 +199,7 @@ END
 // Dialog
 //
 
-IDD_ABOUTBOX DIALOG DISCARDABLE  0, 0, 217, 158
+IDD_ABOUTBOX DIALOG DISCARDABLE  0, 0, 245, 159
 STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "About GServer"
 FONT 10, "Courier"
@@ -211,9 +211,13 @@ BEGIN
     CONTROL         138,IDC_STATIC,"Static",SS_BITMAP,15,56,130,55
     LTEXT           "CompanyName",IDT_COMPANY_NAME,36,14,50,8
     LTEXT           "FileDescription",IDT_FILE_DESC,36,26,95,9
-    LTEXT           "ProductVersion",IDT_PROD_VER,146,26,64,8
+    LTEXT           "ProductVersion",IDT_PROD_VER,174,26,64,8
     LTEXT           "LegalCopyright",IDT_COPYRIGHT,36,39,125,9
-    LTEXT           "LegalTrademarks",IDT_TRADEMARKS,15,122,144,22
+    LTEXT           "LegalTrademarks",IDT_TRADEMARKS,7,121,144,13
+    LTEXT           "Tel 702.836.9466  Fax 702.893.9464",IDC_STATIC,154,70,
+                    70,17
+    LTEXT           "www.corteksoft.com",IDC_STATIC,154,91,75,10
+    LTEXT           "tech@corteksoft.com",IDC_STATIC,154,102,84,10
 END
 
 IDD_NETWORK DIALOG DISCARDABLE  0, 0, 232, 87
@@ -296,9 +300,9 @@ BEGIN
     IDD_ABOUTBOX, DIALOG
     BEGIN
         LEFTMARGIN, 7
-        RIGHTMARGIN, 210
+        RIGHTMARGIN, 238
         TOPMARGIN, 7
-        BOTTOMMARGIN, 151
+        BOTTOMMARGIN, 152
     END
 
     IDD_NETWORK, DIALOG
