@@ -786,25 +786,26 @@ void CControlDlg::OnClipReset()
 	
 }
 
+// Index into VU data for Test Controls dialog VU display
 
 void CControlDlg::OnVu1() 
 {
-	m_ucVUTypeReq = 1;	// Average 1,3   Peak 2 4
+	m_ucVUTypeReq = 2;	// Average 1,3,5,7  Peak 2,4,6,8
 };
 
 void CControlDlg::OnVu3()
 {
-	m_ucVUTypeReq = 3;	
+	m_ucVUTypeReq = 4;	
 };
 
 void CControlDlg::OnVu5() 
 {
-	m_ucVUTypeReq = 5;	// Average
+	m_ucVUTypeReq = 6;	// Average
 };
 
 void CControlDlg::OnVu7() 
 {
-	m_ucVUTypeReq = 7;	
+	m_ucVUTypeReq = 8;	
 };
 
 
