@@ -437,6 +437,8 @@ BOOL    bErr = FALSE;
 char    chPeakVU[5];
 char    chAverageVU[5];
 int     iVU, iVUtoRead, iPeak, iPCV;
+CModule		cm_Module;		// Converts module number to DCX address
+
 
 VU_READ *pVUData;
 
@@ -446,17 +448,19 @@ VU_READ *pVUData;
 
 	// Set a loop to go through all VU 
 	
-		iVUtoRead = m_pDoc->m_VUMetersArray.GetFirstReadIdx();
+//		iVUtoRead = m_pDoc->m_VUMetersArray.GetFirstReadIdx();
 
 //////////////////////////////////////////
 // Here we are just looping through the
 // pre, post, comp, and gate Vu meters of
 // a given module, not all modules
 
-		while(iVUtoRead >= 0)
-		{
+//		while(iVUtoRead >= 0)
+//		{
 
 		// Get point to first VU data
+
+			iVUtoRead = cm_Module.GetModuleNumber(m_iModuleAddr);
 
 			pVUData = m_pDoc->m_VUMetersArray.GetDataPtr(iVUtoRead);
 
@@ -464,15 +468,18 @@ VU_READ *pVUData;
 // If the current meter we are on is being displayed then update the progress bar
 // and labels. This depends on the button pressed in the control panel
 
+				m_VU1.SetRange(0,4095);
+				m_VU2.SetRange(0,4095);
+
 			// Scale the dBu reading to 4096 values
 
-//				iVU =   (int)((m_dStepTodBu[pVUData->wVUValue[m_ucVUTypeReq]]+43.2871)*4096)/58.27;
-//				iPeak = (int)((m_dStepTodBu[pVUData->wPeakClipValue]+43.2871)*4096)/58.27;
+				iVU =   (int)((m_dStepTodBu[pVUData->wVUValue[m_ucVUTypeReq]]+43.2871)*4096)/58.27;
+				iPeak = (int)((m_dStepTodBu[pVUData->wPeakClipValue]+43.2871)*4096)/58.27;
 
 			// Display the progress bar
 
-//				m_VU1.SetPos(iPeak);
-//				m_VU2.SetPos(iVU);
+				m_VU1.SetPos(iPeak);
+				m_VU2.SetPos(iVU);
 
 			// Convert floating point to text
 
@@ -531,7 +538,7 @@ VU_READ *pVUData;
 
 			}
 
-		}	// end while
+//		}	// end while
 
 	} else if (nIDEvent == TIMER_AUTO_SCROLL) 		// 145
 	{

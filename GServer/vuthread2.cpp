@@ -25,7 +25,7 @@ static char THIS_FILE[] = __FILE__;
 #define CYCLECOUNT
 
 
-#define BOGUS_DATA         // Define to send fake vu data
+// #define BOGUS_DATA         // Define to send fake vu data
 
 #ifdef BOGUS_DATA
 #ifdef USEMIXER
