@@ -14,6 +14,7 @@
 
 #include "resource.h"       // main symbols
 
+//#define DEMO_VERSION      // DEMO SOFTWARE - No DCX hardware writes are allowed AND fake VU data
 
 #define DCX_START_ADDRESS	33	// Hardware address of first module
 
