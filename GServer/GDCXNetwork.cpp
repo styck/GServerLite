@@ -33,10 +33,36 @@ extern void    CTekSleep(DWORD m_dwBasedelay,DWORD dwDelay);	// see vuthread2.cp
 
 CGDCXNetwork::CGDCXNetwork(CGServerDoc *pDoc)
 {
+	char szHostName[80];
+	struct hostent *host;
+    u_long InetAddr;                      // Inet-style address
+
+    struct sockaddr_in SockAddrInet;                 // Inet socket address
+
 	m_pDoc = pDoc;
 	m_pAssListener  = NULL; 
 	m_iPort = 9191;         // Default Port address
-	m_csIPAddress = "";     // Default Server address
+
+
+	// Lets get our host name and find the IP address to display
+
+	SockAddrInet.sin_family=AF_INET;
+	SockAddrInet.sin_port = htons(9191);
+	gethostname(szHostName,80);
+	host=gethostbyname(szHostName);
+
+	if(host)
+	{
+		InetAddr=*((u_long *)host->h_addr_list[0]);
+	}
+
+   SockAddrInet.sin_addr.S_un.S_addr = InetAddr;
+
+	m_csIPAddress = inet_ntoa(SockAddrInet.sin_addr);
+
+	
+//	m_csIPAddress = "";     // Default Server address
+
 
 	// Array of Connection Objects
 	//----------------------------
@@ -44,8 +70,9 @@ CGDCXNetwork::CGDCXNetwork(CGServerDoc *pDoc)
 	m_connections.SetSize(MAX_ASYNC_SONNECTIONS);
 	m_iConnInUse = 0;
 	m_pDeviceMap = &pDoc->m_dcxdevMap;		// Point to the device map setup
-																				// CHANGE THIS SO WE DON'T USE THIS NEW VARIABLE AND
-																				// JUST USE THE pDoc-> member variable
+										// CHANGE THIS SO WE DON'T USE THIS NEW VARIABLE AND
+										// JUST USE THE pDoc-> member variable
+
 }
 
 CGDCXNetwork::~CGDCXNetwork()
