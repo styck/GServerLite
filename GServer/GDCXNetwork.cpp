@@ -181,6 +181,9 @@ BOOL    CGDCXNetwork::StartAsServer(LPCTSTR lpcs, UINT  iPort)
     AfxMessageBox(_T("High resolution timing is not available on this CPU"));
   }
 
+
+#ifdef NOTUSED
+
   // Find the master module and setup the VUMetersArray - TEMP TEMP ?????????
 	// This is just hardcoding what VU data to send
 	// The client will eventually set this array
@@ -212,36 +215,36 @@ BOOL    CGDCXNetwork::StartAsServer(LPCTSTR lpcs, UINT  iPort)
     if(m_pDoc->m_dcxdevMap.GetModuleType(i) == DCX_DEVMAP_MODULE_MASTER)
     {
 
-		  m_pDoc->m_VUMetersArray.m_aVUReadData[40+i].iAddr=cModule.GetModuleAddress(i);							// the VUthread Reads from here(module address)
+		  m_pDoc->m_VUMetersArray.m_aVUReadData[i].iAddr=cModule.GetModuleAddress(i);							// the VUthread Reads from here(module address)
 //		  m_pDoc->m_VUMetersArray.m_aVUReadData[40+i].iVUType=3;							// the VUthread Reads from here(Pre, Post, Comp, Gate)
-		  m_pDoc->m_VUMetersArray.m_aVUReadData[40+i].iLock=1;							// if Zero nobody monitors this VU, so we don't need to read the damn thnig
-      m_pDoc->m_VUMetersArray.m_aVUReadData[40+i].iModuleIdx = i;
+		  m_pDoc->m_VUMetersArray.m_aVUReadData[i].iLock=1;							// if Zero nobody monitors this VU, so we don't need to read the damn thnig
+      m_pDoc->m_VUMetersArray.m_aVUReadData[i].iModuleIdx = i;
 
-		  m_pDoc->m_VUMetersArray.m_aVUReadData[40+i + 1].iAddr=cModule.GetModuleAddress(i);							// the VUthread Reads from here(module address)
+		  m_pDoc->m_VUMetersArray.m_aVUReadData[i + 1].iAddr=cModule.GetModuleAddress(i);							// the VUthread Reads from here(module address)
 //		  m_pDoc->m_VUMetersArray.m_aVUReadData[40+i + 1].iVUType=4;							// the VUthread Reads from here(Pre, Post, Comp, Gate)
-		  m_pDoc->m_VUMetersArray.m_aVUReadData[40+i + 1].iLock=1;							// if Zero nobody monitors this VU, so we don't need to read the damn thnig
-      m_pDoc->m_VUMetersArray.m_aVUReadData[40+i + 1].iModuleIdx = i;
+		  m_pDoc->m_VUMetersArray.m_aVUReadData[i + 1].iLock=1;							// if Zero nobody monitors this VU, so we don't need to read the damn thnig
+      m_pDoc->m_VUMetersArray.m_aVUReadData[i + 1].iModuleIdx = i;
 
     }
-   
-    if(m_pDoc->m_dcxdevMap.GetModuleType(i) == DCX_DEVMAP_MODULE_AUX)
+     else if(m_pDoc->m_dcxdevMap.GetModuleType(i) == DCX_DEVMAP_MODULE_AUX)
     {
 
       if(iSubAux == 0xFFFFFFFF)
       {
         iSubAux = i;
 
-		    m_pDoc->m_VUMetersArray.m_aVUReadData[60+i].iAddr=cModule.GetModuleAddress(i);							// the VUthread Reads from here(module address)
+		    m_pDoc->m_VUMetersArray.m_aVUReadData[i].iAddr=cModule.GetModuleAddress(i);							// the VUthread Reads from here(module address)
 //		    m_pDoc->m_VUMetersArray.m_aVUReadData[60+i].iVUType=3;							// the VUthread Reads from here(Pre, Post, Comp, Gate)
-		    m_pDoc->m_VUMetersArray.m_aVUReadData[60+i].iLock=1;							// if Zero nobody monitors this VU, so we don't need to read the damn thnig
-        m_pDoc->m_VUMetersArray.m_aVUReadData[60+i].iModuleIdx = i;
+		    m_pDoc->m_VUMetersArray.m_aVUReadData[i].iLock=1;							// if Zero nobody monitors this VU, so we don't need to read the damn thnig
+        m_pDoc->m_VUMetersArray.m_aVUReadData[i].iModuleIdx = i;
 
-		    m_pDoc->m_VUMetersArray.m_aVUReadData[60+i+1].iAddr=cModule.GetModuleAddress(i);							// the VUthread Reads from here(module address)
+		    m_pDoc->m_VUMetersArray.m_aVUReadData[i+1].iAddr=cModule.GetModuleAddress(i);							// the VUthread Reads from here(module address)
 //		    m_pDoc->m_VUMetersArray.m_aVUReadData[60+i+1].iVUType=4;							// the VUthread Reads from here(Pre, Post, Comp, Gate)
-		    m_pDoc->m_VUMetersArray.m_aVUReadData[60+i+1].iLock=1;							// if Zero nobody monitors this VU, so we don't need to read the damn thnig
-        m_pDoc->m_VUMetersArray.m_aVUReadData[60+i+1].iModuleIdx = i;
+		    m_pDoc->m_VUMetersArray.m_aVUReadData[i+1].iLock=1;							// if Zero nobody monitors this VU, so we don't need to read the damn thnig
+        m_pDoc->m_VUMetersArray.m_aVUReadData[i+1].iModuleIdx = i;
       }
     }
+
     // Store the Matrix Index in the global Array
     //
     if(m_pDoc->m_dcxdevMap.GetModuleType(i) == DCX_DEVMAP_MODULE_MATRIX)
@@ -262,6 +265,8 @@ BOOL    CGDCXNetwork::StartAsServer(LPCTSTR lpcs, UINT  iPort)
 		m_pDoc->m_VUMetersArray.m_aVUReadData[iMatrix + 81].iLock=1;							// if Zero nobody monitors this VU, so we don't need to read the damn thnig
     m_pDoc->m_VUMetersArray.m_aVUReadData[iMatrix + 81].iModuleIdx = iSubAux; // Index for VACS Client
   }
+
+#endif
 
 // First make sure the Listener is not opened already ... 
 //-------------------------------------------------------
