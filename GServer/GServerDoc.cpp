@@ -149,10 +149,19 @@ void CGServerDoc::Serialize(CArchive& ar)
 
 		// Init this Object
 		//-----------------
-		InitGServerDoc();
-		UpdateAllViews(NULL);
-
-		pGServerView->SetServerButton();	// Force a click on Server button
+		if(InitGServerDoc())
+		{
+			UpdateAllViews(NULL);
+			pGServerView->SetServerButton();	// Force a click on Server button
+		}
+		else
+		{	// There was a problem loading the DCX.BIN file
+			POSITION pos;
+			CGServerView* pGServerView;
+			pos = GetFirstViewPosition();
+			pGServerView = (CGServerView *)GetNextView(pos);
+			pGServerView->MessageBox("ERROR Loading DCX.BIN file","ERROR",MB_OK);
+		}
 	}
 }
 
@@ -202,7 +211,7 @@ BOOL bSuccess = CCPUTicker::GetCPUFrequency(m_dCpuSpeed, dDeviation);
 
 	GetCurrentDirectory(sizeof(szBinDirectory),szBinDirectory);
 	strcat(szBinDirectory,"\\dcx.bin");
-//	if(m_dcxBinTable.ReadDCXTableFile( (LPSTR)LPCSTR(m_dcxBinTable.GetBinTableFileName())) == 0)
+
 	if(m_dcxBinTable.ReadDCXTableFile(szBinDirectory)	)
  		bRet = TRUE;
 	else
