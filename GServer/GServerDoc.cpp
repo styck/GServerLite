@@ -313,23 +313,23 @@ BOOL    CGServerDoc::DisplayGeneralMessage(LPSTR lps)
 {
 BOOL      bRet = TRUE;
 
-if(m_pdcxNetwork->iShowErrorMsgs)
-{
+	if(m_pdcxNetwork->iShowErrorMsgs)
+	{
 
-	// Display General messages in the status list box if we are debugging
+		// Display General messages in the status list box if we are debugging
 
-	POSITION pos;
-	CGServerView* pGServerView;
-	// int iCnt;
+		POSITION pos;
+		CGServerView* pGServerView;
+		// int iCnt;
 
-		pos = GetFirstViewPosition();
-		pGServerView = (CGServerView *)GetNextView(pos);
-		pGServerView->m_clbStatusList.InsertString(0,lps);
+			pos = GetFirstViewPosition();
+			pGServerView = (CGServerView *)GetNextView(pos);
+			pGServerView->m_clbStatusList.InsertString(0,lps);
 
-	//	iCnt = pGServerView->m_clbStatusList.GetCount();
-	//	pGServerView->m_clbStatusList.SetTopIndex(iCnt);	// Move to last selection
+		//	iCnt = pGServerView->m_clbStatusList.GetCount();
+		//	pGServerView->m_clbStatusList.SetTopIndex(iCnt);	// Move to last selection
 
-}
+	}
 
     TRACE0((LPSTR) LPCTSTR(lps));
 
@@ -365,17 +365,22 @@ POSITION pos;
 CGServerView* pGServerView;
 //int iCnt;
 
-// Always display network errors in status list box
+	// Always display network errors in status list box
+	if(m_pdcxNetwork->iShowErrorMsgs)
+	{
 
-	pos = GetFirstViewPosition();
-	pGServerView = (CGServerView *)GetNextView(pos);
-	pGServerView->m_clbStatusList.InsertString(0,lps);
+		pos = GetFirstViewPosition();
+		pGServerView = (CGServerView *)GetNextView(pos);
+		pGServerView->m_clbStatusList.InsertString(0,lps);
 
-//	iCnt = pGServerView->m_clbStatusList.GetCount();
-//	pGServerView->m_clbStatusList.SetTopIndex(iCnt);	// Move to last selection
+	//	iCnt = pGServerView->m_clbStatusList.GetCount();
+	//	pGServerView->m_clbStatusList.SetTopIndex(iCnt);	// Move to last selection
 
-	cs.LoadString(IDS_NET_ERROR_MSG);
-	cs = cs + " " + lps;
+		cs.LoadString(IDS_NET_ERROR_MSG);
+		cs = cs + " " + lps;
+
+	}
+
     TRACE0((LPSTR) LPCTSTR(cs));
 //	m_pServerMonitorView->DisplayNetErrorMsg((LPSTR) LPCTSTR(cs));
 

@@ -389,14 +389,14 @@ BEGIN
             VALUE "Comments", "\0"
             VALUE "CompanyName", "CorTek Software, Inc.\0"
             VALUE "FileDescription", "GServer Application for VACS®\0"
-            VALUE "FileVersion", "1, 1, 0, 5\0"
+            VALUE "FileVersion", "1, 2, 0, 0\0"
             VALUE "InternalName", "GServer for the Gamble DCX\0"
-            VALUE "LegalCopyright", "Copyright © CorTek Software, Inc. 1997 - 2000\0"
+            VALUE "LegalCopyright", "Copyright © CorTek Software, Inc. 1997 - 2001\0"
             VALUE "LegalTrademarks", "VACS® is a registered trademark of CorTek Software, Inc.\0"
             VALUE "OriginalFilename", "GServer.EXE\0"
             VALUE "PrivateBuild", "\0"
             VALUE "ProductName", "GServer Application\0"
-            VALUE "ProductVersion", "Version 11/23/2000 \0"
+            VALUE "ProductVersion", "Version 12/30/2000\0"
             VALUE "SpecialBuild", "\0"
         END
     END
