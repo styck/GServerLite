@@ -1396,7 +1396,13 @@ void CGServerView::SetServerButton()
 
 void CGServerView::OnCopymsg() 
 {
+char* szFileName = "c:\\data.txt";
+CFile DataFile;
+CFileException fileException;
 CString source, destination; 
+CFileStatus status;
+BOOL bOpenOK;
+
 
 	//put your text in source
 
@@ -1418,4 +1424,26 @@ CString source, destination;
 		SetClipboardData(CF_TEXT,clipbuffer);
 		CloseClipboard();
 	}
+
+#ifdef NOTUUSED
+// Now write the data to a file: data.txt
+
+if( CFile::GetStatus( szFileName, status ) )
+{
+    // Open the file without the Create flag
+    bOpenOK = DataFile.Open( szFileName, 
+                    CFile::modeWrite );
+}
+else
+{
+    // Open the file with the Create flag
+    bOpenOK = DataFile.Open( szFileName, 
+                    CFile::modeCreate | CFile::modeWrite );
+}
+
+	DataFile.Write( destination, sizeof( destination ) ); 
+
+	DataFile.Close();
+#endif
+
 }
