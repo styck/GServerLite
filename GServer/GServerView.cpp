@@ -378,6 +378,7 @@ BEGIN_MESSAGE_MAP(CGServerView, CFormView)
 	ON_CBN_SELCHANGE(IDC_SERVER_COMBO, OnSelchangeServerCombo)
 	ON_BN_CLICKED(IDC_TESTCONTROLS, OnTestcontrols)
 	ON_BN_CLICKED(IDC_CLEARERRORS, OnClearerrors)
+	ON_BN_CLICKED(IDC_COPYMSG, OnCopymsg)
 	//}}AFX_MSG_MAP
 
 	ON_NOTIFY_EX_RANGE(TTN_NEEDTEXTA, 0, 0xFFFF, OnToolTipText)
@@ -1383,4 +1384,38 @@ void CGServerView::SetServerButton()
 	m_bServerStart = TRUE;	// Set server button state to down
 	UpdateData(FALSE);		// Update the state of the button
 	OnChkNetServer();		// Handle code to start the server
+}
+
+//mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm
+// Name   : OnCopymsg() 
+//          
+// Descr. : copy the controls list box to the clipboard
+//
+// Return : void
+//-----------------------------------------------------------------------------
+
+void CGServerView::OnCopymsg() 
+{
+CString source, destination; 
+
+	//put your text in source
+
+	for(int i=0;i<m_clbStatusList.GetCount();i++)
+	{
+		m_clbStatusList.GetText(i,source);
+		destination = destination + source + "\r\n";
+	}
+
+	if(OpenClipboard())
+	{
+		HGLOBAL clipbuffer;
+		char * buffer;
+		EmptyClipboard();
+		clipbuffer = GlobalAlloc(GMEM_DDESHARE, destination.GetLength()+1);
+		buffer = (char*)GlobalLock(clipbuffer);
+		strcpy(buffer, LPCSTR(destination));
+		GlobalUnlock(clipbuffer);
+		SetClipboardData(CF_TEXT,clipbuffer);
+		CloseClipboard();
+	}
 }

@@ -71,6 +71,7 @@ public:
 // Implementation
 public:
 	virtual ~CGServerView();
+	void SetServerButton();
 #ifdef _DEBUG
 	virtual void AssertValid() const;
 	virtual void Dump(CDumpContext& dc) const;
@@ -87,6 +88,7 @@ protected:
 	afx_msg void OnSelchangeServerCombo();
 	afx_msg void OnTestcontrols();
 	afx_msg void OnClearerrors();
+	afx_msg void OnCopymsg();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };
