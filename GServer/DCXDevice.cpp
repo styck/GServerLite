@@ -20,7 +20,11 @@ static char THIS_FILE[]=__FILE__;
 #include "DCXBinTable.h"
 #include "GServerDoc.h"
 
-//#define DEMO      // TEST TEST USED TO DEMO SOFTWARE
+
+extern void    CTekSleep(DWORD m_dwBasedelay,DWORD dwDelay);	// see vuthread2.cpp
+
+
+// #define DEMO      // DEMO SOFTWARE - No DCX hardware writes are allowed
 
 //////////////////////////////////////////////////////////////////////
 // Construction/Destruction
@@ -122,7 +126,7 @@ return bRet;
 //
 /////////////////////////////////////////////////////////////////////
 
-BOOL  CDCXDevice::Write(int iAddr, LPSTR lpsz, ULONG  *pulWrite)
+BOOL  CDCXDevice::Write(int iAddr, LPSTR lpsz, ULONG  *pulWrite, BOOL bIsVU)
 {
 
 int                 iBufferLength;
@@ -168,6 +172,10 @@ BOOL                bIoctlResult = FALSE;
 #else
 					bIoctlResult = TRUE;
 #endif
+    if(bIsVU)
+     CTekSleep(m_pDoc->m_dwBasedelay,m_pDoc->m_dwVudelay);
+    else         
+     CTekSleep(m_pDoc->m_dwBasedelay,m_pDoc->m_dwCtrldelay);
 
 return bIoctlResult;
 }
@@ -179,7 +187,7 @@ return bIoctlResult;
 // write the string to the DCX
 //
 
-BOOL  CDCXDevice::Write(LPSTR lpsz, ULONG  *pulWrite)
+BOOL  CDCXDevice::Write(LPSTR lpsz, ULONG  *pulWrite, BOOL bIsVU)
 {
 char                chAddr[4];
 int                 iAddr;
@@ -203,12 +211,14 @@ BOOL                bIoctlResult = FALSE;
 
 	// Write the command to the DCX unit
 
-		bIoctlResult = Write(iAddr, lpsz, pulWrite);
+		bIoctlResult = Write(iAddr, lpsz, pulWrite, bIsVU);
   
   }
 #else
   bIoctlResult = TRUE;
 #endif
+
+    //CTekSleep(m_pDoc->m_dwBasedelay,m_pDoc->m_dwCtrldelay);
 
 return bIoctlResult;
 }

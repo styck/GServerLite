@@ -56,8 +56,8 @@ public:
   BOOL      Close(void);
   BOOL      IsOpen(){ return (m_hDevice != INVALID_HANDLE_VALUE);};
 
-  BOOL      Write(int iAddr, LPSTR lpsz, ULONG  *pulWrite);
-  BOOL      Write(LPSTR lpsz, ULONG  *pulWrite);
+  BOOL      Write(int iAddr, LPSTR lpsz, ULONG  *pulWrite, BOOL bIsVU);
+  BOOL      Write(LPSTR lpsz, ULONG  *pulWrite, BOOL bIsVU);
   BOOL      Read(LPSTR lpsz, UINT uiSize, ULONG  *pulRead);
 
   BOOL      ResetBus(void);

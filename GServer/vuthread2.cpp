@@ -24,7 +24,8 @@ static char THIS_FILE[] = __FILE__;
 // #define HIGHRESOLUTIONTIMER   // Use MultiMedia timers if defined
 #define CYCLECOUNT
 
-//#define BOGUS_DATA         // Define to send fake vu data
+
+// #define BOGUS_DATA         // Define to send fake vu data
 
 ////////////////////////////////////////////
 //
@@ -175,13 +176,13 @@ WORD wFlag;     //  TEST TEST
 						wsprintf(chBufferVUType, "*%03dXVU?\n", iAddr);			// ALL VU DATA
 //            TRACE0 (chBufferVUType);
 #ifndef BOGUS_DATA
-  					m_pDoc->m_pDCXDevice->Write(iAddr, chBufferVUType, &ulIO);
+  					m_pDoc->m_pDCXDevice->Write(iAddr, chBufferVUType, &ulIO, TRUE);
 #endif
 
             // Delay between write and read as selected above by the #define
             // This is the delay for the VU reads
 
-            CTekSleep(m_pDoc->m_dwBasedelay,m_pDoc->m_dwVudelay);
+//            CTekSleep(m_pDoc->m_dwBasedelay,m_pDoc->m_dwVudelay);
 
 						// Read ALL the VU data
             // If we read an ACK from the control data then ignore it and

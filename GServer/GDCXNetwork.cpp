@@ -131,7 +131,7 @@ BOOL    CGDCXNetwork::StartAsServer(LPCTSTR lpcs, UINT  iPort)
 			ULONG   ulIO;
 
 				wsprintf(chBufferVUType, "*%03dXVUg\n", cModule.GetModuleAddress(i));
-				m_pDoc->m_pDCXDevice->Write(cModule.GetModuleAddress(i), chBufferVUType, &ulIO);	// Write VU type command
+				m_pDoc->m_pDCXDevice->Write(cModule.GetModuleAddress(i), chBufferVUType, &ulIO, FALSE);	// Write VU type command
 				Sleep(10);
 				m_pDoc->m_pDCXDevice->Read(chBufferVUType, 64, &ulIO);		// Read response and discard
 		}			
@@ -526,7 +526,7 @@ int			iRecvd;				// Number of bytes recieved
 								for(iCount = 0; iCount < dcxCtrlData.iPotCount; iCount++)    
 								{
                   if( ! m_pDoc->m_pDCXDevice->Write(dcxCtrlData.arPotData[iCount].iAddr,
-																							dcxCtrlData.arPotData[iCount].szData, &ulWrite))
+																							dcxCtrlData.arPotData[iCount].szData, &ulWrite, FALSE) )
                   {
 										m_pDoc->DisplayGeneralMessage(DCXDEV_ERROR_WRITE);
 										break;
@@ -536,7 +536,7 @@ int			iRecvd;				// Number of bytes recieved
                   //////////////////////////////////////////////////////////////////
                   // Delay between writing a control value and reading the response
 
-                  CTekSleep(m_pDoc->m_dwBasedelay,m_pDoc->m_dwCtrldelay);		// Delay 7 ms so that we can read our response
+//                  CTekSleep(m_pDoc->m_dwBasedelay,m_pDoc->m_dwCtrldelay);		// Delay 7 ms so that we can read our response
 
                     // Read the response which should be !ccggp\n. We do nothing with this
 										// cc - target chip, gg - group on the DCX board the chip is in
