@@ -43,14 +43,15 @@ public:
   CCorTekAsyncSocket      *m_pAssListener;
   int                     m_iPort;					// TCP/IP port to transmit on
   CString                 m_csIPAddress;		// IP address
-  BOOL                    m_bIsClient;			// Flag for client
 
 	// saves current state of control for a particular module
 	// [module][control number] = control value
 
-  // ONLY 256 UNIQUE CONTROL NUMBERS
+  // ONLY 512 UNIQUE CONTROL NUMBERS
 
-	WORD										m_wCurrentState[DCX_DEVMAP_MAXSIZE][256];
+#define MAX_NUM_CONTROLS  512
+
+	WORD										m_wCurrentState[DCX_DEVMAP_MAXSIZE][MAX_NUM_CONTROLS];
 
   // Array of Connection Objects
   //----------------------------
@@ -61,8 +62,6 @@ public:
 public:
   // General Network Interface Funvtions
   //------------------------------------
-  BOOL    IsStartedAsClient(void);
-  BOOL    IsStartedAsServer(void);
 
   void    OnAcceptConnection(int nErrorCode);
   void    OnCloseConnection(int nErrorCode);
@@ -78,7 +77,6 @@ public:
   BOOL    ShutDown(void);    
   BOOL    ShutDownClients(void);    
 
-  BOOL    SendMsgType(void* lpv, int iSize, UINT  uiType);
   BOOL    BroadcastMsgType(void* lpv, int iSize, UINT  uiType, CCorTekAsyncSocket *pCurrentSocket, UINT uiWho);
 
 
