@@ -21,6 +21,7 @@ static char THIS_FILE[]=__FILE__;
 #include "DCXBinTable.h"
 #include "GServerDoc.h"
 
+// #define DEMO      // TEST TEST USED TO DEMO SOFTWARE
 
 //////////////////////////////////////////////////////////////////////
 // Construction/Destruction
@@ -61,6 +62,7 @@ BOOL  CDCXDevice::Open(void)
 {
 BOOL    bRet = TRUE;
 
+#ifndef DEMO
 
 	if(m_hDevice == INVALID_HANDLE_VALUE && m_pchBuffRead != NULL && m_pchBuffWrite != NULL)
   {
@@ -81,23 +83,29 @@ BOOL    bRet = TRUE;
 	else
 		bRet = FALSE;
 
+#else
+    bRet=TRUE;
+#endif
+
 return bRet;
 }
 
 /////////////////////////////////////////////////////////////////////
 //  MEMBER FUNCTION: Close(void)
 //                   
+//  ALWAYS RETURNS TRUE ??????????????
 //
-//
-BOOL  CDCXDevice::Close(void)
+BOOL  CDCXDevice::Close(void) 
 {
 BOOL    bRet = TRUE;
 
+#ifndef DEMO
 	if(m_hDevice != INVALID_HANDLE_VALUE)
   {
 		CloseHandle(m_hDevice);
 		m_hDevice = INVALID_HANDLE_VALUE;
   }
+#endif
 
 return bRet;
 }
@@ -112,6 +120,8 @@ BOOL  CDCXDevice::Write(int iAddr, LPSTR lpsz, ULONG  *pulWrite)
 
 int                 iBufferLength;
 BOOL                bIoctlResult = FALSE;
+
+#ifndef DEMO
 
 		//m_DeviceIOLock.Lock();
 
@@ -149,6 +159,10 @@ BOOL                bIoctlResult = FALSE;
 				}
 		}
 
+#else
+					bIoctlResult = TRUE;
+#endif
+
 return bIoctlResult;
 }
 
@@ -165,6 +179,7 @@ char                chAddr[4];
 int                 iAddr;
 BOOL                bIoctlResult = FALSE;
 
+#ifndef DEMO
 	//m_DeviceIOLock.Lock();
 
 	if(m_hDevice  != INVALID_HANDLE_VALUE)
@@ -184,6 +199,10 @@ BOOL                bIoctlResult = FALSE;
 		bIoctlResult = Write(iAddr, lpsz, pulWrite);
   
   }
+#else
+  bIoctlResult = TRUE;
+#endif
+
 return bIoctlResult;
 }
 
@@ -198,6 +217,8 @@ BOOL  CDCXDevice::Read(LPSTR lpsz, UINT uiSize, ULONG *pulRead)
 char                chAddr[4];
 int                 iBufferLength;
 BOOL                bIoctlResult = FALSE;
+
+#ifndef DEMO
 
 	if(m_hDevice != INVALID_HANDLE_VALUE)
 	{
@@ -244,6 +265,12 @@ BOOL                bIoctlResult = FALSE;
 	}
 			//m_DeviceIOLock.Unlock();
 
+#else
+
+    bIoctlResult = TRUE;
+
+#endif
+
 return bIoctlResult;
 }
 
@@ -269,6 +296,8 @@ DCXPORT_WRITE_INPUT dcx_buffer;       // buffer for DCX i\o Control
 	dcx_buffer.Addr = DCX_START_ADDRESS; // this means nothing here
 
 	iBufferLength = sizeof(DCXPORT_WRITE_INPUT);
+
+#ifndef DEMO
 
 	if(m_hDevice  != INVALID_HANDLE_VALUE)
 	{
@@ -317,6 +346,12 @@ DCXPORT_WRITE_INPUT dcx_buffer;       // buffer for DCX i\o Control
 
 		Sleep(10);
 	}
+
+#else
+
+  bIoctlResult = TRUE;
+
+#endif
 
 return bIoctlResult;
 
