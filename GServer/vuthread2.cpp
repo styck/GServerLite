@@ -34,6 +34,8 @@ static char THIS_FILE[] = __FILE__;
 // The default precision can be 5 ms or more for windows NT, for window 95 it is 1 ms.
 // The precision is set in the GDCXNetwork.cpp file in the StartAsServer() function
 //
+
+#ifdef NOTUSED
 void    CTekSleep(DWORD dwDelay )
 {
   DWORD  dwStartTime;
@@ -41,6 +43,35 @@ void    CTekSleep(DWORD dwDelay )
   dwStartTime = timeGetTime();
   while(abs( (timeGetTime() - dwStartTime) < dwDelay));
 };
+
+#else
+////////////////////////////////////////////
+//
+//
+//
+#define PPRO_NOP_MSEC_COUNTER     90000 // !!
+void    CTekSleep(DWORD dwDelay )
+{
+  DWORD     dwTickCountDelay;
+  // *************************************************************
+  // SPECIAL DELAY LOOP ....... !!!!!
+  // IT IS CALCULATED FOR Intel PPro 200 Mhz
+  // This Loop gives us a resolution of 0.001 sec / 100000 (!!!!!)
+  // NOTE the loop has been adjusted to faster than 1 msec
+
+  while(dwDelay -- > 0 )
+  {
+    dwTickCountDelay = PPRO_NOP_MSEC_COUNTER;
+    while(dwTickCountDelay > 0)
+    {
+      dwTickCountDelay --;
+      __asm{NOP};
+    }
+  }
+};
+
+#endif
+
 
 /////////////////////////////////////////////////////////////////////////////
 
@@ -55,9 +86,6 @@ char	chPeakVU[5];
 char	chBufferVUType[128];
 char  chBuffer1[sizeof(DCXPORT_WRITE_INPUT )];
 DCXPORT_WRITE_INPUT   *RBuffer=(DCXPORT_WRITE_INPUT *)chBuffer1; //->arChar;
-
-
-
 ULONG   ulIO;
 int     iVUtoRead;
 VU_READ *pVUData;		// Data structure for our VU data
@@ -116,9 +144,8 @@ CGServerDoc*	m_pDoc = (CGServerDoc*)pParam;
 //            lstrcpy(chBuffer1,"!0000,0001,0002,0003,0004,0005,0006,0007,/123");
 
             OutputDebugString (chBuffer1);
-            //OutputDebugString (RBuffer->arChar);
-	////////////////////////////////////////////////////
 
+          ////////////////////////////////////////////////////
 					// Now parse the data and display it ...
 					// "!0000,0000,0000,0000,0000,0000,0000,0000,/000"  ... this parsing needs
 					// to be done better .. maybe
