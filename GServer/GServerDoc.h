@@ -96,6 +96,11 @@ public:
 
 // Implementation
 public:
+	LARGE_INTEGER m_liPeriod;
+	double m_dCpuSpeed;
+	DWORD m_dwCtrldelay;
+	DWORD m_dwVudelay;
+	DWORD m_dwBasedelay;
 	void StartVUthread();
 	virtual ~CGServerDoc();
 #ifdef _DEBUG
