@@ -21,14 +21,10 @@ static char THIS_FILE[] = __FILE__;
 #endif
 
 
-#define HIGHRESOLUTIONTIMER   // Use MultiMedia timers if defined
+// #define HIGHRESOLUTIONTIMER   // Use MultiMedia timers if defined
+#define CYCLECOUNT
 
-/////////////////////////////////////////////////////////////////////////////
-// This RW_DELAY is being changed from 4 to 7 per Gamble's request after his 
-// attempts to optimize the delays. - Evan 
-
-#define	RW_DELAY	7
-
+// #define BOGUS_DATA         // Define to send fake vu data
 
 ////////////////////////////////////////////
 //
@@ -50,18 +46,29 @@ void    CTekSleep(DWORD dwDelay )
   while(abs( (timeGetTime() - dwStartTime) < dwDelay));
 };
 
-#else
-////////////////////////////////////////////
-//
-//
-//	This constant (PPRO_NOP_MSEC_COUNTER) was 90000. It was changed to 104850 to compensate
-//	for Gamble having a 233MHz instead of a 200MHz.  Increase is proportional. -- Evan.
-//
-//
-#define PPRO_NOP_MSEC_COUNTER     104850 // !!
-void    CTekSleep(DWORD dwDelay )
+#endif
+
+#ifdef CYCLECOUNT
+
+#define PPRO_NOP_MSEC_COUNTER  90000
+void CTekSleep(DWORD dwDelay)
 {
-  DWORD     dwTickCountDelay;
+DWORD dwTickCountDelay;
+
+while(dwDelay -- > 0 )
+{
+  dwTickCountDelay = PPRO_NOP_MSEC_COUNTER;
+  while(dwTickCountDelay > 0)
+  {
+    dwTickCountDelay --;
+    __asm{NOP};
+  }
+}
+}
+
+#else
+
+   DWORD     dwTickCountDelay;
   // *************************************************************
   // SPECIAL DELAY LOOP ....... !!!!!
   // IT IS CALCULATED FOR Intel PPro 200 Mhz
@@ -70,13 +77,32 @@ void    CTekSleep(DWORD dwDelay )
 
   while(dwDelay -- > 0 )
   {
-    dwTickCountDelay = m_pDoc->m_dwBasedelay;
+    dwTickCountDelay = PPRO_NOP_MSEC_COUNTER;
     while(dwTickCountDelay > 0)
     {
       dwTickCountDelay --;
       __asm{NOP};
     }
   }
+};
+
+////////////////////////////////////////////
+//
+// Use High precision counter to calculate
+// 1 ms delay
+//
+//
+void    CTekSleep(DWORD dwDelay )
+{
+    LARGE_INTEGER goal, start, current;
+
+    QueryPerformanceCounter(&start);
+    goal.QuadPart = m_liPeriod.QuadPart * .001 * dwDelay; // Goal in counts for 1ms
+
+    do
+    {
+      QueryPerformanceCounter(&current)
+    }while(abs(current.QuadPart - start.QuadPart) <  goal.QuadPart)
 };
 
 #endif
@@ -102,6 +128,9 @@ VU_READ *pVUData;		// Data structure for our VU data
 
 CGServerDoc*	m_pDoc = (CGServerDoc*)pParam;
 
+#ifdef BOGUS_DATA
+WORD wFlag;     //  TEST TEST
+#endif
 
 	if(m_pDoc != NULL)
 	{
@@ -118,6 +147,10 @@ CGServerDoc*	m_pDoc = (CGServerDoc*)pParam;
 			if(WaitForSingleObject(m_pDoc->m_hEventKillVUThread,0) == WAIT_OBJECT_0)
 					break;
 
+#ifdef BOGUS_DATA
+              wFlag++;    // Toggle fake vu data, low or high
+#endif
+
 // Build the VU meter read command based on user selections 
 
 			// Set a loop to go through all VU ...
@@ -129,6 +162,7 @@ CGServerDoc*	m_pDoc = (CGServerDoc*)pParam;
 				// Get a pointer to this VU data
 
 				pVUData = m_pDoc->m_VUMetersArray.GetDataPtr(iVUtoRead);
+
 
 				// Set the module address
 
@@ -152,12 +186,8 @@ CGServerDoc*	m_pDoc = (CGServerDoc*)pParam;
             // If we read an ACK from the control data then ignore it and
             // find the real data
 
-//            do
-//            {
               lstrcpy(chBuffer1, chBufferVUType);
 						  m_pDoc->m_pDCXDevice->Read(chBuffer1, sizeof(DCXPORT_WRITE_INPUT ), &ulIO);
-//              OutputDebugString (chBuffer1);
-//            }while(chBuffer1[0] == '!' && chBuffer1[1] == '$');
            
 
           ////////////////////////////////////////////////////
@@ -165,10 +195,21 @@ CGServerDoc*	m_pDoc = (CGServerDoc*)pParam;
 					// "!0000,0000,0000,0000,0000,0000,0000,0000,/000"  ... this parsing needs
 					// to be done better .. maybe
 					//--------------------------------------
-// #define BOGUS_DATA
 #ifdef BOGUS_DATA
-              lstrcpy(chBuffer1, "!1000,0900,1100,0800,1200,0700,1300,0800,/123");
-              OutputDebugString (chBuffer1);
+
+          if(wFlag & 1)
+          {
+              lstrcpy(chBuffer1, "!0000,0000,0000,0000,0000,0000,0000,0000,/123");
+//              OutputDebugString (chBuffer1);
+          }
+          else
+          {
+
+              lstrcpy(chBuffer1, "!4000,2000,3000,2500,2000,1500,1000,0500,/123");
+//              OutputDebugString (chBuffer1);
+
+          }
+
 #endif
 
         ///////////////////////////////////////////////////////////////////////////////
