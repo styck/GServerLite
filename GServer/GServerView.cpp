@@ -19,6 +19,8 @@
 static char THIS_FILE[] = __FILE__;
 #endif
 
+void WINAPI DDX_IPAddress(CDataExchange* pDX, int nIDC, UINT & value);
+
 /////////////////////////////////////////////////////////////////////////////
 // CGServerView
 
@@ -757,7 +759,8 @@ void CGServerView::DoDataExchange(CDataExchange* pDX)
 	//{{AFX_DATA_MAP(CGServerView)
 	DDX_Control(pDX, IDC_NUM_CONNECTIONS, m_NumClientsProgress);
 	DDX_Text(pDX, IDC_TCP_ADDRESS, m_csTcpAddr);
-	DDX_Text(pDX, IDC_TCP_PORT, m_iPort);
+	//DDX_IPAddress(pDX, IDC_TCP_ADDRESS, m_csTcpAddr)
+  DDX_Text(pDX, IDC_TCP_PORT, m_iPort);
 	DDX_Check(pDX, IDC_CHK_NET_SERVER, m_bServerStart);
 	DDX_Text(pDX, IDC_NUM_CLIENTS_TEXT, m_csNumClients);
 	//}}AFX_DATA_MAP
@@ -781,3 +784,60 @@ void CGServerView::Serialize(CArchive& ar)
 		ar >> m_bServerStart;
 	}
 }
+
+
+// DDX routine fo IP address translation
+void WINAPI DDX_IPAddress(CDataExchange* pDX, int nIDC, UINT & value)
+{
+	// from dialog to class ?
+	if( pDX->m_bSaveAndValidate)
+	{
+		CString Val;
+		BOOL bValid = true;
+
+		pDX->m_pDlgWnd->GetDlgItem(nIDC)->GetWindowText(Val);
+
+		for( int i = 0; i < Val.GetLength(); i++)
+		{
+			// let's check if all entered char in entered
+			// IP address are digits
+			if(Val[i] == '.')
+				continue;
+
+			if(isdigit(Val[i]) == 0)
+			{
+				bValid = false;
+				break;			
+			}
+		}
+
+		if(bValid)
+		{
+			value = inet_addr(Val);
+			if(value == INADDR_NONE)
+			{
+				pDX->m_pDlgWnd->MessageBox("The entered IP address is invalid.");
+				pDX->PrepareEditCtrl(nIDC);
+				pDX->Fail();
+			}
+		}
+		else
+		{
+			pDX->m_pDlgWnd->MessageBox("IP address can only have digits and dots.");
+			pDX->PrepareEditCtrl(nIDC);
+			pDX->Fail();
+		}
+	}
+	else
+	{
+		// if the value is a valid IP address store it in the child control
+		in_addr IPaddress;
+		memcpy(&IPaddress, &value, 4);
+		CString Address = inet_ntoa(IPaddress);
+		if(!Address.IsEmpty())
+		{
+			pDX->m_pDlgWnd->GetDlgItem(nIDC)->SetWindowText(Address);
+		}
+	}	
+}
+
