@@ -648,6 +648,24 @@ int			iRecvd;				// Number of bytes recieved
           psocket->AcceptVuData(FALSE);
           break;
 
+
+				//////////////////////////////////////////////
+				// Set the lock byte for each module
+
+				case DCX_SHOW_VU_DATA:		// DCX_SHOW_VU_DATA
+
+        	int			i;
+
+					// Loop thru data received for showing the VU data and add it
+					// to the Lock.  Client must turn OFF showing VU's when it EXITS
+
+					for(i=0;i<MAX_VU_READ_DATA;i++)
+					{
+						  m_pDoc->m_VUMetersArray.m_aVUReadData[i].iLock+=m_chNetBufferIn[i];
+					}
+
+					break;
+
 				default:
 					m_pDoc->DisplayGeneralMessage(IDS_NETMSG_NOT_IMPLEMET);
 					break;
