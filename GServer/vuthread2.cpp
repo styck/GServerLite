@@ -24,7 +24,7 @@ static char THIS_FILE[] = __FILE__;
 // #define HIGHRESOLUTIONTIMER   // Use MultiMedia timers if defined
 #define CYCLECOUNT
 
-#define BOGUS_DATA         // Define to send fake vu data
+//#define BOGUS_DATA         // Define to send fake vu data
 
 ////////////////////////////////////////////
 //
