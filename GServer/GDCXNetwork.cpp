@@ -42,7 +42,7 @@ CGDCXNetwork::CGDCXNetwork(CGServerDoc *pDoc)
 	m_pDoc = pDoc;
 	m_pAssListener  = NULL; 
 	m_iPort = 9191;         // Default Port address
-	iShowControlData = 0;	// Default don't show control data
+	iShowControlData = 1;	// Default is show control data
 
 	// Lets get our host name and find the IP address to display
 
