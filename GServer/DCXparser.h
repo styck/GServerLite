@@ -77,7 +77,7 @@ typedef struct
 {
 	WORD		wAddr;							// the VUthread Reads from here(module address)
 //	BYTE	iVUType;					// the VUthread Reads from here(Pre, Post, Comp, Gate)
-	BYTE    bLock;							// if Zero nobody monitors this VU, so we don't need to read the damn thnig
+	char    cLock;							// if Zero nobody monitors this VU, so we don't need to read the damn thnig
 	WORD    wVUValue[8];		    // data. VUthread writes here
 	WORD    wPeakClipValue;			// data
   WORD    wModuleIdx;
