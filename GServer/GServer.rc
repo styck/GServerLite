@@ -284,6 +284,8 @@ BEGIN
                     BS_AUTOCHECKBOX | WS_TABSTOP,213,105,85,14
     PUSHBUTTON      "OSC ON",IDC_OSC_ON,301,79,34,12
     PUSHBUTTON      "OSC OFF",IDC_OSC_OFF,302,95,34,12
+    CONTROL         "Read VU data",IDC_READVUDATA,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,213,131,74,8
 END
 
 IDD_REG0DIALOG DIALOG DISCARDABLE  0, 0, 346, 193
@@ -340,7 +342,7 @@ BEGIN
             VALUE "OriginalFilename", "GServer.EXE\0"
             VALUE "PrivateBuild", "\0"
             VALUE "ProductName", "GServer Application\0"
-            VALUE "ProductVersion", "Version 10/8/99  Registry VUdelay and CTRLdelay \0"
+            VALUE "ProductVersion", "Version 10/8/99b  Registry VUdelay and CTRLdelay \0"
             VALUE "SpecialBuild", "\0"
         END
     END

@@ -52,6 +52,7 @@ void CControlDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CControlDlg)
+	DDX_Control(pDX, IDC_READVUDATA, m_ReadVuData);
 	DDX_Control(pDX, IDC_SHOWCONTROLDATA, m_ShowControlData);
 	DDX_Control(pDX, IDC_CTRLS_LIST, m_CControlListBox);
 	DDX_Control(pDX, IDC_CTRLS_SLIDER, m_CtrlSlider);
@@ -76,6 +77,7 @@ BEGIN_MESSAGE_MAP(CControlDlg, CDialog)
 	ON_BN_CLICKED(IDC_SHOWCONTROLDATA, OnShowcontroldata)
 	ON_BN_CLICKED(IDC_OSC_ON, OnOscOn)
 	ON_BN_CLICKED(IDC_OSC_OFF, OnOscOff)
+	ON_BN_CLICKED(IDC_READVUDATA, OnReadvudata)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
@@ -248,6 +250,8 @@ BOOL CControlDlg::OnInitDialog()
 	// Setup default values and update the dialog box
 
 	m_ShowControlData.SetCheck(m_pDoc->m_pdcxNetwork->iShowControlData);
+	m_ReadVuData.SetCheck(m_pDoc->m_pdcxNetwork->iReadVUData);
+
 	m_iDelay=10;		// 10ms default delay
 	m_iModuleAddr=33;	// Default starting module is 33 for DCX
 	UpdateData(FALSE);
@@ -483,13 +487,6 @@ void CControlDlg::OnWriteRegisterZero()
 
 }
 
-void CControlDlg::OnShowcontroldata() 
-{
-	// TODO: Add your control notification handler code here
-	m_pDoc->m_pdcxNetwork->iShowControlData= m_ShowControlData.GetCheck();
-}
-
-
 
 //mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm
 // Name   : OnOscOn() 
@@ -620,4 +617,17 @@ int CControlDlg::FindCueModule()
       }
 	}
 	return 0;	// Cuemodule not found
+}
+
+///////////////////////////////////////////////////////////
+// Check Boxes : let everyone else know the status of these
+
+void CControlDlg::OnShowcontroldata() 
+{
+	m_pDoc->m_pdcxNetwork->iShowControlData= m_ShowControlData.GetCheck();
+}
+
+void CControlDlg::OnReadvudata() 
+{
+	m_pDoc->m_pdcxNetwork->iReadVUData= m_ReadVuData.GetCheck();	
 }

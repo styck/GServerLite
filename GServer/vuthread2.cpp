@@ -199,7 +199,7 @@ WORD wFlag;     //  TEST TEST
 				// Set the module address
 
 				iAddr = pVUData->wAddr;
-				if(pVUData->cLock > 0)	// Use this to determine if we should read this
+				if( (pVUData->cLock > 0) && (m_pDoc->m_pdcxNetwork->iReadVUData) )	// Use this to determine if we should read this
 				{
 
             //ZeroMemory(chBuffer1, sizeof(DCXPORT_WRITE_INPUT ));
