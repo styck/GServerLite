@@ -20,8 +20,10 @@ static char THIS_FILE[] = __FILE__;
 #endif
 
 /////////////////////////////////////////////////////////////////////////////
+// This RW_DELAY is being changed from 4 to 7 per Gamble's request after his 
+// attempts to optimize the delays. - Evan 
 
-#define	RW_DELAY	4
+#define	RW_DELAY	7
 
 
 ////////////////////////////////////////////
