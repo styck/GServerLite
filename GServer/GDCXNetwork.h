@@ -48,7 +48,9 @@ public:
 	// saves current state of control for a particular module
 	// [module][control number] = control value
 
-	WORD										m_wCurrentState[DCX_DEVMAP_MAXSIZE][512];
+  // ONLY 256 UNIQUE CONTROL NUMBERS
+
+	WORD										m_wCurrentState[DCX_DEVMAP_MAXSIZE][256];
 
   // Array of Connection Objects
   //----------------------------
