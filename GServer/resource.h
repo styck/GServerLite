@@ -99,6 +99,7 @@
 #define IDC_NUM_CLIENTS_TEXT            1083
 #define IDC_SERVER_COMBO                1087
 #define IDC_SETTINGS_FRAME              1089
+#define IDC_STATIC_HISTOGRAM            1091
 #define ID_VIEW_NETWORK                 32771
 #define ID_VIEW_CONVERTER               32772
 #define ID_VIEW_CONTROLS                32773
@@ -119,7 +120,7 @@
 #define _APS_3D_CONTROLS                     1
 #define _APS_NEXT_RESOURCE_VALUE        186
 #define _APS_NEXT_COMMAND_VALUE         32820
-#define _APS_NEXT_CONTROL_VALUE         1090
+#define _APS_NEXT_CONTROL_VALUE         1092
 #define _APS_NEXT_SYMED_VALUE           107
 #endif
 #endif

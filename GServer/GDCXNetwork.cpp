@@ -742,7 +742,6 @@ char                    m_chNetBufferOut[MAX_NET_BUFFER+sizeof(HDR_DCXTCP)];
 							if( (uiType == DCX_VU_DATA) && pSocket->DoesAcceptVuData()) 
 							{
 								iSent=pSocket->Send(m_chNetBufferOut, iSize + sizeof(HDR_DCXTCP));
-								m_pView->m_HistogramCtrl.SetPos(50);
 
                 // If it all didn't go out then report an error
 
