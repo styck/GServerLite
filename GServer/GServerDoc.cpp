@@ -1,6 +1,6 @@
 //////////////////////////////////////////////////////////////////////
 // GServer project.
-// Copyright CorTek Software, Inc. 1997-1998. All rights reserved.
+// Copyright CorTek Software, Inc. 1997-2001. All rights reserved.
 //
 // GServerDoc.cpp : implementation of the CGServerDoc class
 //////////////////////////////////////////////////////////////////////
@@ -38,6 +38,9 @@ END_MESSAGE_MAP()
 
 CGServerDoc::CGServerDoc()
 {
+
+	CDCXRegistryEdit pReg; // Instantiate pReg
+
 	m_csGServerDocID = GSERVER_ID_STRING;  
 	m_dwVersion = GSERVER_VERSION;
 
@@ -48,6 +51,17 @@ CGServerDoc::CGServerDoc()
 	m_pDCXDevice->Open();										// Open the DCX device
 
 	m_VUthread = NULL;											// The VU thread hasn't started yet
+
+	///////////////////////////////////////////////////////////////////////////////////
+	// Basedelay is used in CorTekSleep for the base loop counter
+	// Vudelay is the time in milliseconds between writting and reading of vu data
+	// Ctrlelay is the time in milliseconds between writting and reading control data
+	// Read these from the Registry or set to default values
+	///////////////////////////////////////////////////////////////////////////////////
+
+	pReg.GetDCXDelayData( &m_dwBasedelay,  &m_dwVudelay, &m_dwCtrldelay);
+
+
 
 #ifdef NOTUSED // this is done when the server button is pressed
 	m_hEventKillVUThread = CreateEvent(NULL,FALSE, FALSE, NULL); // auto reset, initially reset
@@ -167,15 +181,6 @@ BOOL    bRet;
 
 char szBinDirectory[_MAX_PATH];		// 128
 double dDeviation = 0;
-
-CDCXRegistryEdit pReg; // Instantiate pReg
-
-// Basedelay was used in CorTekSleep for the base loop counter
-// Vudelay is the time in milliseconds between writting and reading of vu data
-/// Ctrlelay is the time in milliseconds between writting and reading control data
-
-pReg.GetDCXDelayData( &m_dwBasedelay,  &m_dwVudelay, &m_dwCtrldelay);
-
 
 // retrieves the frequency of the high-resolution performance counter, 	
 // THIS WILL EXIT IF HIGH RESOLUTION COUNTER IS NOT AVAILABLE
