@@ -22,9 +22,11 @@ protected: // create from serialization only
 public:
 	//{{AFX_DATA(CGServerView)
 	enum { IDD = IDD_DEVICE_SETUP };
+	CProgressCtrl	m_NumClientsProgress;
 	CString	m_csTcpAddr;
 	UINT	m_iPort;
 	BOOL	m_bServerStart;
+	CString	m_csNumClients;
 	//}}AFX_DATA
 
 
@@ -35,6 +37,7 @@ public:
 	// Module setup variables
 
   CCorTekTBCtrl   m_tbCtrlModule;
+
   DWORD           m_dwCurModuleSel;
 
 // Operations
