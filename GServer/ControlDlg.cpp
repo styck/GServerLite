@@ -790,22 +790,22 @@ void CControlDlg::OnClipReset()
 
 void CControlDlg::OnVu1() 
 {
-	m_ucVUTypeReq = 2;	// Average 1,3,5,7  Peak 2,4,6,8
+	m_ucVUTypeReq =0 ;	// Average 1,3,5,7  Peak 0, 2,4,6
 };
 
 void CControlDlg::OnVu3()
 {
-	m_ucVUTypeReq = 4;	
+	m_ucVUTypeReq = 2;	
 };
 
 void CControlDlg::OnVu5() 
 {
-	m_ucVUTypeReq = 6;	// Average
+	m_ucVUTypeReq = 4;
 };
 
 void CControlDlg::OnVu7() 
 {
-	m_ucVUTypeReq = 8;	
+	m_ucVUTypeReq = 6;	
 };
 
 
