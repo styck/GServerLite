@@ -603,7 +603,8 @@ int			iRecvd;				// Number of bytes recieved
 										if(iShowControlData)
 											m_pDoc->DisplayGeneralMessage(dcxCtrlData.arPotData[iCount].szData);
 // Always delay per Gamble 10/12/99 email			else
-											CTekSleep(m_pDoc->m_dwBasedelay,25);		// Delay 2.5 ms as per Jim Gamble
+// Updated email 1/15/2000, delay 3.0 ms for more stability
+											CTekSleep(m_pDoc->m_dwBasedelay,30);		// Delay 3.0 ms as per Jim Gamble 1/15/2000
 
 
 								}

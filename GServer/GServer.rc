@@ -292,10 +292,10 @@ BEGIN
                     WS_EX_CLIENTEDGE
     CONTROL         "Progress2",IDC_VUMETER_1,"msctls_progress32",
                     PBS_VERTICAL | PBS_SMOOTH | WS_BORDER,429,45,18,79
-    CTEXT           "0000",IDC_VUMETER1_RDOUT,426,33,25,8
+    CTEXT           "000",IDC_VUMETER1_RDOUT,426,33,25,8
     CONTROL         "Progress2",IDC_VUMETER_2,"msctls_progress32",
                     PBS_VERTICAL | PBS_SMOOTH | WS_BORDER,367,45,18,79
-    CTEXT           "000",IDC_VUMETER2_RDOUT,363,34,25,8
+    CTEXT           "0000",IDC_VUMETER2_RDOUT,363,34,25,8
     CONTROL         "1",IDC_VU_1,"Button",BS_AUTORADIOBUTTON | BS_PUSHLIKE,
                     367,146,27,10
     CONTROL         "3",IDC_VU_5,"Button",BS_AUTORADIOBUTTON | BS_PUSHLIKE,
@@ -390,12 +390,12 @@ BEGIN
             VALUE "FileDescription", "GServer Application for VACS®\0"
             VALUE "FileVersion", "1, 0, 0, 5\0"
             VALUE "InternalName", "GServer for the Gamble DCX\0"
-            VALUE "LegalCopyright", "Copyright © CorTek Software, Inc. 1997 - 1999\0"
+            VALUE "LegalCopyright", "Copyright © CorTek Software, Inc. 1997 - 2000\0"
             VALUE "LegalTrademarks", "VACS® is a registered trademark of CorTek Software, Inc.\0"
             VALUE "OriginalFilename", "GServer.EXE\0"
             VALUE "PrivateBuild", "\0"
             VALUE "ProductName", "GServer Application\0"
-            VALUE "ProductVersion", "Version 11/23/99  Registry VUdelay and CTRLdelay \0"
+            VALUE "ProductVersion", "Version 1/15/2000  Registry VUdelay and CTRLdelay \0"
             VALUE "SpecialBuild", "\0"
         END
     END
