@@ -24,7 +24,6 @@ static char THIS_FILE[]=__FILE__;
 extern void    CTekSleep(DWORD m_dwBasedelay,DWORD dwDelay);	// see vuthread2.cpp
 
 
-// #define DEMO      // DEMO SOFTWARE - No DCX hardware writes are allowed
 
 //////////////////////////////////////////////////////////////////////
 // Construction/Destruction
@@ -69,7 +68,7 @@ BOOL  CDCXDevice::Open(void)
 {
 BOOL    bRet = TRUE;
 
-#ifndef DEMO    // If NOT demo then open the DCX device driver
+#ifndef DEMO_VERSION    // If NOT demo then open the DCX device driver
 
 	if(m_hDevice == INVALID_HANDLE_VALUE && m_pchBuffRead != NULL && m_pchBuffWrite != NULL)
   {
@@ -108,7 +107,7 @@ BOOL  CDCXDevice::Close(void)
 {
 BOOL    bRet = TRUE;
 
-#ifndef DEMO  // Close the device if NOT compiled as DEMO
+#ifndef DEMO_VERSION  // Close the device if NOT compiled as DEMO_VERSION
 	if(m_hDevice != INVALID_HANDLE_VALUE)
   {
 		CloseHandle(m_hDevice);
@@ -132,7 +131,7 @@ BOOL  CDCXDevice::Write(int iAddr, LPSTR lpsz, ULONG  *pulWrite, BOOL bIsVU)
 int                 iBufferLength;
 BOOL                bIoctlResult = FALSE;
 
-#ifndef DEMO  // Write to DCX if NOT a demo version
+#ifndef DEMO_VERSION  // Write to DCX if NOT a DEMO_VERSION version
 
     m_DeviceIOLock.Lock();    // Lock this resource until we read the response
 
@@ -195,7 +194,7 @@ char                chAddr[4];
 int                 iAddr;
 BOOL                bIoctlResult = FALSE;
 
-#ifndef DEMO
+#ifndef DEMO_VERSION
 
   m_DeviceIOLock.Lock();  // Lock this resource until we read the response
 
@@ -237,7 +236,7 @@ char                chAddr[4];
 int                 iBufferLength;
 BOOL                bIoctlResult = FALSE;
 
-#ifndef DEMO
+#ifndef DEMO_VERSION
 
 	if(m_hDevice != INVALID_HANDLE_VALUE)
 	{
@@ -319,7 +318,7 @@ DCXPORT_WRITE_INPUT dcx_buffer;       // buffer for DCX i\o Control
 	if(m_pDoc)
 		m_pDoc->m_pdcxNetwork->iReadVUData = 0;	// Tell thread to stop sending VU read commands
 
-#ifndef DEMO
+#ifndef DEMO_VERSION
 
 	if(m_hDevice  != INVALID_HANDLE_VALUE)
 	{
