@@ -396,7 +396,7 @@ BEGIN
             VALUE "OriginalFilename", "GServer.EXE\0"
             VALUE "PrivateBuild", "\0"
             VALUE "ProductName", "GServer Application\0"
-            VALUE "ProductVersion", "Version 12/30/2000\0"
+            VALUE "ProductVersion", "Version 6/28/2001\0"
             VALUE "SpecialBuild", "\0"
         END
     END
