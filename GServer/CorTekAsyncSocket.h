@@ -23,6 +23,7 @@ public:
 			char		SendBuf[MAX_NET_BUFFER+sizeof(HDR_DCXTCP)];
 			int			HowManyInSendBuf;
 			int			OffsetToSend;
+      int     iSocketNumber;  // Keep track of the socket number 0-7
 
 			HANDLE	m_hFile;
 			BOOL		m_bSendingControlStates;

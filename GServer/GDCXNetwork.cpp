@@ -375,16 +375,18 @@ void CGDCXNetwork::OnAcceptConnection(int nErrorCode)
 int                 iCount;
 CCorTekAsyncSocket* pSocket = NULL;
 
-
 	if(m_iConnInUse < MAX_ASYNC_SONNECTIONS)
   {
+		m_iConnInUse ++ ;
 		for(iCount = 0; iCount < MAX_ASYNC_SONNECTIONS; iCount++)
     {
 			pSocket = (CCorTekAsyncSocket*)m_connections[iCount];
 			if( ! pSocket->IsOpened() )
       {
 				m_pAssListener->Accept(*pSocket);
-				pSocket->Init();                      
+				pSocket->Init();
+        pSocket->iSocketNumber = iCount;  // Keep track of socket number
+
 				break;
       }
     }
@@ -453,7 +455,7 @@ void CGDCXNetwork::OnCloseConnection(int nErrorCode)
 ////////////////////////////////////////////////////////////////////
 //MEMBER FUNCTION: OnConnect
 //
-//
+// NEVER CALLED ?????????????????????????????????????????///
 //
 void CGDCXNetwork::OnConnect(int nErrorCode) 
 {
@@ -661,7 +663,9 @@ int			iRecvd;				// Number of bytes recieved
 
 					for(i=0;i<MAX_VU_READ_DATA;i++)
 					{
-						  m_pDoc->m_VUMetersArray.m_aVUReadData[i].bLock+=m_chNetBufferIn[i];
+						  m_pDoc->m_VUMetersArray.m_aVUReadData[i].cLock+=m_chNetBufferIn[i];
+						  if(m_pDoc->m_VUMetersArray.m_aVUReadData[i].cLock < 0)
+                m_pDoc->m_VUMetersArray.m_aVUReadData[i].cLock = 0;
 					}
 
 					break;

@@ -29,6 +29,7 @@ CCorTekAsyncSocket::CCorTekAsyncSocket(CGDCXNetwork * pnet)
 	m_bOpened = FALSE;
   m_bSendVuData = FALSE;
 	m_hFile = NULL;
+  iSocketNumber = -1; // Invalidate the socket number
 
 	HowManyInSendBuf = 0;							// How much data in send buffer
 	OffsetToSend = 0;									// Index into data that needs to be sent
@@ -148,6 +149,14 @@ void CCorTekAsyncSocket::OnClose(int nErrorCode)
 	m_bOpened = FALSE;
   m_bSendVuData = FALSE; // Force the VU flag to FALSE ...
                          // Until the Client requests the VU data to start
+  
+  /////////////////////////////////////////////////
+  // clear the lock flag for VUs that this client
+  // was looking at
+
+  iSocketNumber = -1; // Invalidate the socket number
+
+
 
 	State = 0;
 	if(m_hFile != NULL)
