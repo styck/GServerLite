@@ -21,7 +21,7 @@ static char THIS_FILE[]=__FILE__;
 #include "DCXBinTable.h"
 #include "GServerDoc.h"
 
-// #define DEMO      // TEST TEST USED TO DEMO SOFTWARE
+//#define DEMO      // TEST TEST USED TO DEMO SOFTWARE
 
 //////////////////////////////////////////////////////////////////////
 // Construction/Destruction
@@ -123,7 +123,7 @@ BOOL                bIoctlResult = FALSE;
 
 #ifndef DEMO
 
-		//m_DeviceIOLock.Lock();
+    m_DeviceIOLock.Lock();
 
 		if(m_hDevice  != INVALID_HANDLE_VALUE)
 		{
@@ -180,7 +180,7 @@ int                 iAddr;
 BOOL                bIoctlResult = FALSE;
 
 #ifndef DEMO
-	//m_DeviceIOLock.Lock();
+  m_DeviceIOLock.Lock();
 
 	if(m_hDevice  != INVALID_HANDLE_VALUE)
   {
@@ -263,7 +263,7 @@ BOOL                bIoctlResult = FALSE;
 			bIoctlResult = TRUE;
 		}
 	}
-			//m_DeviceIOLock.Unlock();
+			m_DeviceIOLock.Unlock();
 
 #else
 

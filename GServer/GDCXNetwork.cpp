@@ -25,7 +25,7 @@ static char THIS_FILE[]=__FILE__;
 // #define HIGHRESOLUTIONTIMER   // Use MultiMedia timers if defined
 
 
-extern void    CTekSleep(DWORD dwDelay);	// see vuthread2.cpp
+extern void    CTekSleep(DWORD m_dwBasedelay,DWORD dwDelay);	// see vuthread2.cpp
 
 //////////////////////////////////////////////////////////////////////
 // Construction/Destruction
@@ -43,7 +43,6 @@ CGDCXNetwork::CGDCXNetwork(CGServerDoc *pDoc)
 
 	m_connections.SetSize(MAX_ASYNC_SONNECTIONS);
 	m_iConnInUse = 0;
-	m_bIsClient = FALSE;
 	m_pDeviceMap = &pDoc->m_dcxdevMap;		// Point to the device map setup
 																				// CHANGE THIS SO WE DON'T USE THIS NEW VARIABLE AND
 																				// JUST USE THE pDoc-> member variable
@@ -65,7 +64,6 @@ void CGDCXNetwork::Serialize(CArchive& ar)
 		// ------------------------------------
 		ar <<  NETWORK_OBJ_ID;
 		ar <<  NETWORK_VERSION;  
-		ar <<  m_bIsClient;
 		ar <<  m_iPort;
 		ar <<  m_csIPAddress;
 	}
@@ -80,32 +78,12 @@ void CGDCXNetwork::Serialize(CArchive& ar)
 		if(csObjID == NETWORK_OBJ_ID)
 		{
 			ar >>  dwVersion;
-			ar >>  m_bIsClient;
 			ar >>  m_iPort;
 			ar >>  m_csIPAddress;
 		}
 	}
 }
 
-
-////////////////////////////////////////////////////////////////////
-// MEMBER FUNCTION: IsStartedAsClient(void)
-//
-//
-BOOL    CGDCXNetwork::IsStartedAsClient(void)
-{
-	return (m_pAssListener != NULL && m_bIsClient);
-}
-
-////////////////////////////////////////////////////////////////////
-// MEMBER FUNCTION: IsStartedAsServer(void)
-//
-// Returns true is we are started as a server
-//
-BOOL    CGDCXNetwork::IsStartedAsServer(void)
-{
-	return (m_pAssListener != NULL && ! m_bIsClient);
-}
 
 
 ////////////////////////////////////////////////////////////////////
@@ -177,6 +155,7 @@ BOOL    CGDCXNetwork::StartAsServer(LPCTSTR lpcs, UINT  iPort)
 // This is for CSocket
 //			if(m_pAssListener->Create(iPort,SOCK_STREAM,lpcs))
 			{
+
 				if(m_pAssListener->Listen())
 				{
 					m_iPort = iPort;
@@ -191,16 +170,11 @@ BOOL    CGDCXNetwork::StartAsServer(LPCTSTR lpcs, UINT  iPort)
 // Clear out our state memory for the controls
 // We should fill this in with the register zero values
 //
-// No more than 256 unique controls
+// No more than MAX_NUM_CONTROLS unique controls
 
-			ZeroMemory(&m_wCurrentState[0][0],256*80*sizeof(WORD));
+			ZeroMemory(&m_wCurrentState[0][0],MAX_NUM_CONTROLS*80*sizeof(WORD));
 
 //////////////////////////////////////////////////
-
-if(bRet == FALSE)
-  ShutDown();
-else
-  m_bIsClient = FALSE;
 
 return bRet;
 }
@@ -245,14 +219,14 @@ int                 iCount;
     {
 			// Set the Default settings for the socket
 			//----------------------------------------
-			pSocket->SetOptions();
+			bRet = pSocket->SetOptions();                    // Set the socket options
+
 			m_connections[iCount] = (void *)pSocket; // Set this pointer to newly created object
 
 			// Clear out local locks for each socket connection
 
 			for(int i=0; i < MAX_VU_READ_DATA; i++)
 				m_pDoc->m_SocketVULocks[iCount][i] = 0;
-
 
     }
 		else
@@ -309,7 +283,6 @@ BOOL                bRet = TRUE;
   }
 
 	bRet = ShutDownClients();
-	m_bIsClient = FALSE;
 
 	return bRet;
 }    
@@ -368,11 +341,6 @@ void CGDCXNetwork::OnCloseConnection(int nErrorCode)
 	m_iConnInUse -- ;
 	m_pDoc->DisplayGeneralMessage(IDS_CONNECTION_CLOSED);
 
-// is this netobject opened as Client if so ShutDown
-//--------------------------------------------------
-
-	if(m_bIsClient)
-		ShutDown();
 
 		LPVOID    lpvMsg = NULL;
 
@@ -535,10 +503,10 @@ int			iRecvd;				// Number of bytes recieved
 					ctrld = (CONTROLDATA *)m_chNetBufferIn;
 
 					// Do some error checking to keep the program from crashing
-					// The control number should never be 256 or greater
+					// The control number should never be MAX_NUM_CONTROLS or greater
 					// and we are currently limited to 80 channels
 
-					if( (ctrld->wCtrl < 256) && (ctrld->wChannel < 80) )	
+					if( (ctrld->wCtrl < MAX_NUM_CONTROLS) && (ctrld->wChannel < 80) )	
 					{
 							// Save the value of this control on this channel (module)
 
@@ -570,7 +538,7 @@ int			iRecvd;				// Number of bytes recieved
                   //////////////////////////////////////////////////////////////////
                   // Delay between writing a control value and reading the response
 
-                  CTekSleep(m_pDoc->m_dwCtrldelay);		// Delay 7 ms so that we can read our response
+                  CTekSleep(m_pDoc->m_dwBasedelay,m_pDoc->m_dwCtrldelay);		// Delay 7 ms so that we can read our response
 
                     // Read the response which should be !ccggp\n. We do nothing with this
 										// cc - target chip, gg - group on the DCX board the chip is in
@@ -630,15 +598,15 @@ int			iRecvd;				// Number of bytes recieved
 								m_pDoc->m_SocketVULocks[psocket->iSocketNumber][i] = 0;
 
 #ifdef _DEBUG
-						wsprintf(chBuffer,"%d",m_pDoc->m_VUMetersArray.m_aVUReadData[i].cLock);
-							OutputDebugString(chBuffer);
+//						wsprintf(chBuffer,"%d",m_pDoc->m_VUMetersArray.m_aVUReadData[i].cLock);
+//							OutputDebugString(chBuffer);
 #endif
 
 				}
 
 
 #ifdef _DEBUG
-						OutputDebugString("\n");
+//						OutputDebugString("\n");
 #endif
 					break;
 
@@ -652,48 +620,6 @@ int			iRecvd;				// Number of bytes recieved
 	}
 
 return;
-}
-
-/////////////////////////////////////////////////////////////////////
-//  MEMBER FUNCTION: SendMsgType(void* lpv, int iSize, UINT  uiType);
-//
-//  Called by: HandleSliderMove() Only.
-//
-//  Remove if server sliders removed
-//
-//
-BOOL    CGDCXNetwork::SendMsgType(void* lpv, int iSize, UINT  uiType)
-{
-BOOL        bRet = FALSE;
-HDR_DCXTCP  hdrDCXTcp;
-
-	if(IsStartedAsClient())	
-  {
-		if( iSize <= MAX_NET_BUFFER) 
-    {
-			hdrDCXTcp.iID = DCX_TCP_ID;
-			hdrDCXTcp.wMessage  = uiType;
-			hdrDCXTcp.wSize = iSize;// + sizeof(HDR_DCXTCP); Hristo
-			hdrDCXTcp.mmt.wType = TIME_MS;
-			hdrDCXTcp.mmt.u.ms = GetTickCount();
-    
-    // Put the message header and the actual message into one buffer
-    // so we can write them out together
-    //--------------------------------------------------------------
-
-			CopyMemory(m_chNetBufferOut, &hdrDCXTcp, sizeof(HDR_DCXTCP));
-			if(lpv != NULL)
-			  CopyMemory(&m_chNetBufferOut[sizeof(HDR_DCXTCP)], lpv, iSize);
-
-			// Send the message and check for errros
-
-			if(m_pAssListener->Send(m_chNetBufferOut, iSize + sizeof(HDR_DCXTCP)) != SOCKET_ERROR)
-				bRet = TRUE;
-			else
-				bRet = FALSE;
-    }
-  }
-return bRet;
 }
 
 /////////////////////////////////////////////////////////////////////
@@ -714,8 +640,6 @@ CCorTekAsyncSocket* pSocket = NULL;
 int                 iCount;
 int									iSent;
 
-	if(IsStartedAsServer() )
-  {
 		if( iSize <= MAX_NET_BUFFER) 
     {
 			hdrDCXTcp.iID = DCX_TCP_ID;
@@ -785,7 +709,6 @@ int									iSent;
 			{
 					m_pDoc->DisplayGeneralMessage("BroadcastMsgType: Size too big");
 			}
-  }
 return bRet;
 }
 

@@ -26,14 +26,15 @@ static char THIS_FILE[] = __FILE__;
 CCorTekAsyncSocket::CCorTekAsyncSocket(CGDCXNetwork * pnet)
 {
 	m_pNet = pnet;
-	m_bOpened = FALSE;
-  m_bSendVuData = FALSE;
+	m_bOpened = FALSE;                // Socket is closed
+  m_bSendVuData = FALSE;            // Socket defaults to no VU data
 	m_hFile = NULL;
-  iSocketNumber = -1; // Invalidate the socket number
+  iSocketNumber = -1;               // Invalidate the socket number
 
 	HowManyInSendBuf = 0;							// How much data in send buffer
 	OffsetToSend = 0;									// Index into data that needs to be sent
 	m_bSendingControlStates = FALSE;	// not sending the control states yet
+
 
 }
 
@@ -42,6 +43,7 @@ CCorTekAsyncSocket::~CCorTekAsyncSocket()
 }
 
 // Do not edit the following lines, which are needed by ClassWizard.
+
 #if 0
 BEGIN_MESSAGE_MAP(CCorTekAsyncSocket, CAsyncSocket)
 	//{{AFX_MSG_MAP(CCorTekAsyncSocket)
@@ -65,9 +67,9 @@ CCorTekAsyncSocket::Abort()
 BOOL CCorTekAsyncSocket::Init(void) 
 {
 if(m_bOpened == FALSE)
-  m_bOpened = TRUE;
+  m_bOpened = TRUE;     // Socket is opened
 else
-  return FALSE;
+  return FALSE;         // Socket was already opened
     
 return TRUE; 
 }
@@ -88,17 +90,31 @@ BOOL    bRet = TRUE;
 int iSize=16384;
 BOOL	bOpt = TRUE;
 
-	if(!SetSockOpt(SO_RCVBUF, &iSize, sizeof(int), SOL_SOCKET))
+int									iErr;
+
+
+  if(!CAsyncSocket::SetSockOpt(SO_RCVBUF, &iSize, sizeof(int), SOL_SOCKET))
+  {
+			iErr=GetLastError();
 			bRet=FALSE;
+  }
 
 	if(!SetSockOpt(SO_SNDBUF, &iSize, sizeof(int), SOL_SOCKET))
+  {
+			iErr=GetLastError();
 			bRet=FALSE;
+  }
 
 //	if( ! SetSockOpt(SO_DONTLINGER, &bOpt, sizeof(BOOL), SOL_SOCKET))
 //			bRet=FALSE;
 
 	if( ! SetSockOpt(TCP_NODELAY , &bOpt, sizeof(BOOL), IPPROTO_TCP))
+  {
+			iErr=GetLastError();
 			bRet=FALSE;
+  }
+
+  bRet=TRUE;      // TEST TEST TEST TEST
 
 return bRet;
 }
@@ -170,14 +186,14 @@ char chBuffer[64];
 
 		// Show the resulting VU locks for DEBUG
 #ifdef _DEBUG
-						wsprintf(chBuffer,"%d",m_pNet->m_pDoc->m_VUMetersArray.m_aVUReadData[i].cLock);
-							OutputDebugString(chBuffer);
+//						wsprintf(chBuffer,"%d",m_pNet->m_pDoc->m_VUMetersArray.m_aVUReadData[i].cLock);
+//							OutputDebugString(chBuffer);
 #endif
 
 	}
 
 #ifdef _DEBUG
-							OutputDebugString("\n");
+//							OutputDebugString("\n");
 #endif
 
   iSocketNumber = -1; // Invalidate the socket number
@@ -362,7 +378,7 @@ void CCorTekAsyncSocket::OnSend(int nErrorCode)
 									break;
 								} 
 
-								pHdr->wSize = dwRead;	// Update the header with new amount of data read
+								pHdr->wSize = (WORD)dwRead;	// Update the header with new amount of data read
 						}
 
 
@@ -428,7 +444,7 @@ void CCorTekAsyncSocket::OnSend(int nErrorCode)
 					if(m_bSendingControlStates == FALSE)	
 					{
 							m_bSendingControlStates = TRUE;
-							dwDataSize = 512*80*sizeof(WORD);		// size of data array holding control states
+							dwDataSize = MAX_NUM_CONTROLS*80*sizeof(WORD);		// size of data array holding control states
 
 						// Set the header information for the TCP packet
 

@@ -384,7 +384,7 @@ BEGIN
             VALUE "LegalCopyright", "Copyright (C) 1998 CorTek Software, Inc.\0"
             VALUE "OriginalFilename", "GServer.EXE\0"
             VALUE "ProductName", "GServer Application\0"
-            VALUE "ProductVersion", "1, 0, 0, 1\0"
+            VALUE "ProductVersion", "1, 0, 0, 1 BETA 8/11/98\0"
         END
     END
     BLOCK "VarFileInfo"

@@ -24,7 +24,7 @@ static char THIS_FILE[] = __FILE__;
 // #define HIGHRESOLUTIONTIMER   // Use MultiMedia timers if defined
 #define CYCLECOUNT
 
-// #define BOGUS_DATA         // Define to send fake vu data
+#define BOGUS_DATA         // Define to send fake vu data
 
 ////////////////////////////////////////////
 //
@@ -50,14 +50,14 @@ void    CTekSleep(DWORD dwDelay )
 
 #ifdef CYCLECOUNT
 
-#define PPRO_NOP_MSEC_COUNTER  90000
-void CTekSleep(DWORD dwDelay)
+#define PPRO_NOP_MSEC_COUNTER  90000    // NOT USED
+void CTekSleep(DWORD dwBasedelay,DWORD dwDelay)
 {
 DWORD dwTickCountDelay;
 
 while(dwDelay -- > 0 )
 {
-  dwTickCountDelay = PPRO_NOP_MSEC_COUNTER;
+  dwTickCountDelay = dwBasedelay;
   while(dwTickCountDelay > 0)
   {
     dwTickCountDelay --;
@@ -173,22 +173,23 @@ WORD wFlag;     //  TEST TEST
             //ZeroMemory(chBuffer1, sizeof(DCXPORT_WRITE_INPUT ));
 						wsprintf(chBufferVUType, "*%03dXVU?\n", iAddr);			// ALL VU DATA
 //            OutputDebugString (chBufferVUType);
-
+#ifndef BOGUS_DATA
   					m_pDoc->m_pDCXDevice->Write(iAddr, chBufferVUType, &ulIO);
-
+#endif
 
             // Delay between write and read as selected above by the #define
             // This is the delay for the VU reads
 
-            CTekSleep(m_pDoc->m_dwVudelay);
+            CTekSleep(m_pDoc->m_dwBasedelay,m_pDoc->m_dwVudelay);
 
 						// Read ALL the VU data
             // If we read an ACK from the control data then ignore it and
             // find the real data
 
-              lstrcpy(chBuffer1, chBufferVUType);
+              lstrcpy(chBuffer1, chBufferVUType);   // Need this to get device address
+#ifndef BOGUS_DATA
 						  m_pDoc->m_pDCXDevice->Read(chBuffer1, sizeof(DCXPORT_WRITE_INPUT ), &ulIO);
-           
+#endif           
 
           ////////////////////////////////////////////////////
 					// Now parse the data and display it ...
@@ -221,7 +222,12 @@ WORD wFlag;     //  TEST TEST
 										chPeakVU[3] = chBuffer1[4];
 										chPeakVU[4] = 0;
 
+
+#ifdef BOGUS_DATA
+										pVUData->wVUValue[0]++;
+#else
 										pVUData->wVUValue[0] = atoi(chPeakVU);
+#endif
 
 										if(pVUData->wVUValue[0] < 0 || pVUData->wVUValue[0] > 4095)
 											pVUData->wVUValue[0] = 0;
@@ -236,7 +242,11 @@ WORD wFlag;     //  TEST TEST
 										chPeakVU[3] = chBuffer1[9];
 										chPeakVU[4] = 0;
 
+#ifdef BOGUS_DATA
+										pVUData->wVUValue[1]=pVUData->wVUValue[0]+500;
+#else
 										pVUData->wVUValue[1] = atoi(chPeakVU);
+#endif
 
 										if(pVUData->wVUValue[1] < 0 || pVUData->wVUValue[1] > 4095)
 											pVUData->wVUValue[1] = 0;
@@ -251,7 +261,11 @@ WORD wFlag;     //  TEST TEST
 										chPeakVU[3] = chBuffer1[14];
 										chPeakVU[4] = 0;
 
+#ifdef BOGUS_DATA
+										pVUData->wVUValue[2]=pVUData->wVUValue[1];
+#else
 										pVUData->wVUValue[2] = atoi(chPeakVU);
+#endif
 
 										if(pVUData->wVUValue[2] < 0 || pVUData->wVUValue[2] > 4095)
 											pVUData->wVUValue[2] = 0;
@@ -265,7 +279,11 @@ WORD wFlag;     //  TEST TEST
 										chPeakVU[3] = chBuffer1[19];
 										chPeakVU[4] = 0;
 
+#ifdef BOGUS_DATA
+										pVUData->wVUValue[3]=pVUData->wVUValue[2];
+#else
 										pVUData->wVUValue[3] = atoi(chPeakVU);
+#endif
 
 										if(pVUData->wVUValue[3] < 0 || pVUData->wVUValue[3] > 4095)
 											pVUData->wVUValue[3] = 0;
@@ -281,8 +299,11 @@ WORD wFlag;     //  TEST TEST
 										chPeakVU[3] = chBuffer1[24];
 										chPeakVU[4] = 0;
 
+#ifdef BOGUS_DATA
+										pVUData->wVUValue[4]=pVUData->wVUValue[3];
+#else
 										pVUData->wVUValue[4] = atoi(chPeakVU);
-
+#endif
 										if(pVUData->wVUValue[4] < 0 || pVUData->wVUValue[4] > 4095)
 											pVUData->wVUValue[4] = 0;
 
@@ -296,8 +317,11 @@ WORD wFlag;     //  TEST TEST
 										chPeakVU[3] = chBuffer1[29];
 										chPeakVU[4] = 0;
 
+#ifdef BOGUS_DATA
+										pVUData->wVUValue[5]=pVUData->wVUValue[4];
+#else
 										pVUData->wVUValue[5] = atoi(chPeakVU);
-
+#endif
 										if(pVUData->wVUValue[5] < 0 || pVUData->wVUValue[5] > 4095)
 											pVUData->wVUValue[5] = 0;
 
@@ -311,7 +335,11 @@ WORD wFlag;     //  TEST TEST
 										chPeakVU[3] = chBuffer1[34];
 										chPeakVU[4] = 0;
 
+#ifdef BOGUS_DATA
+										pVUData->wVUValue[6]=pVUData->wVUValue[5];
+#else
 										pVUData->wVUValue[6] = atoi(chPeakVU);
+#endif
 
 										if(pVUData->wVUValue[6] < 0 || pVUData->wVUValue[6] > 4095)
 											pVUData->wVUValue[6] = 0;
@@ -325,8 +353,11 @@ WORD wFlag;     //  TEST TEST
 										chPeakVU[3] = chBuffer1[39];
 										chPeakVU[4] = 0;
 
+#ifdef BOGUS_DATA
+										pVUData->wVUValue[7]=pVUData->wVUValue[6];
+#else
 										pVUData->wVUValue[7] = atoi(chPeakVU);
-
+#endif
 										if(pVUData->wVUValue[7] < 0 || pVUData->wVUValue[7] > 4095)
 											pVUData->wVUValue[7] = 0;
 

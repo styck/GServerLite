@@ -302,8 +302,8 @@ BOOL    CGServerDoc::DisplayGeneralMessage(UINT   uiMsgID)
 BOOL      bRet = TRUE;
 CString   cs;
 
-	if(cs.LoadString(uiMsgID))
-    OutputDebugString((LPSTR) LPCTSTR(cs));
+//	if(cs.LoadString(uiMsgID))
+//    OutputDebugString((LPSTR) LPCTSTR(cs));
 
 return bRet;
 };
@@ -316,7 +316,7 @@ BOOL    CGServerDoc::DisplayGeneralMessage(LPSTR lps)
 {
 BOOL      bRet = TRUE;
 
-    OutputDebugString((LPSTR) LPCTSTR(lps));
+//    OutputDebugString((LPSTR) LPCTSTR(lps));
 //	DisplayGeneralMsg(lps);
 
 return bRet;
@@ -386,7 +386,7 @@ void CGServerDoc::StartVUthread()
 	{
 		// Begin the worker thread.  
 
-		m_VUthread = AfxBeginThread(ThreadProc, this, THREAD_PRIORITY_BELOW_NORMAL);
+		m_VUthread = AfxBeginThread(ThreadProc, this, (int)THREAD_PRIORITY_BELOW_NORMAL,(UINT)0,(DWORD)0,NULL);
 	} 
 }
 
