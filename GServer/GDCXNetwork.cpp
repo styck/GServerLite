@@ -694,6 +694,7 @@ CCorTekAsyncSocket* pSocket = NULL;
 int                 iCount;
 int									iSent;
 
+
 // Moved this here from class declaration
 //This is the simplest way to ensure multitasking correctness. It might not be
 //the best(!) performance, but it is efficient enough to be able to broadcast
@@ -725,6 +726,9 @@ char                    m_chNetBufferOut[MAX_NET_BUFFER+sizeof(HDR_DCXTCP)];
 				}
 				else if (uiWho == ALL)
 				{			// uiWho == ALL so send to all other clients
+
+// Loop thru all the socket connections, 1-8
+
 					for(iCount = 0; iCount < MAX_ASYNC_SONNECTIONS; iCount++)
 					{
 						pSocket = (CCorTekAsyncSocket*)m_connections[iCount];
@@ -736,8 +740,9 @@ char                    m_chNetBufferOut[MAX_NET_BUFFER+sizeof(HDR_DCXTCP)];
 
               // If its VU data and client accepts vu data then send it
 							if( (uiType == DCX_VU_DATA) && pSocket->DoesAcceptVuData()) 
-              {
+							{
 								iSent=pSocket->Send(m_chNetBufferOut, iSize + sizeof(HDR_DCXTCP));
+								m_pView->m_HistogramCtrl.SetPos(50);
 
                 // If it all didn't go out then report an error
 
@@ -746,9 +751,9 @@ char                    m_chNetBufferOut[MAX_NET_BUFFER+sizeof(HDR_DCXTCP)];
 											  bRet = FALSE;
 											  m_pDoc->DisplayGeneralMessage("*** BroadcastMsgType: incomplete ***");
 							  }
-              }
+							}
  							else if(uiType != DCX_VU_DATA)  // If it is not VU data then just send it
-              {
+							{
 								iSent=pSocket->Send(m_chNetBufferOut, iSize + sizeof(HDR_DCXTCP));
 
                 // If it all didn't go out then report an error
@@ -760,11 +765,11 @@ char                    m_chNetBufferOut[MAX_NET_BUFFER+sizeof(HDR_DCXTCP)];
 							  }
 
 
-              }
+							}
 
-            } // end if not current socket and socke opened
-          } // end for iCount
-        } // sending to ALL?
+						} // end if not current socket and socke opened
+					} // end for iCount
+				} // sending to ALL?
       } // if iSize < MAX_NET_BUFFER
 			else
 			{

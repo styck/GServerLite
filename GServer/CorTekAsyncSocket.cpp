@@ -634,7 +634,7 @@ int CCorTekAsyncSocket::Send(const void* pBuffer, int iSendSize, int nFlags)
       // This is some sort of an error ... we might have to check here
 			
 			if(GetLastError()  != WSAEWOULDBLOCK)
-				return -1;
+				return -1;		// Need to toggle RED LED to indicate ERROR sending
 			else
 				Sleep(1);	// Sleep and try again
     }
