@@ -25,10 +25,9 @@ static char THIS_FILE[] = __FILE__;
 #define CYCLECOUNT
 
 
-//#define BOGUS_DATA         // Define to send fake vu data
-//#define USEMIXER
+//#define USEMIXER		// must define DEMO_VERSION in GSERVER.H also
 
-#ifdef BOGUS_DATA
+#ifdef DEMO_VERSION
 #ifdef USEMIXER
 
 	UINT m_nNumMixers;
@@ -143,6 +142,8 @@ char	chPeakVU[5];
 char	chBufferVUType[128];
 char  chBuffer1[sizeof(DCXPORT_WRITE_INPUT )];
 
+VU_READ LastVUdata[DCX_DEVMAP_MAXSIZE];	// holds lset VU data for this module
+
 DCXPORT_WRITE_INPUT   *RBuffer=(DCXPORT_WRITE_INPUT *)chBuffer1; //->arChar;
 ULONG   ulIO;
 int     iVUtoRead;
@@ -150,7 +151,7 @@ VU_READ *pVUData;		// Data structure for our VU data
 
 CGServerDoc*	m_pDoc = (CGServerDoc*)pParam;
 
-#ifdef BOGUS_DATA
+#ifdef DEMO_VERSION
 WORD wFlag;     //  TEST TEST
 #ifdef USEMIXER
 	amdInitialize();
@@ -181,7 +182,7 @@ WORD wFlag;     //  TEST TEST
 			if(WaitForSingleObject(m_pDoc->m_hEventKillVUThread,0) == WAIT_OBJECT_0)
 					break;
 
-#ifdef BOGUS_DATA
+#ifdef DEMO_VERSION
               wFlag++;    // Toggle fake vu data, low or high
 		       CTekSleep(m_pDoc->m_dwBasedelay,4000); // slow it down
 
@@ -203,7 +204,7 @@ WORD wFlag;     //  TEST TEST
 				// Set the module address
 
 				iAddr = pVUData->wAddr;
-#ifdef BOGUS_DATA
+#ifdef DEMO_VERSION
 				if( m_pDoc->m_pdcxNetwork->iReadVUData )	// Use this to determine if we should read this
 #else
 				if( (pVUData->cLock > 0) && (m_pDoc->m_pdcxNetwork->iReadVUData) )	// Use this to determine if we should read this
@@ -213,7 +214,7 @@ WORD wFlag;     //  TEST TEST
             //ZeroMemory(chBuffer1, sizeof(DCXPORT_WRITE_INPUT ));
 						wsprintf(chBufferVUType, "*%03dXVU?\n", iAddr);			// ALL VU DATA
 //            TRACE0 (chBufferVUType);
-#ifndef BOGUS_DATA
+#ifndef DEMO_VERSION
   					m_pDoc->m_pDCXDevice->Write(iAddr, chBufferVUType, &ulIO, TRUE);
 #endif
 
@@ -227,7 +228,7 @@ WORD wFlag;     //  TEST TEST
             // find the real data
 
               lstrcpy(chBuffer1, chBufferVUType);   // Need this to get device address
-#ifndef BOGUS_DATA
+#ifndef DEMO_VERSION
 						  m_pDoc->m_pDCXDevice->Read(chBuffer1, sizeof(DCXPORT_WRITE_INPUT ), &ulIO);
 #endif           
 
@@ -236,7 +237,7 @@ WORD wFlag;     //  TEST TEST
 					// "!0000,0000,0000,0000,0000,0000,0000,0000,/000"  ... this parsing needs
 					// to be done better .. maybe
 					//--------------------------------------
-#ifdef BOGUS_DATA
+#ifdef DEMO_VERSION
 #ifdef USEMIXER
 
 		LONG lval;
@@ -270,7 +271,7 @@ WORD wFlag;     //  TEST TEST
 										chPeakVU[4] = 0;
 
 
-#ifndef BOGUS_DATA
+#ifndef DEMO_VERSION
 										pVUData->wVUValue[0] = atoi(chPeakVU);
 #endif
 
@@ -287,7 +288,7 @@ WORD wFlag;     //  TEST TEST
 										chPeakVU[3] = chBuffer1[9];
 										chPeakVU[4] = 0;
 
-#ifndef BOGUS_DATA
+#ifndef DEMO_VERSION
 										pVUData->wVUValue[1] = atoi(chPeakVU);
 #endif
 
@@ -304,7 +305,7 @@ WORD wFlag;     //  TEST TEST
 										chPeakVU[3] = chBuffer1[14];
 										chPeakVU[4] = 0;
 
-#ifndef BOGUS_DATA
+#ifndef DEMO_VERSION
 										pVUData->wVUValue[2] = atoi(chPeakVU);
 #endif
 
@@ -320,7 +321,7 @@ WORD wFlag;     //  TEST TEST
 										chPeakVU[3] = chBuffer1[19];
 										chPeakVU[4] = 0;
 
-#ifndef BOGUS_DATA
+#ifndef DEMO_VERSION
 										pVUData->wVUValue[3] = atoi(chPeakVU);
 #endif
 
@@ -338,7 +339,7 @@ WORD wFlag;     //  TEST TEST
 										chPeakVU[3] = chBuffer1[24];
 										chPeakVU[4] = 0;
 
-#ifndef BOGUS_DATA
+#ifndef DEMO_VERSION
 										pVUData->wVUValue[4] = atoi(chPeakVU);
 #endif
 										if(pVUData->wVUValue[4] < 0 || pVUData->wVUValue[4] > MAX_VU_VALUE)
@@ -354,7 +355,7 @@ WORD wFlag;     //  TEST TEST
 										chPeakVU[3] = chBuffer1[29];
 										chPeakVU[4] = 0;
 
-#ifndef BOGUS_DATA
+#ifndef DEMO_VERSION
 										pVUData->wVUValue[5] = atoi(chPeakVU);
 #endif
 										if(pVUData->wVUValue[5] < 0 || pVUData->wVUValue[5] > MAX_VU_VALUE)
@@ -370,7 +371,7 @@ WORD wFlag;     //  TEST TEST
 										chPeakVU[3] = chBuffer1[34];
 										chPeakVU[4] = 0;
 
-#ifndef BOGUS_DATA
+#ifndef DEMO_VERSION
 										pVUData->wVUValue[6] = atoi(chPeakVU);
 #endif
 
@@ -386,14 +387,14 @@ WORD wFlag;     //  TEST TEST
 										chPeakVU[3] = chBuffer1[39];
 										chPeakVU[4] = 0;
 
-#ifndef BOGUS_DATA
+#ifndef DEMO_VERSION
 										pVUData->wVUValue[7] = atoi(chPeakVU);
 #endif
 										if(pVUData->wVUValue[7] < 0 || pVUData->wVUValue[7] > MAX_VU_VALUE)
 											pVUData->wVUValue[7] = 0;
 
 
-#ifdef BOGUS_DATA
+#ifdef DEMO_VERSION
 
  										pVUData->wVUValue[0] = pVUData->wVUValue[0]+250;
 										pVUData->wVUValue[1]=pVUData->wVUValue[0];
@@ -423,9 +424,32 @@ WORD wFlag;     //  TEST TEST
 					// only if we didn't get and ACK character from the read
 					// since the client is sending control data and we are not
 					// locking our resource at this time because of speed
+					//					if( chBuffer1[1] != '$' )
 
-//					if( chBuffer1[1] != '$' )
+
+					// IF ANY of the VU data has changed then send the packet
+					// for the module
+
+ 					if(pVUData->wVUValue[0]!=LastVUdata[iVUtoRead].wVUValue[0] ||
+					pVUData->wVUValue[1]!=LastVUdata[iVUtoRead].wVUValue[1] ||
+					pVUData->wVUValue[2]!=LastVUdata[iVUtoRead].wVUValue[2] ||
+					pVUData->wVUValue[3]!=LastVUdata[iVUtoRead].wVUValue[3] ||
+					pVUData->wVUValue[4]!=LastVUdata[iVUtoRead].wVUValue[4] ||
+					pVUData->wVUValue[5]!=LastVUdata[iVUtoRead].wVUValue[5] ||
+					pVUData->wVUValue[6]!=LastVUdata[iVUtoRead].wVUValue[6])
+					{
 	          m_pDoc->m_pdcxNetwork->BroadcastMsgType(pVUData, sizeof(VU_READ), DCX_VU_DATA, NULL, 0);
+
+						LastVUdata[iVUtoRead].wVUValue[0] =	pVUData->wVUValue[0];
+						LastVUdata[iVUtoRead].wVUValue[1] =	pVUData->wVUValue[1];
+						LastVUdata[iVUtoRead].wVUValue[2] =	pVUData->wVUValue[2];
+						LastVUdata[iVUtoRead].wVUValue[3] =	pVUData->wVUValue[3];
+						LastVUdata[iVUtoRead].wVUValue[4] =	pVUData->wVUValue[4];
+						LastVUdata[iVUtoRead].wVUValue[5] =	pVUData->wVUValue[5];
+						LastVUdata[iVUtoRead].wVUValue[6] =	pVUData->wVUValue[6];
+
+					}
+
 
 				}
 
