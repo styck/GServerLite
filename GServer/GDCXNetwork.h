@@ -34,7 +34,10 @@ public:
 private:
 	CDCXDeviceMap						*m_pDeviceMap;
 
-  char                    m_chNetBufferOut[MAX_NET_BUFFER+sizeof(HDR_DCXTCP)];
+// moved to routines so that we don't have thread conflicts with the output buffer
+//
+//  char                    m_chNetBufferOut[MAX_NET_BUFFER+sizeof(HDR_DCXTCP)];
+
   char                    m_chNetBufferIn[MAX_NET_BUFFER+sizeof(HDR_DCXTCP)];
 	
 	
