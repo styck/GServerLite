@@ -6,10 +6,12 @@
 //
 
 #include "stdafx.h"
+#include  "mmsystem.h"
 #include "GServer.h"
 #include "VUthread2.h"
 #include "gserverdoc.h"
 #include	"VUMeterArray.h"
+
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -24,27 +26,20 @@ static char THIS_FILE[] = __FILE__;
 
 ////////////////////////////////////////////
 //
+// Delay by milliseconds.
+// 
+// The value for timeGetTime() wraps around to 0 every 2^32 milliseconds (49.71 days)
+// That is why the abs() call is there to check the difference
 //
+// The default precision can be 5 ms or more for windows NT, for window 95 it is 1 ms.
+// The precision is set in the GDCXNetwork.cpp file in the StartAsServer() function
 //
-#define PPRO_NOP_MSEC_COUNTER     90000 // !!
 void    CTekSleep(DWORD dwDelay )
 {
-  DWORD     dwTickCountDelay;
-  // *************************************************************
-  // SPECIAL DELAY LOOP ....... !!!!!
-  // IT IS CALCULATED FOR Intel PPro 200 Mhz
-  // This Loop gives us a resolution of 0.001 sec / 100000 (!!!!!)
-  // NOTE the loop has been adjusted to faster than 1 msec
+  DWORD  dwStartTime;
 
-  while(dwDelay -- > 0 )
-  {
-    dwTickCountDelay = PPRO_NOP_MSEC_COUNTER;
-    while(dwTickCountDelay > 0)
-    {
-      dwTickCountDelay --;
-      __asm{NOP};
-    }
-  }
+  dwStartTime = timeGetTime();
+  while(abs( (timeGetTime() - dwStartTime) < dwDelay));
 };
 
 /////////////////////////////////////////////////////////////////////////////
