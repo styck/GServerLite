@@ -9,7 +9,8 @@
 
 #include "stdafx.h"
 #include "GServer.h"
-#include "DCXDeviceMap.h"
+#include "DCXparser.h"		
+#include "DCXDeviceMap.h"	// DCXparser.h must be include before this one
 
 #ifdef _DEBUG
 #undef THIS_FILE

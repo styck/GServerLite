@@ -8,6 +8,17 @@
 #ifndef DCXPARSER_H_
 #define	DCXPARSER_H_
 
+
+#define DCX_DEVMAP_ID_STR         "DCX_DEVMAP"
+#define DCX_DEVMAP_MAXSIZE        80						// Maximum number of modules
+
+#define DCX_DEVMAP_MODULE_NA			0
+#define DCX_DEVMAP_MODULE_INPUT		1
+#define DCX_DEVMAP_MODULE_AUX			2
+#define DCX_DEVMAP_MODULE_MATRIX	3
+#define DCX_DEVMAP_MODULE_CUE			4
+#define DCX_DEVMAP_MODULE_MASTER	5
+
 #pragma pack(1) // pack on a byte boundry
 
 #define   DCX_FILE_VERSION (DWORD)0x00010000 // the version

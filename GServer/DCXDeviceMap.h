@@ -11,15 +11,6 @@
 
 class CDCXDeviceMap : public CObject  
 {
-#define DCX_DEVMAP_ID_STR         "DCX_DEVMAP"
-#define DCX_DEVMAP_MAXSIZE        80						// Maximum number of modules
-
-#define DCX_DEVMAP_MODULE_NA			0
-#define DCX_DEVMAP_MODULE_INPUT		1
-#define DCX_DEVMAP_MODULE_AUX			2
-#define DCX_DEVMAP_MODULE_MATRIX	3
-#define DCX_DEVMAP_MODULE_CUE			4
-#define DCX_DEVMAP_MODULE_MASTER	5
 
 // #define DCX_DEVMAP_MODULE_COMPUTER  100
 
