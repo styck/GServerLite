@@ -618,9 +618,13 @@ int			iRecvd;				// Number of bytes recieved
           break;
         case DCX_STOP_VU_DATA:
           psocket->AcceptVuData(FALSE);
-//			m_pDoc->m_pDCXDevice->ResetBus();
           break;
 
+// Rest the DCX Bus
+
+		case DCX_RESET_BUS:
+		   m_pDoc->m_pDCXDevice->ResetBus();
+		   break;
 
 				//////////////////////////////////////////////
 				// Set the lock byte for each module
