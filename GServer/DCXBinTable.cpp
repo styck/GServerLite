@@ -1,17 +1,13 @@
 //////////////////////////////////////////////////////////////////////
-// GServer project.
-// Copyright CorTek Software, Inc. 1997-1998. All rights reserved.
+//
+// Copyright CorTek Software, Inc. 1997-2004. All rights reserved.
 //
 // DCXBinTable.cpp: implementation of the CDCXBinTable class.
-//
-// Copyright CorTek Software, Inc. 1997-1998. All rights reserved.
 //
 //////////////////////////////////////////////////////////////////////
 
 #include "stdafx.h"
 #include "Module.h"
-
-// #include "..\portio\sys\Gpioctl.h"	// DCX Device driver header file
 
 #include "GServer.h"
 #include "DCXBinTable.h"
@@ -28,15 +24,12 @@ static char THIS_FILE[]=__FILE__;
 
 CDCXBinTable::CDCXBinTable()
 {
-
-
 	ZeroMemory((void *)&m_DcxMemMap, sizeof (DCX_MEM_MAP));
 
 	m_DcxMemMap.pDcxMap = NULL;
 	m_DcxMemMap.pDcxCtrls = NULL;
 
 	m_iLastError = DBT_ERR_NOERROR;
-//	m_iChanAddrOffset = DCX_START_ADDRESS;			// Initial channel address offset
 
 
 	m_pDCXBuffer = NULL;
@@ -56,26 +49,19 @@ void CDCXBinTable::Serialize(CArchive& ar)
 {
 	if (ar.IsStoring())
 	{	// storing code
-//  ar <<  m_iChanAddrOffset;
 	}
 	else
 	{	// loading code
-//  ar >>  m_iChanAddrOffset;
 	}
 }
 
-
-/////////////////////////////////////////////
-//
-//
-
-////////////////////////////////////////
-// MEMBER FUNCTION: GetControlDesc(int iIdx ..
+//////////////////////////////////////////////////////////////////////////////////
+// MEMBER FUNCTION: GetControlDesc(int iIdx, LPDCX_CTRL_DESC lpCtrlDesc)
 //
 // Copy the description of the control at index iIdx into the pointer passed
-//
+// get control information by index
 
-BOOL    CDCXBinTable::GetControlDesc(int iIdx, LPDCX_CTRL_DESC lpCtrlDesc) // get control information by index
+BOOL    CDCXBinTable::GetControlDesc(int iIdx, LPDCX_CTRL_DESC lpCtrlDesc) 
 {
 BOOL    bRet = TRUE;
 
@@ -107,7 +93,6 @@ if(GetControlsCount())
 {
   // Scan through control to find this Control Name
   //------------------------------------------------
-
 }
 else
 {
@@ -134,10 +119,10 @@ return iRet;
 ////////////////////////////////////////
 // MEMBER FUNCTION: CompileDCXTable
 //
-//
-//
+// This function builds the DCX.BIN file
+// from the various text control files
 
-int     CDCXBinTable::CompileDCXTable(LPSTR szSourceDir, LPSTR szDest, /*HWND hdlg,*/ BOOL bReverse)
+int     CDCXBinTable::CompileDCXTable(LPSTR szSourceDir, LPSTR szDest,BOOL bReverse)
 {
 
 DCX_CTRL_FILE_HDR dcxFileHeader = { 0 };
@@ -196,7 +181,6 @@ int               iCtrlCount = 0;
 					break;
 				}
 
-    
 				if(iMaxCtrlSteps < pCtrl->iNumEntr)
 					iMaxCtrlSteps = pCtrl->iNumEntr;
     
@@ -240,7 +224,6 @@ int               iCtrlCount = 0;
 		goto ON_EXIT;
 	}
 
-
 	ON_EXIT:
 	if(hfDest != INVALID_HANDLE_VALUE)
 		CloseHandle(hfDest);
@@ -268,7 +251,7 @@ int     CDCXBinTable::FreeDCXMapBuffers(void)
 		m_DcxMemMap.pDcxMap = NULL;
 	}
 
-ZeroMemory(&m_DcxMemMap.dcxHdr, sizeof(DCX_CTRL_FILE_HDR));
+	ZeroMemory(&m_DcxMemMap.dcxHdr, sizeof(DCX_CTRL_FILE_HDR));
 
 return 0;
 } 
@@ -277,12 +260,12 @@ return 0;
 // FUNCTION: ReadDCXTableFile
 //
 //
-int   CDCXBinTable::ReadDCXTableFile(LPSTR  lpFName) //, LPDCX_MEM_MAP pMemMap)
+int   CDCXBinTable::ReadDCXTableFile(LPSTR  lpFName)
 {
-	int                 iRet;
-	LPDCX_CTRL_DESC     pdcxctrl; // buffer were the controls data will be stored
-	LPDCX_CTRL_DESC     pwalk;		// buffer were the controls data will be stored
-	LPDCX_MAP_ENTRY     pdcxmap;	// the lookup table for the controls position in memory
+	int                 iRet = FALSE;			// ERROR by default
+	LPDCX_CTRL_DESC     pdcxctrl;					// buffer were the controls data will be stored
+	LPDCX_CTRL_DESC     pwalk = NULL;			// buffer were the controls data will be stored
+	LPDCX_MAP_ENTRY     pdcxmap = NULL;		// the lookup table for the controls position in memory
 	LPSTR               pend;
 	DCX_CTRL_FILE_HDR   dcxFileHeader = { 0 };
 	HANDLE              hf;
@@ -295,30 +278,27 @@ int   CDCXBinTable::ReadDCXTableFile(LPSTR  lpFName) //, LPDCX_MEM_MAP pMemMap)
 
 	FreeDCXMapBuffers();
 
-	iRet = 1; // set it to error
-	pdcxmap = NULL;
-	pdcxctrl = NULL;
-
+	// Open DCX.BIN file
 	hf = CreateFile(lpFName, GENERIC_READ, 0, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
 
 	if( hf == INVALID_HANDLE_VALUE )
 		goto ON_EXIT;
 
+	// Validate the file size
 	dwSize = GetFileSize(hf, NULL);
 
 	if(( dwSize == 0 ) || ( dwSize == 0xFFFFFFFF))
 		goto ON_EXIT;
 
+	// Read in the DCX_CTRL_FILE_HDR
 	SetFilePointer(hf, 0, NULL, FILE_BEGIN);
-
 	::ReadFile(hf, &dcxFileHeader, sizeof(DCX_CTRL_FILE_HDR), &dwRead, NULL);
 
 	if(dwRead != sizeof(DCX_CTRL_FILE_HDR))
 		goto ON_EXIT;
 
-	// verify the File Header
-	//-----------------------
-
+	// Verify the DCX_CTRL_FILE_HDR
+	//------------------------------
 	if( (dcxFileHeader.dwID != DCX_TCP_ID) || (dcxFileHeader.iSize != sizeof(DCX_CTRL_FILE_HDR)) )
 		goto ON_EXIT;
 
@@ -349,7 +329,6 @@ int   CDCXBinTable::ReadDCXTableFile(LPSTR  lpFName) //, LPDCX_MEM_MAP pMemMap)
 
 	// loop to read all of the controls and load them into memory ...
 	//---------------------------------------------------------------
-
 	iCtrlCount = 0;
 	while( (LPSTR)pwalk < pend)
 	{
@@ -359,31 +338,31 @@ int   CDCXBinTable::ReadDCXTableFile(LPSTR  lpFName) //, LPDCX_MEM_MAP pMemMap)
 		pwalk = (LPDCX_CTRL_DESC)((LPSTR)pwalk + pwalk->iSize);
 	}
 
-	if( iCtrlCount != dcxFileHeader.iCtrlCount)
+	if( iCtrlCount == dcxFileHeader.iCtrlCount)
 	{
-		// the controls read is not the same as it's specified in the File Header
-		// handle this ERROR
-		//-----------------------------------------------------------------------
-
+		// store the header information and the buffer pointers
+		// so that the control data can be found
+		//-----------------------------------------------------
+		m_DcxMemMap.dcxHdr     = dcxFileHeader;
+		m_DcxMemMap.pDcxCtrls  = pdcxctrl;	// Pointer to the control description,
+		m_DcxMemMap.pDcxMap    = pdcxmap;
+		iRet = TRUE;						// Everything ok
 	}
 	else
 	{
-		// store the header information and the buffer pointers
-		//-----------------------------------------------------
-		m_DcxMemMap.dcxHdr     = dcxFileHeader;
-		m_DcxMemMap.pDcxCtrls  = pdcxctrl;
-		m_DcxMemMap.pDcxMap    = pdcxmap;
-//		m_csBinFileName        = lpFName;
-		iRet = 0;
+		// the controls read is not the same as it's specified in the File Header
+		// handle this ERROR by returning FALSE
+		//-----------------------------------------------------------------------
+		iRet = FALSE;
 	}
 
-	// ready to leave this function ....
-	//----------------------------------
+
 	ON_EXIT:
+
 	// Free the buffers if an error occured
 	// and they were already allocated
 	//-------------------------------------
-	if(iRet)
+	if(!iRet)
 	{
 		if(pdcxctrl)  
 			GlobalFree( (HANDLE) pdcxctrl);
@@ -393,8 +372,6 @@ int   CDCXBinTable::ReadDCXTableFile(LPSTR  lpFName) //, LPDCX_MEM_MAP pMemMap)
 
 	if(hf != INVALID_HANDLE_VALUE)
 		CloseHandle(hf);
-
-
 
 return iRet;
 };
@@ -421,8 +398,9 @@ BOOL     CDCXBinTable::RemapControlData(int iChannel, int iCtrl, int iVal, DCX_C
 	ctrld.wCtrl    = (WORD)iCtrl;
 	ctrld.wVal     =  (WORD)iVal;
 
-return RemapControlData(&ctrld, pctrldata);
+	return RemapControlData(&ctrld, pctrldata);
 }
+
 
 BOOL     CDCXBinTable::RemapControlData(CONTROLDATA * pctrld, DCX_CTRLDATA  *pctrldata)
 {
@@ -453,8 +431,6 @@ BOOL     CDCXBinTable::RemapControlData(CONTROLDATA * pctrld, DCX_CTRLDATA  *pct
 			// Address is the Channel address sent from the CLIENT + channel address offset
 			// that is set on the SERVER
 			// Usually one side will need to set this to zero.
-
-//			iAddr =  m_iChanAddrOffset + pctrld->wChannel;
 
 			// The card-cage addresses jump from one cage to another
 			//
@@ -491,9 +467,12 @@ return bRet;
 ///////////////////////////////////////////////////////////////////////////////////
 // MEMBER FUNCTION:  ReadDCXRawFile
 //
-// NOTE:   This functions is fucking nightmare ...
-//      Do not modify unless You know what You are doing.
+// This function is used to parse the raw control descriptor files when
+// compiling the dcx.bin file.
 //
+// NOTE:   Do not modify unless You know what You are doing.
+//
+
 int     CDCXBinTable::ReadDCXRawFile(LPSTR lpRawFileName, LPDCX_CTRL_DESC *ppCtrl, int  *piSize, BOOL bReverse)
 {
 int             iRet;
@@ -556,7 +535,7 @@ char            szREG0[24];
 		if(i > (sizeof(dcxCtrl.szName) - 1) )
 			i = sizeof(dcxCtrl.szName) - 1;
 
-		CopyMemory(dcxCtrl.szName, szLine, i); // boom we've got the name
+		CopyMemory(dcxCtrl.szName, szLine, i); // we've got the name
  
 
 		// skip the File Name
@@ -754,7 +733,6 @@ char            szREG0[24];
 				lpEntry2 --;
 			}
 		}
-
 
 		// Very cool we are almost done here
 		// just need to locate the REG0 entry
