@@ -11,12 +11,18 @@
 #include "ControlDlg.h"
 #include "DCXLoadReg0Dialog.h"
 
+#include <time.h>
+#include <stdlib.h>
+#include <math.h>
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #undef THIS_FILE
 static char THIS_FILE[] = __FILE__;
 #endif
+
+#define	VU_UPDATE_TIME	70		// update time for VU on server
+
 
 extern void    CTekSleep(DWORD m_dwBasedelay,DWORD dwDelay);	// see vuthread2.cpp
 
@@ -44,6 +50,13 @@ CControlDlg::CControlDlg(CWnd* pParent /*=NULL*/)
 	m_iCurrentValue=0xFFFFFFFF;		// current value of 
 	m_iDirection=1;
 
+    m_ucVUTypeReq = 0xFF;	// No VU of this   
+
+// Initialize conversion table for step to dBu
+
+	for(int i=0;i<4096;i++)
+		m_dStepTodBu[i] = 20*log10( (double)i/(double)730);
+
 
 }
 
@@ -52,6 +65,11 @@ void CControlDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CControlDlg)
+	DDX_Control(pDX, IDC_VUMETER2_RDOUT, m_VU2_RdOut);
+	DDX_Control(pDX, IDC_VUMETER1_RDOUT, m_VU1_RdOut);
+	DDX_Control(pDX, IDC_VUMETER_2, m_VU2);
+	DDX_Control(pDX, IDC_VUMETER_1, m_VU1);
+	DDX_Control(pDX, IDC_VU_START, m_VuStartButton);
 	DDX_Control(pDX, IDC_READVUDATA, m_ReadVuData);
 	DDX_Control(pDX, IDC_SHOWCONTROLDATA, m_ShowControlData);
 	DDX_Control(pDX, IDC_CTRLS_LIST, m_CControlListBox);
@@ -78,6 +96,12 @@ BEGIN_MESSAGE_MAP(CControlDlg, CDialog)
 	ON_BN_CLICKED(IDC_OSC_ON, OnOscOn)
 	ON_BN_CLICKED(IDC_OSC_OFF, OnOscOff)
 	ON_BN_CLICKED(IDC_READVUDATA, OnReadvudata)
+	ON_BN_CLICKED(IDC_CLIP_RESET, OnClipReset)
+	ON_BN_CLICKED(IDC_VU_1, OnVu1)
+	ON_BN_CLICKED(IDC_VU_3, OnVu3)
+	ON_BN_CLICKED(IDC_VU_5, OnVu5)
+	ON_BN_CLICKED(IDC_VU_7, OnVu7)
+	ON_BN_CLICKED(IDC_VU_START, OnVuStart)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
@@ -410,10 +434,108 @@ void CControlDlg::OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
 void CControlDlg::OnTimer(UINT nIDEvent) 
 {
 BOOL    bErr = FALSE;
+char    chPeakVU[5];
+char    chAverageVU[5];
+int     iVU, iVUtoRead, iPeak, iPCV;
+
+VU_READ *pVUData;
 
 																			  
-	if (nIDEvent == TIMER_AUTO_SCROLL) 		// 145
+	if(nIDEvent == TIMER_VU)	// VU timer	 144
 	{
+
+	// Set a loop to go through all VU 
+	
+		iVUtoRead = m_pDoc->m_VUMetersArray.GetFirstReadIdx();
+
+//////////////////////////////////////////
+// Here we are just looping through the
+// pre, post, comp, and gate Vu meters of
+// a given module, not all modules
+
+		for(iVUtoRead = 0; iVUtoRead < 4; iVUtoRead++)
+		{
+
+		// Get point to first VU data
+
+			pVUData = m_pDoc->m_VUMetersArray.GetDataPtr(iVUtoRead);
+
+
+// If the current meter we are on is being displayed then update the progress bar
+// and labels. This depends on the button pressed in the control panel
+
+			// Scale the dBu reading to 4096 values
+
+				iVU =   (int)((m_dStepTodBu[pVUData->wVUValue[m_ucVUTypeReq]]+43.2871)*4096)/58.27;
+				iPeak = (int)((m_dStepTodBu[pVUData->wPeakClipValue]+43.2871)*4096)/58.27;
+
+			// Display the progress bar
+
+				m_VU1.SetPos(iPeak);
+				m_VU2.SetPos(iVU);
+
+			// Convert floating point to text
+
+//				gcvt(m_dStepTodBu[pVUData->wVUValue[m_ucVUTypeReq]],2,chAverageVU);
+//				gcvt(m_dStepTodBu[pVUData->wPeakClipValue],2,chPeakVU);
+
+				itoa(pVUData->wVUValue[m_ucVUTypeReq],chAverageVU,10);
+				itoa(pVUData->wPeakClipValue,chPeakVU,10);
+
+			// Display the dBu value
+
+				m_VU1_RdOut.SetWindowText(chPeakVU);
+				m_VU2_RdOut.SetWindowText(chAverageVU);
+  
+	/////////////////////////////////////////////
+	// Update Clip check boxes always, no matter
+	// what vu is selected
+
+				iPCV = pVUData->wPeakClipValue;
+
+			switch(m_ucVUTypeReq)
+			{
+					case 1:
+						if(iPCV> 1)
+							CheckDlgButton(IDC_CLIP1, 1 );
+						else
+							CheckDlgButton(IDC_CLIP1, 0 );
+					break;
+			
+					case 2:
+						if(iPCV> 1)
+							CheckDlgButton(IDC_CLIP3, 1 );
+						else
+							CheckDlgButton(IDC_CLIP3, 0 );
+					break;						
+			
+					case 3:
+						if(iPCV> 1)
+							CheckDlgButton(IDC_CLIP5, 1 );
+						else
+							CheckDlgButton(IDC_CLIP5, 0 );
+							
+					break;
+			
+					case 4:
+						if(iPCV> 1)
+							CheckDlgButton(IDC_CLIP7, 1 );
+						else
+							CheckDlgButton(IDC_CLIP7, 0 );
+						
+					break;
+
+						default:
+						bErr = TRUE;
+						break;
+
+			}
+
+		}
+
+	} else if (nIDEvent == TIMER_AUTO_SCROLL) 		// 145
+	{
+
 /////////////////////////////////////////////////////////////////
 // Handle AutoScroll Timer event here
 /////////////////////////////////////////////////////////////////
@@ -586,6 +708,13 @@ int iSaveModuleAddr;
 	
 }
 
+//mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm
+// Name   : FindCueModule() 
+//          
+// Descr. : Used above in OnOscOff() to find the cue module to set the oscillator
+//          
+// Return : void
+//-----------------------------------------------------------------------------
 
 int CControlDlg::FindCueModule()
 {
@@ -630,4 +759,78 @@ void CControlDlg::OnShowcontroldata()
 void CControlDlg::OnReadvudata() 
 {
 	m_pDoc->m_pdcxNetwork->iReadVUData= m_ReadVuData.GetCheck();	
+}
+
+
+void CControlDlg::OnClipReset() 
+{
+	// Clear all the peak clip indicators
+	// by unchecking all the buttons
+
+				CheckDlgButton(IDC_CLIP1, 0 );
+				CheckDlgButton(IDC_CLIP2, 0 );
+				CheckDlgButton(IDC_CLIP3, 0 );
+				CheckDlgButton(IDC_CLIP4, 0 );
+				CheckDlgButton(IDC_CLIP5, 0 );
+				CheckDlgButton(IDC_CLIP6, 0 );
+				CheckDlgButton(IDC_CLIP7, 0 );
+				CheckDlgButton(IDC_CLIP8, 0 );
+
+	
+}
+
+
+void CControlDlg::OnVu1() 
+{
+	m_ucVUTypeReq = 1;
+};
+
+void CControlDlg::OnVu3()
+{
+	m_ucVUTypeReq = 2;	
+};
+
+void CControlDlg::OnVu5() 
+{
+	m_ucVUTypeReq = 3;	
+};
+
+void CControlDlg::OnVu7() 
+{
+	m_ucVUTypeReq = 4;	
+};
+
+
+
+void CControlDlg::OnVuStart() 
+{
+	if(m_pDoc->m_VUthread != NULL)		// Make sure the VU reading thread is started before
+	{																// we start the timer to display them.
+
+	//	UpdateData(TRUE);
+
+		if(m_uiTimerID == 0)
+		{
+				// TIMER START
+
+				m_uiTimerID = SetTimer(TIMER_VU, VU_UPDATE_TIME, NULL);
+ 
+				if(m_uiTimerID)
+				{
+					m_VuStartButton.SetWindowText("Stop");
+				}
+		}
+		else
+		{
+			KillTimer(m_uiTimerID);
+			m_uiTimerID = 0;
+			m_VuStartButton.SetWindowText("Start");
+		}	
+
+	}
+	else		// SERVER mode starts the thread to read VU data
+	{
+		MessageBox( "Must be in SERVER mode to read VU", NULL, MB_OK ); 
+	}
+
 }

@@ -6,6 +6,7 @@
 #define IDP_SOCKETS_INIT_FAILED         104
 #define TIMER_AUTO_SCROLL               107
 #define IDD_REG0DIALOG                  108
+#define TIMER_VU                        109
 #define IDR_MAINFRAME                   128
 #define IDR_GSERVETYPE                  129
 #define IDD_NETWORK                     130
@@ -74,6 +75,15 @@
 #define IDC_CONV_REVERSE_CTRLVALUES     1021
 #define IDC_NET_MSG_LIST                1024
 #define IDC_MESSAGES_CLEAR              1033
+#define IDC_VUMETER_1                   1036
+#define IDC_VUMETER1_RDOUT              1037
+#define IDC_VUMETER_2                   1038
+#define IDC_VUMETER2_RDOUT              1039
+#define IDC_VU_1                        1047
+#define IDC_VU_5                        1048
+#define IDC_VU_3                        1049
+#define IDC_VU_7                        1050
+#define IDC_VU_START                    1054
 #define IDC_CLIP1                       1058
 #define IDC_CLIP3                       1059
 #define IDC_CLIP5                       1060
@@ -134,6 +144,6 @@
 #define _APS_NEXT_RESOURCE_VALUE        187
 #define _APS_NEXT_COMMAND_VALUE         32820
 #define _APS_NEXT_CONTROL_VALUE         1108
-#define _APS_NEXT_SYMED_VALUE           109
+#define _APS_NEXT_SYMED_VALUE           110
 #endif
 #endif

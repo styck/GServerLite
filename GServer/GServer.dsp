@@ -730,6 +730,10 @@ SOURCE=.\ReadMe.txt
 # End Source File
 # End Target
 # End Project
+# Section GServer : {00000000-0000-0000-0000-000000000000}
+# 	1:10:IDB_SPLASH:102
+# 	2:21:SplashScreenInsertKey:4.0
+# End Section
 # Section GServer : {975C6675-648B-11D3-850E-006008BD93E7}
 # 	1:14:IDD_REG0DIALOG:108
 # 	2:16:Resource Include:resource.h
@@ -739,8 +743,4 @@ SOURCE=.\ReadMe.txt
 # 	2:24:CLASS: DCXLoadReg0Dialog:DCXLoadReg0Dialog
 # 	2:21:DCXLoadReg0Dialog.cpp:DCXLoadReg0Dialog.cpp
 # 	2:19:Application Include:gserver.h
-# End Section
-# Section GServer : {00000000-0000-0000-0000-000000000000}
-# 	1:10:IDB_SPLASH:102
-# 	2:21:SplashScreenInsertKey:4.0
 # End Section

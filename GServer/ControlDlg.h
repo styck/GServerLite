@@ -32,6 +32,11 @@ public:
 // Dialog Data
 	//{{AFX_DATA(CControlDlg)
 	enum { IDD = IDD_TESTCONTROLSSETUP };
+	CStatic	m_VU2_RdOut;
+	CStatic	m_VU1_RdOut;
+	CProgressCtrl	m_VU2;
+	CProgressCtrl	m_VU1;
+	CButton	m_VuStartButton;
 	CButton	m_ReadVuData;
 	CButton	m_ShowControlData;
 	CListBox	m_CControlListBox;
@@ -67,12 +72,20 @@ protected:
 	afx_msg void OnOscOn();
 	afx_msg void OnOscOff();
 	afx_msg void OnReadvudata();
+	afx_msg void OnClipReset();
+	afx_msg void OnVu1();
+	afx_msg void OnVu3();
+	afx_msg void OnVu5();
+	afx_msg void OnVu7();
+	afx_msg void OnVuStart();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 private:
 //	void OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar);
 	int m_iCurrentValue;	// AutoScroll current value
 	int m_iDirection;			// AutoScroll direction
+	BYTE	m_ucVUTypeReq;	// type of VU data
+	double	m_dStepTodBu[4096];	// Converts step to dBu
 
 	void HandleSliderMove(int iPos);
 	int FindCueModule(void);	// returns index to cue module

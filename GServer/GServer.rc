@@ -259,19 +259,20 @@ BEGIN
     PUSHBUTTON      "Copy",IDC_COPYMSG,241,104,40,15
 END
 
-IDD_TESTCONTROLSSETUP DIALOG DISCARDABLE  0, 0, 361, 204
+IDD_TESTCONTROLSSETUP DIALOGEX 0, 0, 488, 205
 STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "DCX Control Test Dialog"
 FONT 8, "MS Sans Serif"
 BEGIN
-    DEFPUSHBUTTON   "Done",IDOK,294,175,50,14
+    DEFPUSHBUTTON   "Done",IDOK,279,175,50,14
     LTEXT           "Controls List",IDC_STATIC,13,14,88,10
     LISTBOX         IDC_CTRLS_LIST,7,36,143,155,LBS_SORT | 
                     LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_TABSTOP
     CONTROL         "Slider1",IDC_CTRLS_SLIDER,"msctls_trackbar32",
                     TBS_AUTOTICKS | TBS_VERT | TBS_TOP | WS_BORDER | 
                     WS_TABSTOP,167,38,27,147
-    EDITTEXT        IDC_CTRLS_RDOUT,158,27,37,9,ES_AUTOHSCROLL | ES_READONLY
+    EDITTEXT        IDC_CTRLS_RDOUT,158,27,37,12,ES_AUTOHSCROLL | 
+                    ES_READONLY
     PUSHBUTTON      "Reset Bus",IDC_DCXCTRLS_RESTBUS,250,14,37,13
     LTEXT           "Auto Delay (milliseconds)",IDC_STATIC,207,39,46,17
     EDITTEXT        IDC_CTRLS_DELAY,259,39,32,12,ES_AUTOHSCROLL
@@ -286,6 +287,50 @@ BEGIN
     PUSHBUTTON      "OSC OFF",IDC_OSC_OFF,302,95,34,12
     CONTROL         "Read VU data",IDC_READVUDATA,"Button",BS_AUTOCHECKBOX | 
                     WS_TABSTOP,213,131,74,8
+    GROUPBOX        "VU Settings",IDC_STATIC,356,21,109,159,BS_CENTER,
+                    WS_EX_DLGMODALFRAME | WS_EX_TRANSPARENT | 
+                    WS_EX_CLIENTEDGE
+    CONTROL         "Progress2",IDC_VUMETER_1,"msctls_progress32",WS_BORDER,
+                    360,41,94,11
+    CTEXT           "0000",IDC_VUMETER1_RDOUT,376,33,75,8
+    CONTROL         "Progress2",IDC_VUMETER_2,"msctls_progress32",WS_BORDER,
+                    360,63,95,11
+    CTEXT           "000",IDC_VUMETER2_RDOUT,372,55,76,8
+    CONTROL         "1",IDC_VU_1,"Button",BS_AUTORADIOBUTTON | BS_PUSHLIKE,
+                    367,146,27,10
+    CONTROL         "5",IDC_VU_5,"Button",BS_AUTORADIOBUTTON | BS_PUSHLIKE,
+                    367,158,27,10
+    CONTROL         "3",IDC_VU_3,"Button",BS_AUTORADIOBUTTON | BS_PUSHLIKE,
+                    399,146,27,10
+    CONTROL         "7",IDC_VU_7,"Button",BS_AUTORADIOBUTTON | BS_PUSHLIKE,
+                    399,158,27,10
+    PUSHBUTTON      "Start",IDC_VU_START,429,146,27,10
+    LTEXT           "VU METER SELECT",IDC_STATIC,367,133,79,9
+    CONTROL         "Check1",IDC_CLIP1,"Button",BS_AUTOCHECKBOX | 
+                    WS_DISABLED | WS_TABSTOP,370,96,11,8
+    CONTROL         "Check1",IDC_CLIP3,"Button",BS_AUTOCHECKBOX | 
+                    WS_DISABLED | WS_TABSTOP,386,96,11,8
+    CONTROL         "Check1",IDC_CLIP5,"Button",BS_AUTOCHECKBOX | 
+                    WS_DISABLED | WS_TABSTOP,402,96,11,8
+    CONTROL         "Check1",IDC_CLIP7,"Button",BS_AUTOCHECKBOX | 
+                    WS_DISABLED | WS_TABSTOP,416,96,11,8
+    CONTROL         "Check1",IDC_CLIP2,"Button",BS_AUTOCHECKBOX | 
+                    WS_DISABLED | WS_TABSTOP,370,108,11,8
+    CONTROL         "Check1",IDC_CLIP4,"Button",BS_AUTOCHECKBOX | 
+                    WS_DISABLED | WS_TABSTOP,386,108,11,8
+    CONTROL         "Check1",IDC_CLIP6,"Button",BS_AUTOCHECKBOX | 
+                    WS_DISABLED | WS_TABSTOP,402,108,11,8
+    CONTROL         "Check1",IDC_CLIP8,"Button",BS_AUTOCHECKBOX | 
+                    WS_DISABLED | WS_TABSTOP,416,108,11,8
+    LTEXT           "P1",IDC_STATIC,368,86,11,8
+    LTEXT           "P3",IDC_STATIC,386,86,11,8
+    LTEXT           "P5",IDC_STATIC,402,86,11,8
+    LTEXT           "P7",IDC_STATIC,416,86,11,8
+    LTEXT           "P2",IDC_STATIC,370,119,11,8
+    LTEXT           "P4",IDC_STATIC,384,119,11,8
+    LTEXT           "P6",IDC_STATIC,402,119,11,8
+    LTEXT           "P8",IDC_STATIC,416,119,11,8
+    PUSHBUTTON      "RESET",IDC_CLIP_RESET,429,158,27,10
 END
 
 IDD_REG0DIALOG DIALOG DISCARDABLE  0, 0, 346, 193
@@ -342,7 +387,7 @@ BEGIN
             VALUE "OriginalFilename", "GServer.EXE\0"
             VALUE "PrivateBuild", "\0"
             VALUE "ProductName", "GServer Application\0"
-            VALUE "ProductVersion", "Version 10/17/99  Registry VUdelay and CTRLdelay \0"
+            VALUE "ProductVersion", "Version 11/15/99  Registry VUdelay and CTRLdelay \0"
             VALUE "SpecialBuild", "\0"
         END
     END
@@ -390,9 +435,9 @@ BEGIN
     IDD_TESTCONTROLSSETUP, DIALOG
     BEGIN
         LEFTMARGIN, 7
-        RIGHTMARGIN, 354
+        RIGHTMARGIN, 481
         TOPMARGIN, 7
-        BOTTOMMARGIN, 197
+        BOTTOMMARGIN, 198
     END
 
     IDD_REG0DIALOG, DIALOG
