@@ -9,6 +9,7 @@
 #include "GServer.h"
 
 #include "GServerDoc.h"
+#include "GServerView.h"
 #include "vuthread2.h"
 
 #ifdef _DEBUG
@@ -101,6 +102,11 @@ BOOL CGServerDoc::OnNewDocument()
 
 void CGServerDoc::Serialize(CArchive& ar)
 {
+  POSITION pos;
+  CGServerView* pGServerView;
+  pos = GetFirstViewPosition();
+  pGServerView = (CGServerView *)GetNextView(pos);
+
 	if (ar.IsStoring())
 	{
 		// Store this Document Settings
@@ -112,7 +118,7 @@ void CGServerDoc::Serialize(CArchive& ar)
 		//--------------------------------------------
 		m_dcxBinTable.Serialize(ar);
 
-//		m_GServerView.Serialize(ar);		// TEST TEST TEST NEED TO SERIALIZE THE GSERVERVIEW TO SAVE SETTINGS
+  	pGServerView->Serialize(ar);		// TEST TEST TEST NEED TO SERIALIZE THE GSERVERVIEW TO SAVE SETTINGS
 		m_pdcxNetwork->Serialize(ar);
 		m_dcxdevMap.Serialize(ar);
 	}
@@ -122,6 +128,7 @@ void CGServerDoc::Serialize(CArchive& ar)
 		ar >>  m_csGServerDocID;  
 		ar >>  m_dwVersion;
 
+  	pGServerView->Serialize(ar);		// TEST TEST TEST NEED TO SERIALIZE THE GSERVERVIEW TO SAVE SETTINGS
 		m_dcxBinTable.Serialize(ar);
 		m_pdcxNetwork->Serialize(ar);
 		m_dcxdevMap.Serialize(ar);

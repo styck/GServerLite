@@ -21,6 +21,263 @@ static char THIS_FILE[] = __FILE__;
 
 void WINAPI DDX_IPAddress(CDataExchange* pDX, int nIDC, UINT & value);
 
+// Declare the server type positions in the combo box
+
+enum {ST_CUSTOM, ST_EVENT, ST_SHOWTIME, ST_CABARET}; 
+
+DWORD g_dwEvent[DCX_DEVMAP_MAXSIZE] =
+{
+DCX_DEVMAP_MODULE_INPUT,
+DCX_DEVMAP_MODULE_INPUT,
+DCX_DEVMAP_MODULE_INPUT,
+DCX_DEVMAP_MODULE_INPUT,
+DCX_DEVMAP_MODULE_INPUT,
+DCX_DEVMAP_MODULE_INPUT,
+DCX_DEVMAP_MODULE_INPUT,
+DCX_DEVMAP_MODULE_INPUT,
+DCX_DEVMAP_MODULE_INPUT,
+DCX_DEVMAP_MODULE_INPUT,
+DCX_DEVMAP_MODULE_INPUT,
+DCX_DEVMAP_MODULE_INPUT,
+DCX_DEVMAP_MODULE_INPUT,
+DCX_DEVMAP_MODULE_INPUT,
+DCX_DEVMAP_MODULE_INPUT,
+DCX_DEVMAP_MODULE_INPUT,
+DCX_DEVMAP_MODULE_INPUT,
+DCX_DEVMAP_MODULE_INPUT,
+DCX_DEVMAP_MODULE_INPUT,
+DCX_DEVMAP_MODULE_INPUT,  // 20
+DCX_DEVMAP_MODULE_INPUT,
+DCX_DEVMAP_MODULE_INPUT,
+DCX_DEVMAP_MODULE_INPUT,
+DCX_DEVMAP_MODULE_INPUT,
+DCX_DEVMAP_MODULE_INPUT,
+DCX_DEVMAP_MODULE_INPUT,
+DCX_DEVMAP_MODULE_INPUT,
+DCX_DEVMAP_MODULE_INPUT,
+DCX_DEVMAP_MODULE_INPUT,
+DCX_DEVMAP_MODULE_INPUT,
+DCX_DEVMAP_MODULE_INPUT,
+DCX_DEVMAP_MODULE_INPUT,
+DCX_DEVMAP_MODULE_INPUT,
+DCX_DEVMAP_MODULE_INPUT,
+DCX_DEVMAP_MODULE_INPUT,
+DCX_DEVMAP_MODULE_INPUT,
+DCX_DEVMAP_MODULE_INPUT,
+DCX_DEVMAP_MODULE_INPUT,
+DCX_DEVMAP_MODULE_INPUT,
+DCX_DEVMAP_MODULE_INPUT,  // 40
+DCX_DEVMAP_MODULE_INPUT,
+DCX_DEVMAP_MODULE_INPUT,
+DCX_DEVMAP_MODULE_INPUT,
+DCX_DEVMAP_MODULE_INPUT,
+DCX_DEVMAP_MODULE_INPUT,
+DCX_DEVMAP_MODULE_INPUT,
+DCX_DEVMAP_MODULE_INPUT,
+DCX_DEVMAP_MODULE_INPUT,
+DCX_DEVMAP_MODULE_INPUT,
+DCX_DEVMAP_MODULE_INPUT,
+DCX_DEVMAP_MODULE_INPUT,
+DCX_DEVMAP_MODULE_INPUT,
+DCX_DEVMAP_MODULE_INPUT,
+DCX_DEVMAP_MODULE_INPUT,
+DCX_DEVMAP_MODULE_INPUT,
+DCX_DEVMAP_MODULE_INPUT,
+DCX_DEVMAP_MODULE_INPUT,
+DCX_DEVMAP_MODULE_INPUT,
+DCX_DEVMAP_MODULE_INPUT,
+DCX_DEVMAP_MODULE_INPUT,  // 60
+DCX_DEVMAP_MODULE_AUX,
+DCX_DEVMAP_MODULE_AUX,
+DCX_DEVMAP_MODULE_AUX,
+DCX_DEVMAP_MODULE_AUX,
+DCX_DEVMAP_MODULE_AUX,
+DCX_DEVMAP_MODULE_AUX,
+DCX_DEVMAP_MODULE_AUX,
+DCX_DEVMAP_MODULE_AUX,  // 8 aux modules
+DCX_DEVMAP_MODULE_MASTER,
+DCX_DEVMAP_MODULE_CUE,
+DCX_DEVMAP_MODULE_MATRIX,
+DCX_DEVMAP_MODULE_MATRIX,
+DCX_DEVMAP_MODULE_MATRIX,
+DCX_DEVMAP_MODULE_MATRIX,
+DCX_DEVMAP_MODULE_MATRIX,
+DCX_DEVMAP_MODULE_MATRIX,
+DCX_DEVMAP_MODULE_MATRIX,
+DCX_DEVMAP_MODULE_MATRIX,
+DCX_DEVMAP_MODULE_NA,		
+DCX_DEVMAP_MODULE_NA
+};
+
+DWORD g_dwShowTime[DCX_DEVMAP_MAXSIZE] =
+{
+DCX_DEVMAP_MODULE_INPUT,
+DCX_DEVMAP_MODULE_INPUT,
+DCX_DEVMAP_MODULE_INPUT,
+DCX_DEVMAP_MODULE_INPUT,
+DCX_DEVMAP_MODULE_INPUT,
+DCX_DEVMAP_MODULE_INPUT,
+DCX_DEVMAP_MODULE_INPUT,
+DCX_DEVMAP_MODULE_INPUT,
+DCX_DEVMAP_MODULE_INPUT,
+DCX_DEVMAP_MODULE_INPUT,
+DCX_DEVMAP_MODULE_INPUT,
+DCX_DEVMAP_MODULE_INPUT,
+DCX_DEVMAP_MODULE_INPUT,
+DCX_DEVMAP_MODULE_INPUT,
+DCX_DEVMAP_MODULE_INPUT,
+DCX_DEVMAP_MODULE_INPUT,
+DCX_DEVMAP_MODULE_INPUT,
+DCX_DEVMAP_MODULE_INPUT,
+DCX_DEVMAP_MODULE_INPUT,
+DCX_DEVMAP_MODULE_INPUT,  // 20
+DCX_DEVMAP_MODULE_INPUT,
+DCX_DEVMAP_MODULE_INPUT,
+DCX_DEVMAP_MODULE_INPUT,
+DCX_DEVMAP_MODULE_INPUT,  // 24
+DCX_DEVMAP_MODULE_AUX,
+DCX_DEVMAP_MODULE_AUX,
+DCX_DEVMAP_MODULE_AUX,
+DCX_DEVMAP_MODULE_AUX,
+DCX_DEVMAP_MODULE_AUX,
+DCX_DEVMAP_MODULE_AUX,  // 6 aux modules
+DCX_DEVMAP_MODULE_MASTER,
+DCX_DEVMAP_MODULE_CUE,
+DCX_DEVMAP_MODULE_MATRIX,
+DCX_DEVMAP_MODULE_MATRIX,
+DCX_DEVMAP_MODULE_MATRIX,
+DCX_DEVMAP_MODULE_MATRIX,
+DCX_DEVMAP_MODULE_MATRIX,
+DCX_DEVMAP_MODULE_MATRIX, // 6
+DCX_DEVMAP_MODULE_NA,		
+DCX_DEVMAP_MODULE_NA,      // 2
+DCX_DEVMAP_MODULE_NA,
+DCX_DEVMAP_MODULE_NA,
+DCX_DEVMAP_MODULE_NA,
+DCX_DEVMAP_MODULE_NA,
+DCX_DEVMAP_MODULE_NA,
+DCX_DEVMAP_MODULE_NA,
+DCX_DEVMAP_MODULE_NA,
+DCX_DEVMAP_MODULE_NA,
+DCX_DEVMAP_MODULE_NA,
+DCX_DEVMAP_MODULE_NA,
+DCX_DEVMAP_MODULE_NA,
+DCX_DEVMAP_MODULE_NA,
+DCX_DEVMAP_MODULE_NA,
+DCX_DEVMAP_MODULE_NA,
+DCX_DEVMAP_MODULE_NA,
+DCX_DEVMAP_MODULE_NA,
+DCX_DEVMAP_MODULE_NA,
+DCX_DEVMAP_MODULE_NA,
+DCX_DEVMAP_MODULE_NA,
+DCX_DEVMAP_MODULE_NA,    // 20
+DCX_DEVMAP_MODULE_NA,
+DCX_DEVMAP_MODULE_NA,
+DCX_DEVMAP_MODULE_NA,
+DCX_DEVMAP_MODULE_NA,
+DCX_DEVMAP_MODULE_NA,
+DCX_DEVMAP_MODULE_NA,
+DCX_DEVMAP_MODULE_NA,
+DCX_DEVMAP_MODULE_NA,
+DCX_DEVMAP_MODULE_NA,
+DCX_DEVMAP_MODULE_NA,
+DCX_DEVMAP_MODULE_NA,
+DCX_DEVMAP_MODULE_NA,
+DCX_DEVMAP_MODULE_NA,
+DCX_DEVMAP_MODULE_NA,
+DCX_DEVMAP_MODULE_NA,
+DCX_DEVMAP_MODULE_NA,
+DCX_DEVMAP_MODULE_NA,
+DCX_DEVMAP_MODULE_NA,
+DCX_DEVMAP_MODULE_NA,
+DCX_DEVMAP_MODULE_NA    // 40
+};
+
+DWORD g_dwCabaret[DCX_DEVMAP_MAXSIZE] =
+{
+DCX_DEVMAP_MODULE_INPUT,
+DCX_DEVMAP_MODULE_INPUT,
+DCX_DEVMAP_MODULE_INPUT,
+DCX_DEVMAP_MODULE_INPUT,
+DCX_DEVMAP_MODULE_INPUT,
+DCX_DEVMAP_MODULE_INPUT,
+DCX_DEVMAP_MODULE_INPUT,
+DCX_DEVMAP_MODULE_INPUT,
+DCX_DEVMAP_MODULE_INPUT,
+DCX_DEVMAP_MODULE_INPUT,
+DCX_DEVMAP_MODULE_INPUT,
+DCX_DEVMAP_MODULE_INPUT,  // 12
+DCX_DEVMAP_MODULE_AUX,    // 13
+DCX_DEVMAP_MODULE_AUX,    // 14
+DCX_DEVMAP_MODULE_MASTER, // 15
+DCX_DEVMAP_MODULE_CUE,    // 16
+DCX_DEVMAP_MODULE_MATRIX, // 17
+DCX_DEVMAP_MODULE_MATRIX, // 18
+DCX_DEVMAP_MODULE_NA,		  // 19
+DCX_DEVMAP_MODULE_NA,     // 20
+DCX_DEVMAP_MODULE_NA,
+DCX_DEVMAP_MODULE_NA,
+DCX_DEVMAP_MODULE_NA,
+DCX_DEVMAP_MODULE_NA,
+DCX_DEVMAP_MODULE_NA,
+DCX_DEVMAP_MODULE_NA,
+DCX_DEVMAP_MODULE_NA,
+DCX_DEVMAP_MODULE_NA,
+DCX_DEVMAP_MODULE_NA,
+DCX_DEVMAP_MODULE_NA,
+DCX_DEVMAP_MODULE_NA,
+DCX_DEVMAP_MODULE_NA,
+DCX_DEVMAP_MODULE_NA,
+DCX_DEVMAP_MODULE_NA,
+DCX_DEVMAP_MODULE_NA,
+DCX_DEVMAP_MODULE_NA,
+DCX_DEVMAP_MODULE_NA,
+DCX_DEVMAP_MODULE_NA,
+DCX_DEVMAP_MODULE_NA,
+DCX_DEVMAP_MODULE_NA,    // 40
+DCX_DEVMAP_MODULE_NA,
+DCX_DEVMAP_MODULE_NA,
+DCX_DEVMAP_MODULE_NA,
+DCX_DEVMAP_MODULE_NA,
+DCX_DEVMAP_MODULE_NA,
+DCX_DEVMAP_MODULE_NA,
+DCX_DEVMAP_MODULE_NA,
+DCX_DEVMAP_MODULE_NA,
+DCX_DEVMAP_MODULE_NA,
+DCX_DEVMAP_MODULE_NA,
+DCX_DEVMAP_MODULE_NA,
+DCX_DEVMAP_MODULE_NA,
+DCX_DEVMAP_MODULE_NA,
+DCX_DEVMAP_MODULE_NA,
+DCX_DEVMAP_MODULE_NA,
+DCX_DEVMAP_MODULE_NA,
+DCX_DEVMAP_MODULE_NA,
+DCX_DEVMAP_MODULE_NA,
+DCX_DEVMAP_MODULE_NA,
+DCX_DEVMAP_MODULE_NA,    // 60
+DCX_DEVMAP_MODULE_NA,
+DCX_DEVMAP_MODULE_NA,
+DCX_DEVMAP_MODULE_NA,
+DCX_DEVMAP_MODULE_NA,
+DCX_DEVMAP_MODULE_NA,
+DCX_DEVMAP_MODULE_NA,
+DCX_DEVMAP_MODULE_NA,
+DCX_DEVMAP_MODULE_NA,
+DCX_DEVMAP_MODULE_NA,
+DCX_DEVMAP_MODULE_NA,
+DCX_DEVMAP_MODULE_NA,
+DCX_DEVMAP_MODULE_NA,
+DCX_DEVMAP_MODULE_NA,
+DCX_DEVMAP_MODULE_NA,
+DCX_DEVMAP_MODULE_NA,
+DCX_DEVMAP_MODULE_NA,
+DCX_DEVMAP_MODULE_NA,
+DCX_DEVMAP_MODULE_NA,
+DCX_DEVMAP_MODULE_NA,
+DCX_DEVMAP_MODULE_NA    // 80
+};
+
+
 /////////////////////////////////////////////////////////////////////////////
 // CGServerView
 
@@ -28,9 +285,10 @@ IMPLEMENT_DYNCREATE(CGServerView, CFormView)
 
 BEGIN_MESSAGE_MAP(CGServerView, CFormView)
 	//{{AFX_MSG_MAP(CGServerView)
-	ON_BN_CLICKED(IDC_CHK_NET_SERVER, OnChkNetServer)
 	ON_WM_PAINT()
+	ON_BN_CLICKED(IDC_CHK_NET_SERVER, OnChkNetServer)
 	ON_WM_ERASEBKGND()
+	ON_CBN_SELCHANGE(IDC_SERVER_COMBO, OnSelchangeServerCombo)
 	//}}AFX_MSG_MAP
 
 	ON_NOTIFY_EX_RANGE(TTN_NEEDTEXTA, 0, 0xFFFF, OnToolTipText)
@@ -52,9 +310,12 @@ CGServerView::CGServerView()
 	m_csTcpAddr = _T("");
 	m_iPort = 0;
 	m_csNumClients = _T("");
+	m_csServerType = _T("");
 	//}}AFX_DATA_INIT
 
+  
   m_dwCurModuleSel = 0;   // Default to the first module
+  m_iServerType = 0;      // Default to CUSTOM configuration
 
 }
 
@@ -124,16 +385,16 @@ CGServerDoc* CGServerView::GetDocument() // non-debug version is inline
 
 void CGServerView::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint) 
 {
-
 	CGServerDoc   *pDoc = GetDocument();
+
 
 // Lets Update the data in the view
 //---------------------------------
 
 	if(pDoc)
   {
-		m_iPort       = pDoc->m_pdcxNetwork->m_iPort;         // Port number
-		m_csTcpAddr   = pDoc->m_pdcxNetwork->m_csIPAddress;   // IP Address
+//		m_iPort       = pDoc->m_pdcxNetwork->m_iPort;         // Port number
+//		m_csTcpAddr   = pDoc->m_pdcxNetwork->m_csIPAddress;   // IP Address
 
     // Show the number of clients currently connected
 
@@ -474,44 +735,49 @@ CGServerDoc*  pDoc = GetDocument();
 		CMenu   *pmenuPop;   
 		POINT   pntCPos;
 
-		m_dwCurModuleSel = wParam - 1;	// From base 1 to base 0
+    if(m_iServerType == ST_CUSTOM)  // only allow editing for CUSTOM server type
+    {
+      // Someone clicked on one of the modules, find out which one.
 
-		GetCursorPos(&pntCPos);
+		  m_dwCurModuleSel = wParam - 1;	// From base 1 to base 0
 
-			if(menu.LoadMenu(IDR_MENU_MODULESELECTION))
-			{
-					pmenuPop = menu.GetSubMenu(0);
+		  GetCursorPos(&pntCPos);
 
-					switch(pDoc->m_dcxdevMap.GetModuleType(m_dwCurModuleSel))
-					{
-						case  DCX_DEVMAP_MODULE_NA:
-							pmenuPop->CheckMenuItem(ID_NATYPE, MF_CHECKED);
-							break;
-						case  DCX_DEVMAP_MODULE_INPUT:
-							pmenuPop->CheckMenuItem(ID_INPUTMODULE, MF_CHECKED);
-							break;
-						case  DCX_DEVMAP_MODULE_AUX:
-							pmenuPop->CheckMenuItem(ID_AUXMODULE, MF_CHECKED);
-							break;
-						case  DCX_DEVMAP_MODULE_MATRIX:
-							pmenuPop->CheckMenuItem(ID_MATRIXMODULE, MF_CHECKED);
-							break;
-						case  DCX_DEVMAP_MODULE_CUE:
-							pmenuPop->CheckMenuItem(ID_CUEMODULE, MF_CHECKED);
-							break;
-						case  DCX_DEVMAP_MODULE_MASTER:
-							pmenuPop->CheckMenuItem(ID_MASTERMODULE, MF_CHECKED);
-							break;
-						default:
-							break;
-					}
+			  if(menu.LoadMenu(IDR_MENU_MODULESELECTION))
+			  {
+					  pmenuPop = menu.GetSubMenu(0);
 
-				pmenuPop->TrackPopupMenu(TPM_LEFTALIGN | TPM_LEFTBUTTON | TPM_RIGHTBUTTON, 
-														pntCPos.x, pntCPos.y, 
-														this);
+					  switch(pDoc->m_dcxdevMap.GetModuleType(m_dwCurModuleSel))
+					  {
+						  case  DCX_DEVMAP_MODULE_NA:
+							  pmenuPop->CheckMenuItem(ID_NATYPE, MF_CHECKED);
+							  break;
+						  case  DCX_DEVMAP_MODULE_INPUT:
+							  pmenuPop->CheckMenuItem(ID_INPUTMODULE, MF_CHECKED);
+							  break;
+						  case  DCX_DEVMAP_MODULE_AUX:
+							  pmenuPop->CheckMenuItem(ID_AUXMODULE, MF_CHECKED);
+							  break;
+						  case  DCX_DEVMAP_MODULE_MATRIX:
+							  pmenuPop->CheckMenuItem(ID_MATRIXMODULE, MF_CHECKED);
+							  break;
+						  case  DCX_DEVMAP_MODULE_CUE:
+							  pmenuPop->CheckMenuItem(ID_CUEMODULE, MF_CHECKED);
+							  break;
+						  case  DCX_DEVMAP_MODULE_MASTER:
+							  pmenuPop->CheckMenuItem(ID_MASTERMODULE, MF_CHECKED);
+							  break;
+						  default:
+							  break;
+					  }
 
-				menu.DestroyMenu();
-			}
+				  pmenuPop->TrackPopupMenu(TPM_LEFTALIGN | TPM_LEFTBUTTON | TPM_RIGHTBUTTON, 
+														  pntCPos.x, pntCPos.y, 
+														  this);
+
+				  menu.DestroyMenu();
+			  }
+    } // end if ST_CUSTOM
 	}
 	else
 	{
@@ -619,11 +885,18 @@ CGServerDoc*  pDoc = GetDocument();
 	return CFormView::OnCommand(wParam, lParam);
 }
 
+//////////////////////////////////////////
+// Update the combo box showing the 
+// current server type.
+
 void CGServerView::OnInitialUpdate() 
 {
 	CFormView::OnInitialUpdate();
+  m_pCB = (CComboBox*) GetDlgItem(IDC_SERVER_COMBO);
+
+  m_pCB->SetCurSel((int)m_iServerType);
 	
-	UpdateData(FALSE);	
+	UpdateData(TRUE);	
 	
 }
 
@@ -765,21 +1038,24 @@ void CGServerView::DoDataExchange(CDataExchange* pDX)
 	//{{AFX_DATA_MAP(CGServerView)
 	DDX_Control(pDX, IDC_NUM_CONNECTIONS, m_NumClientsProgress);
 	DDX_Text(pDX, IDC_TCP_ADDRESS, m_csTcpAddr);
-	//DDX_IPAddress(pDX, IDC_TCP_ADDRESS, m_csTcpAddr)
   DDX_Text(pDX, IDC_TCP_PORT, m_iPort);
 	DDX_Check(pDX, IDC_CHK_NET_SERVER, m_bServerStart);
 	DDX_Text(pDX, IDC_NUM_CLIENTS_TEXT, m_csNumClients);
+	DDX_CBString(pDX, IDC_SERVER_COMBO, m_csServerType);
 	//}}AFX_DATA_MAP
 }
 
 void CGServerView::Serialize(CArchive& ar) 
 {
+
 	if (ar.IsStoring())
 	{	// storing code
 
+    UpdateData(TRUE);
 		ar << m_iPort;       
 		ar << m_csTcpAddr;                
 		ar << m_bServerStart;
+    ar << m_iServerType;
 
 	}
 	else
@@ -788,11 +1064,16 @@ void CGServerView::Serialize(CArchive& ar)
 		ar >> m_iPort;       
 		ar >> m_csTcpAddr;                
 		ar >> m_bServerStart;
+    ar >> m_iServerType;
+    UpdateData(FALSE);
+
 	}
 }
 
 
 // DDX routine fo IP address translation
+// CURRENTLY NOT USED
+
 void WINAPI DDX_IPAddress(CDataExchange* pDX, int nIDC, UINT & value)
 {
 	// from dialog to class ?
@@ -847,3 +1128,50 @@ void WINAPI DDX_IPAddress(CDataExchange* pDX, int nIDC, UINT & value)
 	}	
 }
 
+///////////////////////////////////////////////////
+// Someone changed the server type so lets update
+// the device map to reflect the changes.
+// Only Custom configurations are allowed to 
+// change the module layout.
+
+void CGServerView::OnSelchangeServerCombo() 
+{
+  int iCount;
+
+  CComboBox * m_pCB = (CComboBox*) GetDlgItem(IDC_SERVER_COMBO);
+  m_iServerType=m_pCB->GetCurSel();
+  m_pCB->GetLBText(m_iServerType,m_csServerType);
+
+	CGServerDoc   *pDoc = GetDocument();
+
+	if(pDoc)	
+  {
+
+    switch(m_iServerType)
+    {
+      case 0:  // custom
+        break;
+      case 1:  // event
+        // setup default values for an EVENT
+        //--------------------------
+        for(iCount = 0; iCount < DCX_DEVMAP_MAXSIZE; iCount ++)
+          pDoc->m_dcxdevMap.SetModuleType(iCount, g_dwEvent[iCount]);
+      break;
+      case 2:  // showtime
+        // setup default values for an SHOWTIME
+        //--------------------------
+        for(iCount = 0; iCount < DCX_DEVMAP_MAXSIZE; iCount ++)
+          pDoc->m_dcxdevMap.SetModuleType(iCount, g_dwShowTime[iCount]);
+      break;
+
+      case 3: // cabaret
+        // setup default values for an CABARET
+        //--------------------------
+        for(iCount = 0; iCount < DCX_DEVMAP_MAXSIZE; iCount ++)
+          pDoc->m_dcxdevMap.SetModuleType(iCount, g_dwCabaret[iCount]);
+      break;
+    }
+    pDoc->UpdateAllViews(NULL);
+
+  }  
+}

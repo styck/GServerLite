@@ -27,6 +27,7 @@ public:
 	UINT	m_iPort;
 	BOOL	m_bServerStart;
 	CString	m_csNumClients;
+	CString	m_csServerType;
 	//}}AFX_DATA
 
 
@@ -37,8 +38,10 @@ public:
 	// Module setup variables
 
   CCorTekTBCtrl   m_tbCtrlModule;
+  CComboBox *     m_pCB;
 
-  DWORD           m_dwCurModuleSel;
+  DWORD m_dwCurModuleSel;
+  UINT  m_iServerType;      // Index into server type combo box 
 
 // Operations
 public:
@@ -79,6 +82,7 @@ protected:
 	afx_msg void OnPaint();
 	afx_msg void OnChkNetServer();
 	afx_msg BOOL OnEraseBkgnd(CDC* pDC);
+	afx_msg void OnSelchangeServerCombo();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };

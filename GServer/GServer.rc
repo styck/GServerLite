@@ -237,19 +237,21 @@ IDD_DEVICE_SETUP DIALOGEX 0, 0, 430, 221
 STYLE WS_CHILD | WS_CLIPCHILDREN | WS_BORDER
 FONT 8, "MS Sans Serif"
 BEGIN
-    LTEXT           "IP Address",IDC_STATIC,22,34,44,10,0,WS_EX_STATICEDGE
-    EDITTEXT        IDC_TCP_ADDRESS,69,34,70,12,ES_AUTOHSCROLL
-    LTEXT           "Port",IDC_STATIC,22,47,44,12,0,WS_EX_STATICEDGE
-    EDITTEXT        IDC_TCP_PORT,69,47,70,12,ES_AUTOHSCROLL
+    LTEXT           "IP Address",IDC_STATIC,22,38,44,10,0,WS_EX_STATICEDGE
+    EDITTEXT        IDC_TCP_ADDRESS,69,38,70,12,ES_AUTOHSCROLL
+    LTEXT           "Port",IDC_STATIC,22,50,44,12,0,WS_EX_STATICEDGE
+    EDITTEXT        IDC_TCP_PORT,69,50,70,12,ES_AUTOHSCROLL
     CONTROL         "&Start Server",IDC_CHK_NET_SERVER,"Button",
-                    BS_AUTOCHECKBOX | BS_PUSHLIKE | WS_TABSTOP,49,62,69,12
-    GROUPBOX        "TCP/IP Settings",IDC_STATIC,15,20,237,59,0,
+                    BS_AUTOCHECKBOX | BS_PUSHLIKE | WS_TABSTOP,49,66,69,12
+    GROUPBOX        "TCP/IP Settings",IDC_STATIC,15,24,237,66,0,
                     WS_EX_DLGMODALFRAME | WS_EX_TRANSPARENT | 
                     WS_EX_CLIENTEDGE
     CONTROL         "Progress1",IDC_NUM_CONNECTIONS,"msctls_progress32",
-                    WS_BORDER,148,47,90,10
-    LTEXT           "Client Connections",IDC_STATIC,150,36,61,10
-    LTEXT           "",IDC_NUM_CLIENTS_TEXT,219,36,19,8
+                    WS_BORDER,143,70,78,10
+    LTEXT           "Client Connections",IDC_STATIC,149,60,61,10
+    LTEXT           "",IDC_NUM_CLIENTS_TEXT,223,61,19,8
+    COMBOBOX        IDC_SERVER_COMBO,147,38,84,54,CBS_DROPDOWN | WS_VSCROLL | 
+                    WS_TABSTOP
 END
 
 
@@ -284,7 +286,7 @@ BEGIN
             VALUE "LegalTrademarks", "VACS® is a registered trademark of CorTek Software, Inc.\0"
             VALUE "OriginalFilename", "GServer.EXE\0"
             VALUE "ProductName", "GServer Application\0"
-            VALUE "ProductVersion", "Version 10/17/98\0"
+            VALUE "ProductVersion", "Version 10/19/98\0"
         END
     END
     BLOCK "VarFileInfo"
@@ -329,6 +331,25 @@ BEGIN
     END
 END
 #endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog Info
+//
+
+IDD_DEVICE_SETUP DLGINIT
+BEGIN
+    IDC_SERVER_COMBO, 0x403, 7, 0
+0x7543, 0x7473, 0x6d6f, "\000" 
+    IDC_SERVER_COMBO, 0x403, 10, 0
+0x4344, 0x2058, 0x7645, 0x6e65, 0x0074, 
+    IDC_SERVER_COMBO, 0x403, 13, 0
+0x4344, 0x2058, 0x6853, 0x776f, 0x6974, 0x656d, "\000" 
+    IDC_SERVER_COMBO, 0x403, 12, 0
+0x4344, 0x2058, 0x6143, 0x6162, 0x6572, 0x0074, 
+    0
+END
 
 
 /////////////////////////////////////////////////////////////////////////////
