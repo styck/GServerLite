@@ -78,7 +78,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 /nologo /subsystem:windows /debug /machine:I386 /pdbtype:sept
-# ADD LINK32 /nologo /subsystem:windows /debug /machine:I386 /pdbtype:sept
+# ADD LINK32 winmm.lib /nologo /subsystem:windows /debug /machine:I386 /pdbtype:sept
 # SUBTRACT LINK32 /map
 
 !ENDIF 
@@ -121,6 +121,13 @@ SOURCE=.\GServer.cpp
 # Begin Source File
 
 SOURCE=.\GServer.rc
+
+!IF  "$(CFG)" == "GServer - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "GServer - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
