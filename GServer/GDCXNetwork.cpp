@@ -176,8 +176,10 @@ BOOL    CGDCXNetwork::StartAsServer(LPCTSTR lpcs, UINT  iPort)
   // First lets initialize the precision of our multimedia timer
   // used for read/write delays
 
-  timeBeginPeriod(1); // Set it to 1ms
-
+  if(timeBeginPeriod(1) != TIMERR_NOERROR) // Set it to 1ms
+  {
+    AfxMessageBox(_T("High resolution timing is not available on this CPU"));
+  }
 
   // Find the master module and setup the VUMetersArray - TEMP TEMP ?????????
 	// This is just hardcoding what VU data to send
