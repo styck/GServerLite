@@ -481,7 +481,7 @@ void CCorTekAsyncSocket::OnSend(int nErrorCode)
 								//-----------------------------------
 								if (dwDataSize == 0)
 								{ 
-									m_pNet->m_pDoc->DisplayGeneralMessage("@@ Send CONTROL STATES: EOF : Send complete @@");
+//									m_pNet->m_pDoc->DisplayGeneralMessage("@@ Send CONTROL STATES: EOF : Send complete @@");
 									m_bSendingControlStates = FALSE;
 									State = 0;
 //									m_pNet->m_pDoc->m_pdcxNetwork->BroadcastMsgType(NULL, 0, DCX_TCP_RECEIVE_TABLE_DONE, this, CURRENT);

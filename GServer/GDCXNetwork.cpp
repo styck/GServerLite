@@ -564,7 +564,7 @@ int			iRecvd;				// Number of bytes recieved
 
               if(m_pDoc->m_dcxBinTable.RemapControlData(ctrld, &dcxCtrlData))
 							{
-								m_pDoc->DisplayGeneralMessage("&& Msg Data &&");
+//								m_pDoc->DisplayGeneralMessage("&& Msg Data &&");
 
 							/////////////////////////////////////////////////////////////////////////////
 							// Loop thru all the pots for this control and write the XXW to the DCX
@@ -595,7 +595,7 @@ int			iRecvd;				// Number of bytes recieved
 #endif
 
 								}
-								m_pDoc->DisplayGeneralMessage("&& Msg Data End &&");
+//								m_pDoc->DisplayGeneralMessage("&& Msg Data End &&");
 							}
 					}
 					break;

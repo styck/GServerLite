@@ -280,8 +280,8 @@ void CControlDlg::HandleSliderMove(int iPos)
 
 					for(iCount = 0; iCount < ctrlData.iPotCount; iCount++)    
 					{	
-//                  if( ! m_pDoc->m_pDCXDevice->Write((int)ctrlData.arPotData[iCount].iAddr,
-//											(LPSTR)ctrlData.arPotData[iCount].szData, &ulWrite), FALSE)
+                  if( ! m_pDoc->m_pDCXDevice->Write(ctrlData.arPotData[iCount].iAddr,
+						ctrlData.arPotData[iCount].szData, &ulWrite, FALSE) )
 					{
 							m_pDoc->DisplayGeneralMessage(DCXDEV_ERROR_WRITE);	// Display what we wrote
 							break;
@@ -311,8 +311,8 @@ void CControlDlg::HandleSliderMove(int iPos)
 						
 						for(iCount = 0; iCount < ctrlData.iPotCount; iCount++)    
 						{
-//							if( ! m_pDoc->m_pDCXDevice->Write(ctrlData.arPotData[iCount].iAddr,
-//																							ctrlData.arPotData[iCount].szData, &ulWrite),FALSE)
+							if( ! m_pDoc->m_pDCXDevice->Write(ctrlData.arPotData[iCount].iAddr,
+								ctrlData.arPotData[iCount].szData, &ulWrite,FALSE))
 							{
 								m_pDoc->DisplayGeneralMessage(DCXDEV_ERROR_WRITE);
 								break;
