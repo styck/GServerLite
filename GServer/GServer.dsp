@@ -112,10 +112,6 @@ SOURCE=.\DCXDeviceMap.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\DCXServerMonitorView.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\GDCXNetwork.cpp
 # End Source File
 # Begin Source File
@@ -125,13 +121,6 @@ SOURCE=.\GServer.cpp
 # Begin Source File
 
 SOURCE=.\GServer.rc
-
-!IF  "$(CFG)" == "GServer - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "GServer - Win32 Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
@@ -193,10 +182,6 @@ SOURCE=.\DCXDeviceMap.h
 # Begin Source File
 
 SOURCE=.\DCXparser.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\DCXServerMonitorView.h
 # End Source File
 # Begin Source File
 
