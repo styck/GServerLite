@@ -173,6 +173,12 @@ BOOL    CGDCXNetwork::StartAsServer(LPCTSTR lpcs, UINT  iPort)
   int       iMatrix = 0xFFFFFFFF;
 
 
+  // First lets initialize the precision of our multimedia timer
+  // used for read/write delays
+
+  timeBeginPeriod(1); // Set it to 1ms
+
+
   // Find the master module and setup the VUMetersArray - TEMP TEMP ?????????
 	// This is just hardcoding what VU data to send
 	// The client will eventually set this array
