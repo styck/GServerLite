@@ -366,7 +366,7 @@ DCXPORT_WRITE_INPUT dcx_buffer;       // buffer for DCX i\o Control
 		else
 			bIoctlResult = TRUE;
 
-		Sleep(10);
+//		Sleep(10);
 	}
 
 	Sleep(5000);	// wait 5 seconds as per Gamble
