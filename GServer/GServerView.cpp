@@ -663,11 +663,17 @@ RECT      rClient;
 
 
 		  for(iX = 0; iX < rClient.right; iX += bmpInfo.bmWidth)
+      {
 			  for(iY = 0; iY < rClient.bottom; iY += bmpInfo.bmHeight)
 			  {
 				  dc.BitBlt(iX, iY, bmpInfo.bmWidth, bmpInfo.bmWidth, 
 								   &dcMem, 0, 0,  SRCCOPY);
 			  }
+      }
+
+      // Draw the horizontal bar accross the top of the client 
+
+      dc.FillSolidRect(0,0,rClient.right,rClient.top+30,RGB(173,0,33));
 
 	  }
 

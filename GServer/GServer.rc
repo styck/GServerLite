@@ -92,7 +92,7 @@ IDB_MODULE_AUX_VU       BITMAP  DISCARDABLE     "res\\module_a.bmp"
 IDB_MODULE_MATRIX_VU    BITMAP  DISCARDABLE     "res\\module_m.bmp"
 IDB_MODULE_CUE_VU       BITMAP  DISCARDABLE     "res\\module_c.bmp"
 IDB_MODULE_MASTER_VU    BITMAP  DISCARDABLE     "res\\bmp00001.bmp"
-IDB_BITMAP1             BITMAP  DISCARDABLE     "res\\test.bmp"
+IDB_BITMAP1             BITMAP  DISCARDABLE     "res\\watermark.bmp"
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -237,19 +237,19 @@ IDD_DEVICE_SETUP DIALOGEX 0, 0, 430, 221
 STYLE WS_CHILD | WS_CLIPCHILDREN | WS_BORDER
 FONT 8, "MS Sans Serif"
 BEGIN
-    LTEXT           "IP Address",IDC_STATIC,20,28,44,10,0,WS_EX_STATICEDGE
-    EDITTEXT        IDC_TCP_ADDRESS,67,28,70,12,ES_AUTOHSCROLL
-    LTEXT           "Port",IDC_STATIC,20,42,44,12,0,WS_EX_STATICEDGE
-    EDITTEXT        IDC_TCP_PORT,67,42,70,12,ES_AUTOHSCROLL
+    LTEXT           "IP Address",IDC_STATIC,22,34,44,10,0,WS_EX_STATICEDGE
+    EDITTEXT        IDC_TCP_ADDRESS,69,34,70,12,ES_AUTOHSCROLL
+    LTEXT           "Port",IDC_STATIC,22,47,44,12,0,WS_EX_STATICEDGE
+    EDITTEXT        IDC_TCP_PORT,69,47,70,12,ES_AUTOHSCROLL
     CONTROL         "&Start Server",IDC_CHK_NET_SERVER,"Button",
-                    BS_AUTOCHECKBOX | BS_PUSHLIKE | WS_TABSTOP,47,56,69,12
-    GROUPBOX        "TCP/IP Settings",IDC_STATIC,13,15,237,59,0,
+                    BS_AUTOCHECKBOX | BS_PUSHLIKE | WS_TABSTOP,49,62,69,12
+    GROUPBOX        "TCP/IP Settings",IDC_STATIC,15,20,237,59,0,
                     WS_EX_DLGMODALFRAME | WS_EX_TRANSPARENT | 
                     WS_EX_CLIENTEDGE
     CONTROL         "Progress1",IDC_NUM_CONNECTIONS,"msctls_progress32",
-                    WS_BORDER,146,42,90,10
-    LTEXT           "Client Connections",IDC_STATIC,148,30,61,10
-    LTEXT           "",IDC_NUM_CLIENTS_TEXT,217,30,19,8
+                    WS_BORDER,148,47,90,10
+    LTEXT           "Client Connections",IDC_STATIC,150,36,61,10
+    LTEXT           "",IDC_NUM_CLIENTS_TEXT,219,36,19,8
 END
 
 
