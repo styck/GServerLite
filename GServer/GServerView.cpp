@@ -49,6 +49,7 @@ CGServerView::CGServerView()
 	//{{AFX_DATA_INIT(CGServerView)
 	m_csTcpAddr = _T("");
 	m_iPort = 0;
+	m_csNumClients = _T("");
 	//}}AFX_DATA_INIT
 
 	
@@ -134,11 +135,26 @@ void CGServerView::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
 		m_iPort       = pDoc->m_pdcxNetwork->m_iPort;
 		m_csTcpAddr   = pDoc->m_pdcxNetwork->m_csIPAddress;
 
+    // Show the number of clients currently connected
+
+    m_csNumClients.Format(": %d",pDoc->m_pdcxNetwork->m_iConnInUse);
+
 		UpdateData(FALSE);
+
+    // Setup the client connections progress bar
+
+    m_NumClientsProgress.SetRange(0,MAX_ASYNC_SONNECTIONS);   // Only eight clients allowed
+    m_NumClientsProgress.SetStep(1);
+    m_NumClientsProgress.SetPos(0);
+
+    // indicate the number of client connections
+    m_NumClientsProgress.SetPos(pDoc->m_pdcxNetwork->m_iConnInUse);
+
   }
 
-int           iIdx;
-int           iBitmap;
+
+  int           iIdx;
+  int           iBitmap;
 
 //Update the Device Map View	
 //--------------------------
@@ -196,12 +212,12 @@ TBBUTTON  tbb;
 CString   csTipText;  
 CGServerDoc*  pDoc;
 
+
 // Create the Window ... first
 // and then we can get the Document binded to this View
 //-------------------------------------------------------
 
 	bRet	=	CFormView::Create(lpszClassName, lpszWindowName, dwStyle, rect, pParentWnd, nID, pContext);
-
 
 	pDoc = GetDocument();
 
@@ -311,16 +327,10 @@ CGServerDoc*  pDoc;
 
 	m_tbCtrlModule.GetWindowRect(&r);
 
-	// Position the register zero button
-
-//	GetDlgItem(IDC_SET_ZERO_REG)->SetWindowPos(NULL,r.right+10,20, 0,0, SWP_NOSIZE | SWP_NOZORDER);
-
   }
 
 return bRet;
 	
-//	return CWnd::Create(lpszClassName, lpszWindowName, dwStyle, rect, pParentWnd, nID, pContext);
-
 }
 
 
@@ -529,7 +539,6 @@ CGServerDoc*  pDoc = GetDocument();
 
 						if(bCtrlFound)
 						{
-
 							iBitmap = 4;
 							iType = DCX_DEVMAP_MODULE_CUE;
 						}
@@ -604,10 +613,10 @@ RECT      rClient;
 	cBmp.LoadBitmap(IDB_CIRCUIT_1);
 	cBmp.GetBitmap(&bmpInfo);
 
+		CGServerDoc* pDoc = GetDocument();
 
 	if(dcMem.CreateCompatibleDC(&dc))
   {
-		CGServerDoc* pDoc = GetDocument();
 		dcMem.SelectObject(cBmp);
 
 
@@ -697,13 +706,17 @@ return TRUE;
 // 	return CFormView::OnEraseBkgnd(pDC);
 }
 
+
+
 void CGServerView::DoDataExchange(CDataExchange* pDX) 
 {
 	CFormView::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CGServerView)
+	DDX_Control(pDX, IDC_NUM_CONNECTIONS, m_NumClientsProgress);
 	DDX_Text(pDX, IDC_TCP_ADDRESS, m_csTcpAddr);
 	DDX_Text(pDX, IDC_TCP_PORT, m_iPort);
 	DDX_Check(pDX, IDC_CHK_NET_SERVER, m_bServerStart);
+	DDX_Text(pDX, IDC_NUM_CLIENTS_TEXT, m_csNumClients);
 	//}}AFX_DATA_MAP
 }
 
