@@ -173,11 +173,11 @@ BOOL                bIoctlResult = FALSE;
 					bIoctlResult = TRUE;
 #endif
     if(bIsVU)
-//     CTekSleep(m_pDoc->m_dwBasedelay,m_pDoc->m_dwVudelay);
-     CTekSleep(9000,46);    // was 50
+     CTekSleep(m_pDoc->m_dwBasedelay,m_pDoc->m_dwVudelay);
+//     CTekSleep(9000,48);    // was 50
     else         
-//     CTekSleep(m_pDoc->m_dwBasedelay,m_pDoc->m_dwCtrldelay);
-     CTekSleep(9000,64);    // was 65
+     CTekSleep(m_pDoc->m_dwBasedelay,m_pDoc->m_dwCtrldelay);
+//     CTekSleep(9000,64);    // was 65
 
 return bIoctlResult;
 }

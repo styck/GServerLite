@@ -216,9 +216,9 @@ BEGIN
     CONTROL         "",IDC_STATIC,"Static",SS_WHITERECT | SS_SUNKEN | 
                     WS_BORDER,13,52,136,63
     CONTROL         138,IDC_STATIC,"Static",SS_BITMAP,15,56,130,55
-    LTEXT           "CompanyName",IDT_COMPANY_NAME,36,14,76,8
+    LTEXT           "CompanyName",IDT_COMPANY_NAME,36,14,61,8
     LTEXT           "FileDescription",IDT_FILE_DESC,36,26,95,9
-    LTEXT           "ProductVersion",IDT_PROD_VER,144,25,94,8
+    LTEXT           "ProductVersion",IDT_PROD_VER,103,15,135,8
     LTEXT           "LegalCopyright",IDT_COPYRIGHT,36,39,125,9
     LTEXT           "LegalTrademarks",IDT_TRADEMARKS,7,121,144,13
     LTEXT           "Tel 702.836.9466  Fax 702.836.9464",IDC_STATIC,154,70,
@@ -235,7 +235,7 @@ END
 
 IDD_DEVICE_SETUP DIALOGEX 0, 0, 430, 104
 STYLE WS_CHILD | WS_CLIPCHILDREN | WS_BORDER
-FONT 8, "MS Sans Serif", 0, 0, 0x1
+FONT 8, "MS Sans Serif"
 BEGIN
     LTEXT           "IP Address",IDC_STATIC,22,38,44,10,0,WS_EX_STATICEDGE
     EDITTEXT        IDC_TCP_ADDRESS,69,38,70,12,ES_AUTOHSCROLL
@@ -286,7 +286,7 @@ BEGIN
             VALUE "LegalTrademarks", "VACS® is a registered trademark of CorTek Software, Inc.\0"
             VALUE "OriginalFilename", "GServer.EXE\0"
             VALUE "ProductName", "GServer Application\0"
-            VALUE "ProductVersion", "Version 5/16/99 VUdelay = 46   CTRLdelay = 64\0"
+            VALUE "ProductVersion", "Version 5/20/99  Registry VUdelay and CTRLdelay \0"
         END
     END
     BLOCK "VarFileInfo"
@@ -342,8 +342,10 @@ IDD_DEVICE_SETUP DLGINIT
 BEGIN
     IDC_SERVER_COMBO, 0x403, 7, 0
 0x7543, 0x7473, 0x6d6f, "\000" 
-    IDC_SERVER_COMBO, 0x403, 10, 0
-0x4344, 0x2058, 0x7645, 0x6e65, 0x0074, 
+    IDC_SERVER_COMBO, 0x403, 13, 0
+0x4344, 0x2058, 0x7645, 0x6e65, 0x2074, 0x3036, "\000" 
+    IDC_SERVER_COMBO, 0x403, 13, 0
+0x4344, 0x2058, 0x7645, 0x6e65, 0x2074, 0x3034, "\000" 
     IDC_SERVER_COMBO, 0x403, 13, 0
 0x4344, 0x2058, 0x6853, 0x776f, 0x6974, 0x656d, "\000" 
     IDC_SERVER_COMBO, 0x403, 12, 0
