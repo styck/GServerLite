@@ -18,6 +18,8 @@ static char THIS_FILE[] = __FILE__;
 #endif
 
 #include "DCXServerMonitorView.h"
+#include "DCXRegistryEdit.h"
+#include "cputicker.h"
 
 /////////////////////////////////////////////////////////////////////////////
 // CGServerDoc
@@ -168,6 +170,28 @@ BOOL    CGServerDoc::InitGServerDoc(void)
 BOOL    bRet;
 
 char szBinDirectory[_MAX_PATH];		// 128
+double dDeviation = 0;
+
+CDCXRegistryEdit pReg; // Instantiate pReg
+
+// Basedelay was used in CorTekSleep for the base loop counter
+// Vudelay is the time in milliseconds between writting and reading of vu data
+/// Ctrlelay is the time in milliseconds between writting and reading control data
+
+pReg.GetDCXDelayData( &m_dwBasedelay,  &m_dwVudelay, &m_dwCtrldelay);
+
+
+// retrieves the frequency of the high-resolution performance counter, 	
+// THIS WILL EXIT IF HIGH RESOLUTION COUNTER IS NOT AVAILABLE
+
+  if (!QueryPerformanceFrequency(&m_liPeriod))
+		return FALSE;
+
+#ifdef NOTUSED
+BOOL bSuccess = CCPUTicker::GetCPUFrequency(m_dCpuSpeed, dDeviation);
+
+  m_dwBasedelay = (DWORD)((double)m_dwBasedelay * ((double)104850. * m_dCpuSpeed) / (double)233.);
+#endif
 
 //
 // Load in the DCX.BIN file
