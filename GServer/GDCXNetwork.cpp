@@ -176,10 +176,12 @@ BOOL    CGDCXNetwork::StartAsServer(LPCTSTR lpcs, UINT  iPort)
   // First lets initialize the precision of our multimedia timer
   // used for read/write delays
 
+#ifdef NOTUSED    // NEED TO TEST THIS MORE. CURRENTLY NOT WORKING
   if(timeBeginPeriod(1) != TIMERR_NOERROR) // Set it to 1ms
   {
     AfxMessageBox(_T("High resolution timing is not available on this CPU"));
   }
+#endif
 
 
 #ifdef NOTUSED
