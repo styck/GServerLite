@@ -82,6 +82,7 @@
 #define IDC_CLIP_RESET                  1066
 #define IDC_SET_ZERO_REG                1067
 #define IDC_LIST1                       1068
+#define IDC_STATUS_LIST                 1068
 #define IDC_LIST2                       1069
 #define IDC_FILENAME                    1070
 #define IDC_BROWSE                      1071
@@ -99,7 +100,6 @@
 #define IDC_NUM_CLIENTS_TEXT            1083
 #define IDC_SERVER_COMBO                1087
 #define IDC_SETTINGS_FRAME              1089
-#define IDC_STATIC_HISTOGRAM            1091
 #define ID_VIEW_NETWORK                 32771
 #define ID_VIEW_CONVERTER               32772
 #define ID_VIEW_CONTROLS                32773

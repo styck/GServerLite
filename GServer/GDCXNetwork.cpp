@@ -73,6 +73,12 @@ CGDCXNetwork::CGDCXNetwork(CGServerDoc *pDoc)
 										// CHANGE THIS SO WE DON'T USE THIS NEW VARIABLE AND
 										// JUST USE THE pDoc-> member variable
 
+
+	// Indicate that we are NOT sending VU data on socket (for display)
+
+	for(int i=0;i<MAX_ASYNC_SONNECTIONS;i++)
+		m_bSendingVUData[i]=FALSE;
+
 }
 
 CGDCXNetwork::~CGDCXNetwork()
@@ -739,17 +745,22 @@ char                    m_chNetBufferOut[MAX_NET_BUFFER+sizeof(HDR_DCXTCP)];
 						{
 
               // If its VU data and client accepts vu data then send it
+
 							if( (uiType == DCX_VU_DATA) && pSocket->DoesAcceptVuData()) 
 							{
 								iSent=pSocket->Send(m_chNetBufferOut, iSize + sizeof(HDR_DCXTCP));
-
+	
                 // If it all didn't go out then report an error
 
 							  if(iSent != iSize + (int) sizeof(HDR_DCXTCP) )
 							  {
-											  bRet = FALSE;
-											  m_pDoc->DisplayGeneralMessage("*** BroadcastMsgType: incomplete ***");
+									bRet = FALSE;
+	  								m_bSendingVUData[iCount]=FALSE;	// Display that VU data did not go out
+									m_pDoc->DisplayGeneralMessage("*** BroadcastMsgType: incomplete ***");
 							  }
+							  else
+	  								m_bSendingVUData[iCount]=TRUE;	// Display that VU data went out
+
 							}
  							else if(uiType != DCX_VU_DATA)  // If it is not VU data then just send it
 							{

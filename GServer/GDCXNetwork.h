@@ -58,9 +58,9 @@ public:
 
   // Array of Connection Objects
   //----------------------------
-	CPtrArray               m_connections;
-  int                     m_iConnInUse;
-
+	CPtrArray	m_connections;
+	int			m_iConnInUse;
+	BOOL		m_bSendingVUData[MAX_ASYNC_SONNECTIONS];	// true if sending VU data on socket
 
 public:
   // General Network Interface Funvtions

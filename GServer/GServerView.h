@@ -22,6 +22,7 @@ protected: // create from serialization only
 public:
 	//{{AFX_DATA(CGServerView)
 	enum { IDD = IDD_DEVICE_SETUP };
+	CListBox	m_clbStatus;
 	CProgressCtrl	m_NumClientsProgress;
 	CString	m_csTcpAddr;
 	UINT	m_iPort;
