@@ -144,17 +144,33 @@ DCX_CTRL_DESC CtrlDesc;
 	}	
 }
 
-
+//////////////////////////////////////////////////////
+//
+//
 
 void CControlDlg::OnDcxctrsSetaddr() 
 {
 
-  	if(m_pDoc)
-  {
+	if(m_uiTimerID)
+	{
+		OnVuStart();	// If the VU timer was started then call OnVuStart() to toggle
+						// it off and restore our VU data cLock variable.
+	}
+
+	// If we are trying to set another VU address with the VU Timer display going then
+	// lets call it to stop it and to restore the lock on the VU that
+	// we were looking at now before setting a new VU to look at.
+
+	if(m_pDoc)
+	{
 		UpdateData(TRUE);
-//		m_pDoc->m_dcxBinTable.m_iChanAddrOffset = 	m_iModuleAddr;
-  }
+	}
 }
+
+
+//////////////////////////////////////////////////////
+//
+//
 
 void CControlDlg::OnDcxctrlsRestbus() 
 {
@@ -438,32 +454,21 @@ char    chPeakVU[5];
 char    chAverageVU[5];
 int     iVU, iVUtoRead, iPeak, iPCV;
 CModule		cm_Module;		// Converts module number to DCX address
-
+char	cLockSave;			// Save the lock value in case we need to change it.
 
 VU_READ *pVUData;
 
 																			  
 	if(nIDEvent == TIMER_VU)	// VU timer	 144
 	{
-
-	// Set a loop to go through all VU 
-	
-//		iVUtoRead = m_pDoc->m_VUMetersArray.GetFirstReadIdx();
-
-//////////////////////////////////////////
-// Here we are just looping through the
-// pre, post, comp, and gate Vu meters of
-// a given module, not all modules
-
-//		while(iVUtoRead >= 0)
-//		{
-
 		// Get point to first VU data
 
+		if(m_ucVUTypeReq != 0xFF)	// if we chose a VU type
+		{
 			iVUtoRead = cm_Module.GetModuleNumber(m_iModuleAddr);
 
+			// iVUtoRead = 0 - 79
 			pVUData = m_pDoc->m_VUMetersArray.GetDataPtr(iVUtoRead);
-
 
 // If the current meter we are on is being displayed then update the progress bar
 // and labels. This depends on the button pressed in the control panel
@@ -542,7 +547,7 @@ VU_READ *pVUData;
 
 			}
 
-//		}	// end while
+		}	// end if m_ucVUTypeReq != 0xFF
 
 	} else if (nIDEvent == TIMER_AUTO_SCROLL) 		// 145
 	{
@@ -603,7 +608,16 @@ void CControlDlg::OnOK()
 		m_uiAutoScrollTimerID=0;
 	}
 
-	
+	// If we are trying to leave with the VU Timer display going then
+	// lets call it to stop it and to restore the lock on the VU that
+	// we were looking at.
+
+	if(m_uiTimerID)
+	{
+		OnVuStart();	// If the VU timer was started then call OnVuStart() to toggle
+						// it off and restore our VU data cLock variable.
+	}
+
 	CDialog::OnOK();
 }
 
@@ -816,11 +830,17 @@ void CControlDlg::OnVu7()
 
 void CControlDlg::OnVuStart() 
 {
+int     iVUtoRead;
+CModule		cm_Module;		// Converts module number to DCX address
+VU_READ *pVUData;
+
+
 	if(m_pDoc->m_VUthread != NULL)		// Make sure the VU reading thread is started before
-	{																// we start the timer to display them.
+	{									// we start the timer to display them.
 
 	//	UpdateData(TRUE);
 
+		// If the we are STOPPED then START it
 		if(m_uiTimerID == 0)
 		{
 				// TIMER START
@@ -831,12 +851,43 @@ void CControlDlg::OnVuStart()
 				{
 					m_VuStartButton.SetWindowText("Stop");
 				}
+
+
+				// Get the info needed to turn this VU on in the VU thread
+
+				if(m_ucVUTypeReq != 0xFF)	// if we chose a VU type
+				{
+					iVUtoRead = cm_Module.GetModuleNumber(m_iModuleAddr);
+
+					// iVUtoRead = 0 - 79
+					pVUData = m_pDoc->m_VUMetersArray.GetDataPtr(iVUtoRead);
+					m_cLockSave = pVUData->cLock;
+					pVUData->cLock = 1;		// Make sure VU is read in the thread
+				}
+
+
+
 		}
 		else
 		{
 			KillTimer(m_uiTimerID);
 			m_uiTimerID = 0;
 			m_VuStartButton.SetWindowText("Start");
+			
+			// Get the info needed to to restore the status of the lock on the VU
+			// that we are currently looking at
+
+				if(m_ucVUTypeReq != 0xFF)	// if we chose a VU type
+				{
+					iVUtoRead = cm_Module.GetModuleNumber(m_iModuleAddr);
+
+					// iVUtoRead = 0 - 79
+					pVUData = m_pDoc->m_VUMetersArray.GetDataPtr(iVUtoRead);
+					pVUData->cLock = m_cLockSave;
+				}
+
+
+
 		}	
 
 	}
