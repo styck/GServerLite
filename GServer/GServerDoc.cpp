@@ -149,18 +149,6 @@ void CGServerDoc::Dump(CDumpContext& dc) const
 #endif //_DEBUG
 
 ////////////////////////////////////////////////////////////////////////////
-// MEMBER FUNCTION: GetServerMonitorView(void)
-//
-//
-#ifdef NOTUSED
-void CGServerDoc::SetServerMonitorView(CDCXServerMonitorView  *psrvmonview)
-{
-//	m_pServerMonitorView = (CDCXServerMonitorView *)psrvmonview;
-}
-#endif
-
-
-////////////////////////////////////////////////////////////////////////////
 // MEMBER FUNCTION: InitGServerDoc(void)
 //
 //
@@ -316,7 +304,6 @@ BOOL    CGServerDoc::DisplayGeneralMessage(LPSTR lps)
 BOOL      bRet = TRUE;
 
     TRACE0((LPSTR) LPCTSTR(lps));
-//	DisplayGeneralMsg(lps);
 
 return bRet;
 };

@@ -145,7 +145,7 @@ BOOL    CGDCXNetwork::StartAsServer(LPCTSTR lpcs, UINT  iPort)
 		if(InitListener() && InitClients())
 		{
 // This is for Async sockets
-			if(m_pAssListener->Create(iPort,SOCK_STREAM,lEvent = FD_READ | FD_WRITE | FD_OOB | FD_ACCEPT | FD_CONNECT | FD_CLOSE ,lpcs))
+			if(m_pAssListener->Create(iPort,SOCK_STREAM,lEvent = FD_READ | FD_WRITE | FD_ACCEPT | FD_CONNECT | FD_CLOSE ,lpcs))
 // This is for CSocket
 //			if(m_pAssListener->Create(iPort,SOCK_STREAM,lpcs))
 			{
