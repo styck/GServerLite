@@ -316,6 +316,9 @@ DCXPORT_WRITE_INPUT dcx_buffer;       // buffer for DCX i\o Control
 
 	iBufferLength = sizeof(DCXPORT_WRITE_INPUT);
 
+	if(m_pDoc)
+		m_pDoc->m_pdcxNetwork->iReadVUData = 0;	// Tell thread to stop sending VU read commands
+
 #ifndef DEMO
 
 	if(m_hDevice  != INVALID_HANDLE_VALUE)
@@ -365,6 +368,11 @@ DCXPORT_WRITE_INPUT dcx_buffer;       // buffer for DCX i\o Control
 
 		Sleep(10);
 	}
+
+	Sleep(5000);	// wait 5 seconds as per Gamble
+
+	if(m_pDoc)
+		m_pDoc->m_pdcxNetwork->iReadVUData = 1;	// Tell thread to start sending VU read commands
 
 #else
 

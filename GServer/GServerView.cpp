@@ -1071,6 +1071,7 @@ void CGServerView::OnChkNetServer()
 		UpdateData(TRUE);		// Get status of server button
 
 
+
 ///// A GAMBLE HACK - PRESS BUTTON COMMANDS, UNPRESS, AND THEN REPRESS
 
 		if(m_bServerStart)	// If it is down the start the server
@@ -1082,6 +1083,8 @@ void CGServerView::OnChkNetServer()
 				pDoc->m_hEventKillVUThread = CreateEvent(NULL,FALSE, FALSE, NULL); // auto reset, initially reset
 				pDoc->m_hEventVUThreadKilled = CreateEvent(NULL,FALSE, FALSE, NULL); // auto reset, initially reset
 				pDoc->StartVUthread();	// Start the thread to read the VU meters and update the member display variables
+
+#ifdef NOTUSED_12OCT99
 
 //////////////////////////////////////
 // HACK BUTTON UP COMMAND
@@ -1119,7 +1122,7 @@ void CGServerView::OnChkNetServer()
 				pDoc->m_hEventKillVUThread = CreateEvent(NULL,FALSE, FALSE, NULL); // auto reset, initially reset
 				pDoc->m_hEventVUThreadKilled = CreateEvent(NULL,FALSE, FALSE, NULL); // auto reset, initially reset
 				pDoc->StartVUthread();	// Start the thread to read the VU meters and update the member display variables
-
+#endif
 
 			}
 			else

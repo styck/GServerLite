@@ -42,7 +42,7 @@ CGDCXNetwork::CGDCXNetwork(CGServerDoc *pDoc)
 	m_pDoc = pDoc;
 	m_pAssListener  = NULL; 
 	m_iPort = 9191;         // Default Port address
-	iShowControlData = 1;	// Default is show control data
+	iShowControlData = 0;	// Default is do NOT show control data
 	iReadVUData = 1;	// Default is show VU data
 
 	// Lets get our host name and find the IP address to display
@@ -156,6 +156,7 @@ BOOL    CGDCXNetwork::StartAsServer(LPCTSTR lpcs, UINT  iPort)
 		//
 		//  Initialize each module to send all the VU data
 
+#ifdef NOTUSED_12OCT99
 
   for(i=0;i<DCX_DEVMAP_MAXSIZE;i++)
   {
@@ -177,6 +178,8 @@ BOOL    CGDCXNetwork::StartAsServer(LPCTSTR lpcs, UINT  iPort)
 
 	}			
   }
+
+#endif
 
 
 // First make sure the Listener is not opened already ... 
