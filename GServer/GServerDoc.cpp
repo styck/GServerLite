@@ -302,7 +302,6 @@ CString   cs;
 
 	if(cs.LoadString(uiMsgID))
     OutputDebugString((LPSTR) LPCTSTR(cs));
-//	  m_pServerMonitorView->DisplayGeneralMsg((LPSTR) LPCTSTR(cs));
 
 return bRet;
 };
@@ -315,7 +314,8 @@ BOOL    CGServerDoc::DisplayGeneralMessage(LPSTR lps)
 {
 BOOL      bRet = TRUE;
 
-//	m_pServerMonitorView->DisplayGeneralMsg(lps);
+    OutputDebugString((LPSTR) LPCTSTR(lps));
+//	DisplayGeneralMsg(lps);
 
 return bRet;
 };
