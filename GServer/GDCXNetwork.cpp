@@ -611,6 +611,10 @@ int			iRecvd;				// Number of bytes recieved
 						wsprintf(chBuffer,"%d",m_pDoc->m_VUMetersArray.m_aVUReadData[i].cLock);
 							TRACE0(chBuffer);
 #endif
+              // Update our views so bitmaps indicate which modules are 
+              // sending VU data
+
+              m_pDoc->UpdateAllViews(NULL);
 
             }
 				}
