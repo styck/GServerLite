@@ -133,7 +133,6 @@ BOOL    CGDCXNetwork::StartAsServer(LPCTSTR lpcs, UINT  iPort)
 #endif
 
 
-#ifdef NOTUSED
 
   // Find the master module and setup the VUMetersArray - TEMP TEMP ?????????
 	// This is just hardcoding what VU data to send
@@ -160,8 +159,9 @@ BOOL    CGDCXNetwork::StartAsServer(LPCTSTR lpcs, UINT  iPort)
 				m_pDoc->m_pDCXDevice->Read(chBufferVUType, 64, &ulIO);		// Read response and discard
 		}
 
-		// Setup to read MASTER VU's
+#ifdef NOTUSED
 
+		// Setup to read MASTER VU's
 
     if(m_pDoc->m_dcxdevMap.GetModuleType(i) == DCX_DEVMAP_MODULE_MASTER)
     {
@@ -201,8 +201,12 @@ BOOL    CGDCXNetwork::StartAsServer(LPCTSTR lpcs, UINT  iPort)
     if(m_pDoc->m_dcxdevMap.GetModuleType(i) == DCX_DEVMAP_MODULE_MATRIX)
       if(iMatrix == 0xFFFFFFFF )
         iMatrix = i;
-    
+
+#endif
+			
   }
+
+#ifdef NOTUSED
 
   if(iSubAux != 0xFFFFFFFF && iMatrix  != 0xFFFFFFFF)
   {
@@ -218,6 +222,7 @@ BOOL    CGDCXNetwork::StartAsServer(LPCTSTR lpcs, UINT  iPort)
   }
 
 #endif
+
 
 // First make sure the Listener is not opened already ... 
 //-------------------------------------------------------
@@ -528,8 +533,10 @@ int			iRecvd;				// Number of bytes recieved
 ///////////////////////////////////////////////
 				case	DCX_TCP_SEND_TABLE:
 				{
+#ifdef _DEBUG
 						m_pDoc->DisplayGeneralMessage("@@ Starting send: DCX.BIN @@");
-					  psocket->State = DCX_TCP_SEND_TABLE;
+#endif
+						psocket->State = DCX_TCP_SEND_TABLE;
 						psocket->OffsetToSend = 0;
 						psocket->HowManyInSendBuf=0;
 						psocket->OnSend(0);
@@ -542,8 +549,10 @@ int			iRecvd;				// Number of bytes recieved
 ///////////////////////////////////////////////
 				case	DCX_TCP_SEND_CONTROL_STATES:
 				{
+#ifdef _DEBUG
 						m_pDoc->DisplayGeneralMessage("@@ Starting send: CONTROLS @@");
-					  psocket->State = DCX_TCP_SEND_CONTROL_STATES;
+#endif
+						psocket->State = DCX_TCP_SEND_CONTROL_STATES;
 						psocket->OffsetToSend = 0;
 						psocket->HowManyInSendBuf=0;
 						psocket->OnSend(0);
@@ -556,7 +565,9 @@ int			iRecvd;				// Number of bytes recieved
 
 				case	DCX_TCP_SEND_SETUP:
 				{
+#ifdef _DEBUG
 					m_pDoc->DisplayGeneralMessage("@@ Sending DCX Setup @@");
+#endif
 					m_pDoc->m_pdcxNetwork->BroadcastMsgType(m_pDeviceMap->GetData(), DCX_DEVMAP_MAXSIZE*sizeof(DWORD), DCX_TCP_RECEIVE_SETUP, psocket, CURRENT);
 				}
 
@@ -614,10 +625,11 @@ int			iRecvd;				// Number of bytes recieved
 										// cc - target chip, gg - group on the DCX board the chip is in
 										// p - the target pot
 
-										m_pDoc->DisplayGeneralMessage(dcxCtrlData.arPotData[iCount].szData);
 										lstrcpy(chBuffer,dcxCtrlData.arPotData[iCount].szData); // must pass the address in string
 										m_pDoc->m_pDCXDevice->Read(chBuffer, 64, &ulIO);
+#ifdef _DEBUG
 										m_pDoc->DisplayGeneralMessage(dcxCtrlData.arPotData[iCount].szData);
+#endif
 
 								}
 //								m_pDoc->DisplayGeneralMessage("&& Msg Data End &&");
@@ -716,7 +728,7 @@ int									iSent;
 			hdrDCXTcp.wMessage  = uiType;
 			hdrDCXTcp.wSize = iSize ;					// + sizeof(HDR_DCXTCP); Hristo
 			hdrDCXTcp.mmt.wType = TIME_MS;
-			hdrDCXTcp.mmt.u.ms = GetTickCount();
+//			hdrDCXTcp.mmt.u.ms = GetTickCount();
     
     // Put the message header and the actual message into one buffer
     // so we can write them out together
