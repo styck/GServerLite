@@ -224,7 +224,7 @@ END
 
 IDD_DEVICE_SETUP DIALOGEX 0, 0, 430, 221
 STYLE WS_CHILD | WS_CLIPCHILDREN | WS_BORDER
-FONT 8, "MS Sans Serif", 0, 0, 0x1
+FONT 8, "MS Sans Serif"
 BEGIN
     LTEXT           "IP Address",IDC_STATIC,20,28,44,10,0,WS_EX_STATICEDGE
     EDITTEXT        IDC_TCP_ADDRESS,67,28,70,12,ES_AUTOHSCROLL
@@ -232,9 +232,13 @@ BEGIN
     EDITTEXT        IDC_TCP_PORT,67,42,70,12,ES_AUTOHSCROLL
     CONTROL         "&Start Server",IDC_CHK_NET_SERVER,"Button",
                     BS_AUTOCHECKBOX | BS_PUSHLIKE | WS_TABSTOP,47,56,69,12
-    GROUPBOX        "TCP/IP Settings",IDC_STATIC,13,15,133,59,0,
+    GROUPBOX        "TCP/IP Settings",IDC_STATIC,13,15,237,59,0,
                     WS_EX_DLGMODALFRAME | WS_EX_TRANSPARENT | 
                     WS_EX_CLIENTEDGE
+    CONTROL         "Progress1",IDC_NUM_CONNECTIONS,"msctls_progress32",
+                    WS_BORDER,146,42,90,10
+    LTEXT           "Client Connections",IDC_STATIC,148,30,61,10
+    LTEXT           "",IDC_NUM_CLIENTS_TEXT,217,30,19,8
 END
 
 
