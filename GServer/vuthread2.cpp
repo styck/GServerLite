@@ -48,8 +48,11 @@ void    CTekSleep(DWORD dwDelay )
 ////////////////////////////////////////////
 //
 //
+//	This constant (PPRO_NOP_MSEC_COUNTER) was 90000. It was changed to 104850 to compensate
+//	for Gamble having a 233MHz instead of a 200MHz.  Increase is proportional. -- Evan.
 //
-#define PPRO_NOP_MSEC_COUNTER     90000 // !!
+//
+#define PPRO_NOP_MSEC_COUNTER     104850 // !!
 void    CTekSleep(DWORD dwDelay )
 {
   DWORD     dwTickCountDelay;
