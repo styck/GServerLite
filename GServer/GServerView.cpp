@@ -130,6 +130,7 @@ void CGServerView::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
 
 // Lets Update the data in the view
 //---------------------------------
+
 	if(pDoc)
   {
 		m_iPort       = pDoc->m_pdcxNetwork->m_iPort;
@@ -152,36 +153,47 @@ void CGServerView::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
 
   }
 
+////////////////////////////////////////////////////////////////////
+//Update the Device Map View	
+//--------------------------
 
   int           iIdx;
   int           iBitmap;
 
-//Update the Device Map View	
-//--------------------------
+#define VU_BITMAP_OFFSET  6
 
 	for(iIdx = 0; iIdx < DCX_DEVMAP_MAXSIZE; iIdx ++)
   {
+
+    // check the VU lock flag.  If it is not zero then we are sending
+    // VU data for this module.  Set the bitmap offset to display module
+    // bitmap indicating VU data is being sent.
+
+		if(pDoc->m_VUMetersArray.m_aVUReadData[iIdx].cLock)
+      iBitmap = VU_BITMAP_OFFSET;
+    else
+      iBitmap = 0;    // No offset
 
 		switch(pDoc->m_dcxdevMap.GetModuleType(iIdx))
     {
 
       case  DCX_DEVMAP_MODULE_NA:
-        iBitmap = 0;
+        iBitmap += 0;
         break;
       case  DCX_DEVMAP_MODULE_INPUT:
-        iBitmap = 1;
+        iBitmap += 1;
         break;
       case  DCX_DEVMAP_MODULE_AUX:
-        iBitmap = 2;
+        iBitmap += 2;
         break;
       case  DCX_DEVMAP_MODULE_MATRIX:
-        iBitmap = 3;
+        iBitmap += 3;
         break;
       case  DCX_DEVMAP_MODULE_CUE:
-        iBitmap = 4;
+        iBitmap += 4;
         break;
       case  DCX_DEVMAP_MODULE_MASTER:
-        iBitmap = 5;
+        iBitmap += 5;
         break;
 //      case  DCX_DEVMAP_MODULE_COMPUTER:
 //        iBitmap = 6;
@@ -248,6 +260,17 @@ CGServerDoc*  pDoc;
 	m_tbCtrlModule.AddBitmap(1, IDB_MODULE_MATRIX);
 	m_tbCtrlModule.AddBitmap(1, IDB_MODULE_CUE);
 	m_tbCtrlModule.AddBitmap(1, IDB_MODULE_MASTER);
+
+  // VU data being sent versions of above
+  //
+	m_tbCtrlModule.AddBitmap(1, IDB_MODULE_NA_VU);
+	m_tbCtrlModule.AddBitmap(1, IDB_MODULE_INPUT_VU);
+	m_tbCtrlModule.AddBitmap(1, IDB_MODULE_AUX_VU);
+	m_tbCtrlModule.AddBitmap(1, IDB_MODULE_MATRIX_VU);
+	m_tbCtrlModule.AddBitmap(1, IDB_MODULE_CUE_VU);
+	m_tbCtrlModule.AddBitmap(1, IDB_MODULE_MASTER_VU);
+
+
 //	m_tbCtrlModule.AddBitmap(1, IDB_MODULE_COMPUTER);	// No computer module for now
 
 

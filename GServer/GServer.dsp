@@ -256,6 +256,10 @@ SOURCE=.\res\bitmap1.bmp
 # End Source File
 # Begin Source File
 
+SOURCE=.\res\bmp00001.bmp
+# End Source File
+# Begin Source File
+
 SOURCE=.\res\bvu_input.bmp
 # End Source File
 # Begin Source File
@@ -304,6 +308,10 @@ SOURCE=.\res\matrix.bmp
 # End Source File
 # Begin Source File
 
+SOURCE=.\res\module_a.bmp
+# End Source File
+# Begin Source File
+
 SOURCE=.\res\module_b.bmp
 # End Source File
 # Begin Source File
@@ -312,7 +320,19 @@ SOURCE=.\res\module_basemap.bmp
 # End Source File
 # Begin Source File
 
+SOURCE=.\res\module_c.bmp
+# End Source File
+# Begin Source File
+
 SOURCE=.\res\module_disabled.bmp
+# End Source File
+# Begin Source File
+
+SOURCE=.\res\module_i.bmp
+# End Source File
+# Begin Source File
+
+SOURCE=.\res\module_m.bmp
 # End Source File
 # Begin Source File
 

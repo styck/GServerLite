@@ -595,7 +595,7 @@ int			iRecvd;				// Number of bytes recieved
 							// Also needs to be in the socket locks to turn them off
 							// when client is closed
 
-							m_pDoc->m_SocketVULocks[psocket->iSocketNumber][i] = m_chNetBufferIn[i];
+							m_pDoc->m_SocketVULocks[psocket->iSocketNumber][i] += m_chNetBufferIn[i];
 
 							// Take into account that its not a perfect world.  Clients open/close and
 							// so can the server.  Everything may not be in sync. The total lock should
@@ -611,13 +611,14 @@ int			iRecvd;				// Number of bytes recieved
 						wsprintf(chBuffer,"%d",m_pDoc->m_VUMetersArray.m_aVUReadData[i].cLock);
 							TRACE0(chBuffer);
 #endif
-              // Update our views so bitmaps indicate which modules are 
-              // sending VU data
-
-              m_pDoc->UpdateAllViews(NULL);
 
             }
 				}
+
+        // Update our views so bitmaps indicate which modules are 
+        // sending VU data
+
+        m_pDoc->UpdateAllViews(NULL);
 
 
 #ifdef _DEBUG

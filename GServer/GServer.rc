@@ -86,6 +86,12 @@ IDB_VERDE               BITMAP  DISCARDABLE     "res\\verde.bmp"
 IDB_MODULE_MATRIX       BITMAP  DISCARDABLE     "res\\matrix.bmp"
 IDB_MODULE_CUE          BITMAP  DISCARDABLE     "res\\cue.bmp"
 IDB_CORTEK_LOGO         BITMAP  DISCARDABLE     "res\\CorTek260x89@72ppi-rgb-indexedcolor.BMP"
+IDB_MODULE_NA_VU        BITMAP  DISCARDABLE     "res\\bitmap1.bmp"
+IDB_MODULE_INPUT_VU     BITMAP  DISCARDABLE     "res\\module_i.bmp"
+IDB_MODULE_AUX_VU       BITMAP  DISCARDABLE     "res\\module_a.bmp"
+IDB_MODULE_MATRIX_VU    BITMAP  DISCARDABLE     "res\\module_m.bmp"
+IDB_MODULE_CUE_VU       BITMAP  DISCARDABLE     "res\\module_c.bmp"
+IDB_MODULE_MASTER_VU    BITMAP  DISCARDABLE     "res\\bmp00001.bmp"
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -209,12 +215,12 @@ BEGIN
     CONTROL         "",IDC_STATIC,"Static",SS_WHITERECT | SS_SUNKEN | 
                     WS_BORDER,13,52,136,63
     CONTROL         138,IDC_STATIC,"Static",SS_BITMAP,15,56,130,55
-    LTEXT           "CompanyName",IDT_COMPANY_NAME,36,14,50,8
+    LTEXT           "CompanyName",IDT_COMPANY_NAME,36,14,76,8
     LTEXT           "FileDescription",IDT_FILE_DESC,36,26,95,9
     LTEXT           "ProductVersion",IDT_PROD_VER,174,26,64,8
     LTEXT           "LegalCopyright",IDT_COPYRIGHT,36,39,125,9
     LTEXT           "LegalTrademarks",IDT_TRADEMARKS,7,121,144,13
-    LTEXT           "Tel 702.836.9466  Fax 702.893.9464",IDC_STATIC,154,70,
+    LTEXT           "Tel 702.836.9466  Fax 702.836.9464",IDC_STATIC,154,70,
                     70,17
     LTEXT           "www.corteksoft.com",IDC_STATIC,154,91,75,10
     LTEXT           "tech@corteksoft.com",IDC_STATIC,154,102,84,10
@@ -277,7 +283,7 @@ BEGIN
             VALUE "LegalTrademarks", "VACS® is a registered trademark of CorTek Software, Inc.\0"
             VALUE "OriginalFilename", "GServer.EXE\0"
             VALUE "ProductName", "GServer Application\0"
-            VALUE "ProductVersion", "Version 8/16/98\0"
+            VALUE "ProductVersion", "Version 8/30/98\0"
         END
     END
     BLOCK "VarFileInfo"

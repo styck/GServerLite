@@ -24,6 +24,12 @@
 #define IDB_CLIP                        165
 #define IDB_NO_CLIP                     166
 #define IDD_DIALOG1                     168
+#define IDB_MODULE_NA_VU                174
+#define IDB_MODULE_INPUT_VU             175
+#define IDB_MODULE_AUX_VU               176
+#define IDB_MODULE_MATRIX_VU            177
+#define IDB_MODULE_CUE_VU               178
+#define IDB_MODULE_MASTER_VU            179
 #define IDS_TBNAME_GENERAL              200
 #define IDS_TBNAME_VIEWS                201
 #define IDS_NET_ERROR_MSG               300
@@ -106,7 +112,7 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_3D_CONTROLS                     1
-#define _APS_NEXT_RESOURCE_VALUE        174
+#define _APS_NEXT_RESOURCE_VALUE        180
 #define _APS_NEXT_COMMAND_VALUE         32818
 #define _APS_NEXT_CONTROL_VALUE         1084
 #define _APS_NEXT_SYMED_VALUE           107

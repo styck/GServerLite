@@ -178,11 +178,13 @@ char chBuffer[64];
 
 	for(int i=0;i < MAX_VU_READ_DATA; i++)
 	{
+
 		m_pNet->m_pDoc->m_VUMetersArray.m_aVUReadData[i].cLock+=-m_pNet->m_pDoc->m_SocketVULocks[iSocketNumber][i];
+
 		if(m_pNet->m_pDoc->m_VUMetersArray.m_aVUReadData[i].cLock < 0)
       m_pNet->m_pDoc->m_VUMetersArray.m_aVUReadData[i].cLock = 0;
 
-		m_pNet->m_pDoc->m_SocketVULocks[iSocketNumber][i] = 0;
+		m_pNet->m_pDoc->m_SocketVULocks[iSocketNumber][i] = 0;  // All locks for this socket are gone
 
 		// Show the resulting VU locks for DEBUG
 #ifdef _DEBUG
@@ -191,6 +193,12 @@ char chBuffer[64];
 #endif
 
 	}
+
+    // Update our views so bitmaps indicate which modules are 
+    // sending VU data
+
+    m_pNet->m_pDoc->UpdateAllViews(NULL);
+
 
 #ifdef _DEBUG
 							TRACE0("\n");
