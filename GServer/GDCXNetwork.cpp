@@ -117,20 +117,14 @@ BOOL    CGDCXNetwork::StartAsServer(LPCTSTR lpcs, UINT  iPort)
 #endif
 
 
-  // Find the master module and setup the VUMetersArray - TEMP TEMP ?????????
-	// This is just hardcoding what VU data to send
-	// The client will eventually set this array
-  // ????????????????????????????? This has to be done   
-
-  for(i=0;i<DCX_DEVMAP_MAXSIZE;i++)
-  {
-
 		/////////////////////////////////////////////////////////////////////
 		// If there is a module there then set VU 0,1,2,3,4,6 to be updated
 		//
-		// If we remove the other code around here we still want to keep
-		// the VU initialization below.
+		//  Initialize each module to send all the VU data
 
+
+  for(i=0;i<DCX_DEVMAP_MAXSIZE;i++)
+  {
 		if(m_pDoc->m_dcxdevMap.GetModuleType(i) != DCX_DEVMAP_MODULE_NA)
 		{
 			char	chBufferVUType[64];
@@ -579,8 +573,14 @@ int			iRecvd;				// Number of bytes recieved
 					// to the Lock.  Client must turn OFF showing VU's when it EXITS
 
 					for(i=0;i<MAX_VU_READ_DATA;i++)
-					{		// Get lock info into our vu data structure used in the vu thread
-						  m_pDoc->m_VUMetersArray.m_aVUReadData[i].cLock+=m_chNetBufferIn[i];
+					{		
+            // If we know the module exists then set the lock 
+
+            if(m_pDoc->m_dcxdevMap.GetModuleType(i) != DCX_DEVMAP_MODULE_NA)
+            {
+              // Get lock info into our vu data structure used in the vu thread
+
+              m_pDoc->m_VUMetersArray.m_aVUReadData[i].cLock+=m_chNetBufferIn[i];
 
 							// Also needs to be in the socket locks to turn them off
 							// when client is closed
@@ -602,6 +602,7 @@ int			iRecvd;				// Number of bytes recieved
 //							OutputDebugString(chBuffer);
 #endif
 
+            }
 				}
 
 
