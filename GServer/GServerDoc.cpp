@@ -208,31 +208,6 @@ BOOL    bRet = TRUE;
 	return bRet;
 };
 
-#ifdef NOTUSED
-////////////////////////////////////////////////////////////////////////////
-// MEMBER FUNCTION: StartClient(LPCTSTR lpcs, UINT iPort)
-//
-//                               
-BOOL    CGServerDoc::StartClient(LPCTSTR lpcs, UINT iPort)
-{
-BOOL    bRet = TRUE;
-
-	if(m_pdcxNetwork)
-  {
-		bRet = m_pdcxNetwork->StartAsClient(lpcs, iPort);
-  }
-	else
-		bRet = FALSE;
-
-	if(bRet)
-		DisplayGeneralMessage(IDS_CLIENT_STARTED);
-	else
-	  DisplayGeneralMessage(IDS_CLIENT_FAILEDTOSTART);
-
-return bRet;
-};
-#endif
-
 ////////////////////////////////////////////////////////////////////////////
 // MEMBER FUNCTION: ShutDownNetwork(void)
 //
