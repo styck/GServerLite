@@ -306,38 +306,30 @@ BEGIN
                     399,158,27,10
     PUSHBUTTON      "Start",IDC_VU_START,429,146,27,10
     LTEXT           "VU METER SELECT",IDC_STATIC,367,133,79,9
-    CONTROL         "Check1",IDC_CLIP1,"Button",BS_AUTOCHECKBOX | NOT 
-                    WS_VISIBLE | WS_DISABLED | WS_TABSTOP,293,130,11,8
-    CONTROL         "Check1",IDC_CLIP3,"Button",BS_AUTOCHECKBOX | NOT 
-                    WS_VISIBLE | WS_DISABLED | WS_TABSTOP,309,130,11,8
-    CONTROL         "Check1",IDC_CLIP5,"Button",BS_AUTOCHECKBOX | NOT 
-                    WS_VISIBLE | WS_DISABLED | WS_TABSTOP,325,130,11,8
-    CONTROL         "Check1",IDC_CLIP7,"Button",BS_AUTOCHECKBOX | NOT 
-                    WS_VISIBLE | WS_DISABLED | WS_TABSTOP,339,130,11,8
-    CONTROL         "Check1",IDC_CLIP2,"Button",BS_AUTOCHECKBOX | NOT 
-                    WS_VISIBLE | WS_DISABLED | WS_TABSTOP,293,142,11,8
-    CONTROL         "Check1",IDC_CLIP4,"Button",BS_AUTOCHECKBOX | NOT 
-                    WS_VISIBLE | WS_DISABLED | WS_TABSTOP,309,142,11,8
-    CONTROL         "Check1",IDC_CLIP6,"Button",BS_AUTOCHECKBOX | NOT 
-                    WS_VISIBLE | WS_DISABLED | WS_TABSTOP,325,142,11,8
-    CONTROL         "Check1",IDC_CLIP8,"Button",BS_AUTOCHECKBOX | NOT 
-                    WS_VISIBLE | WS_DISABLED | WS_TABSTOP,339,142,11,8
-    LTEXT           "P1",IDC_STATIC,291,120,11,8,NOT WS_VISIBLE | 
-                    WS_DISABLED
-    LTEXT           "P3",IDC_STATIC,309,120,11,8,NOT WS_VISIBLE | 
-                    WS_DISABLED
-    LTEXT           "P5",IDC_STATIC,325,120,11,8,NOT WS_VISIBLE | 
-                    WS_DISABLED
-    LTEXT           "P7",IDC_STATIC,339,120,11,8,NOT WS_VISIBLE | 
-                    WS_DISABLED
-    LTEXT           "P2",IDC_STATIC,293,153,11,8,NOT WS_VISIBLE | 
-                    WS_DISABLED
-    LTEXT           "P4",IDC_STATIC,307,153,11,8,NOT WS_VISIBLE | 
-                    WS_DISABLED
-    LTEXT           "P6",IDC_STATIC,325,153,11,8,NOT WS_VISIBLE | 
-                    WS_DISABLED
-    LTEXT           "P8",IDC_STATIC,339,153,11,8,NOT WS_VISIBLE | 
-                    WS_DISABLED
+    CONTROL         "Check1",IDC_CLIP1,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,
+                    293,130,11,8
+    CONTROL         "Check1",IDC_CLIP3,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,
+                    309,130,11,8
+    CONTROL         "Check1",IDC_CLIP5,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,
+                    325,130,11,8
+    CONTROL         "Check1",IDC_CLIP7,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,
+                    339,130,11,8
+    CONTROL         "Check1",IDC_CLIP2,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,
+                    293,142,11,8
+    CONTROL         "Check1",IDC_CLIP4,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,
+                    309,142,11,8
+    CONTROL         "Check1",IDC_CLIP6,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,
+                    325,142,11,8
+    CONTROL         "Check1",IDC_CLIP8,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,
+                    339,142,11,8
+    LTEXT           "P1",IDC_STATIC,291,120,11,8
+    LTEXT           "P3",IDC_STATIC,309,120,11,8
+    LTEXT           "P5",IDC_STATIC,325,120,11,8
+    LTEXT           "P7",IDC_STATIC,339,120,11,8
+    LTEXT           "P2",IDC_STATIC,293,153,11,8
+    LTEXT           "P4",IDC_STATIC,307,153,11,8
+    LTEXT           "P6",IDC_STATIC,325,153,11,8
+    LTEXT           "P8",IDC_STATIC,339,153,11,8
     PUSHBUTTON      "RESET",IDC_CLIP_RESET,429,158,27,10
 END
 
@@ -395,7 +387,7 @@ BEGIN
             VALUE "OriginalFilename", "GServer.EXE\0"
             VALUE "PrivateBuild", "\0"
             VALUE "ProductName", "GServer Application\0"
-            VALUE "ProductVersion", "Version 1/15/2000  Registry VUdelay and CTRLdelay \0"
+            VALUE "ProductVersion", "Version 8/16/2000  Registry VUdelay and CTRLdelay \0"
             VALUE "SpecialBuild", "\0"
         END
     END
