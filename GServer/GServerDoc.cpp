@@ -17,7 +17,6 @@
 static char THIS_FILE[] = __FILE__;
 #endif
 
-#include "DCXServerMonitorView.h"
 #include "DCXRegistryEdit.h"
 #include "cputicker.h"
 

@@ -11,7 +11,6 @@
 #include "MainFrm.h"
 
 #include "GServerDoc.h"
-#include "DCXServerMonitorView.h"
 #include "DCXDeviceSetupView.h"
 
 
