@@ -667,6 +667,13 @@ CCorTekAsyncSocket* pSocket = NULL;
 int                 iCount;
 int									iSent;
 
+// Moved this here from class declaration
+//This is the simplest way to ensure multitasking correctness. It might not be
+//the best(!) performance, but it is efficient enough to be able to broadcast
+//1100 messages a second.
+
+char                    m_chNetBufferOut[MAX_NET_BUFFER+sizeof(HDR_DCXTCP)];
+
 		if( iSize <= MAX_NET_BUFFER) 
     {
 			hdrDCXTcp.iID = DCX_TCP_ID;
