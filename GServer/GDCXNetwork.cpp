@@ -616,7 +616,8 @@ int			iRecvd;				// Number of bytes recieved
           psocket->AcceptVuData(TRUE);
           break;
         case DCX_STOP_VU_DATA:
-          psocket->AcceptVuData(FALSE);
+//          psocket->AcceptVuData(FALSE);
+			m_pDoc->m_pDCXDevice->ResetBus();
           break;
 
 
