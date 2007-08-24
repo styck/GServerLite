@@ -53,7 +53,7 @@ END_MESSAGE_MAP()
 ////////////////////////////////////////////////////////////////////
 // CCorTekAsyncSocket member functions
 
-CCorTekAsyncSocket::Abort()
+BOOL CCorTekAsyncSocket::Abort()
 {
 	return TRUE;
 }
